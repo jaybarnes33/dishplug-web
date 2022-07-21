@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+:root {
+  --dp-primary: #ffa500;
+  --dp-dark: #1a1a1a;
+  --dp-white: #ffffff;
+  --dp-secondary: #eee;
+  --dp-light: #f4f4ee;
+}
+html,
+body {
+  padding: 0;
+  margin-top: -20px;
+  font-family: "Albert Sans", sans-serif;
+}
+
+h1 {
+  font-weight: 400 !important;
+}
+.navbar-brand > span {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-body a {
+  text-decoration: underline;
+  transition: all ease-in 300;
+  :hover {
+    color: var(--dp-dark) !important;
+
+    transform: scale(1.1);
+  }
+}
+* {
+  box-sizing: border-box;
+}
+
+.bg-change {
+  background-color: var(--dp-white);
+}
+
+.navbar {
+  transition: background-color ease-in-out 30ms;
+  z-index: 99;
+}
