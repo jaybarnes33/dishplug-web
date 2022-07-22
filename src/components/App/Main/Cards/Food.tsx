@@ -3,7 +3,7 @@ import { Card, CardImg } from "react-bootstrap";
 import Image from "next/image";
 import { FoodType } from "@/types";
 import Rating from "../../Rating";
-const Food = (food: FoodType) => {
+const Food = ({ food }: { food: FoodType }) => {
   return (
     <Card style={{ border: "none" }}>
       <CardImg
