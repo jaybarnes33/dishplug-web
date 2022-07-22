@@ -6,7 +6,7 @@ import Food from "../Cards/Food";
 
 const Featured = () => {
   return (
-    <Container className="position-relative  pt-5 ">
+    <Container fluid>
       <h2 className="pt-5 d-flex justify-content-between">
         Featured Food
         <small style={{ fontSize: "1rem" }}>

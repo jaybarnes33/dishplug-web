@@ -5,7 +5,7 @@ import CTA from "../Cards/CTA";
 
 const Join = () => {
   return (
-    <Container className="position-relative  pt-5 ">
+    <Container fluid>
       <h2 className="pt-5">Join Us</h2>
       <Row className="d-flex align-items-center justify-content-center pt-1 ">
         <Col xs={6} md={4}>
