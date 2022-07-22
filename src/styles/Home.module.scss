@@ -1,17 +1,22 @@
 .intro {
   background-color: var(--dp-primary);
-  min-height: 60vh;
+  min-height: 70vh;
   color: var(--dp-dark);
-  margin-top: -10;
+
   .text {
     font-weight: 700;
     font-size: 3rem;
 
-    @media screen and (max-width: 508px) {
-      font-size: 2.5rem;
+    @media screen and (max-width: 768px) {
+      font-size: 2rem;
+
+      padding-top: 2.5rem;
     }
   }
 
+  @media screen and (max-width: 768px) {
+    min-height: 80vh;
+  }
   video {
     width: 300px;
   }
