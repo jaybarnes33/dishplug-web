@@ -11,7 +11,7 @@ const Food = ({ food }: { food: FoodType }) => {
         as={Image}
         src={food.image}
         height={400}
-        width={500}
+        width={450}
         objectFit="cover"
       />
       <Button
@@ -22,7 +22,7 @@ const Food = ({ food }: { food: FoodType }) => {
         <FaRegHeart color="red" />
       </Button>
       <Card.Body style={{ padding: 0, paddingTop: 10 }}>
-        <div className="d-flex">
+        <div>
           <div>
             <h5>{food.name}</h5>
             <Rating value={food.rating} />
