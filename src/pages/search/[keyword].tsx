@@ -15,7 +15,7 @@ const Search = () => {
         <Container fluid className="py-5">
           <Row>
             {foods.map((food, index) => (
-              <Col xs={6} md={4} lg={3}>
+              <Col xs={6} md={4} lg={3} key={index}>
                 <Food food={food} />
               </Col>
             ))}
