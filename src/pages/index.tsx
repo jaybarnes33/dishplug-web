@@ -19,7 +19,7 @@ export default function Home() {
       <main className={styles.main}>
         <Intro />
         <Featured />
-        <Join />
+        {/* <Join /> */}
       </main>
     </div>
   );

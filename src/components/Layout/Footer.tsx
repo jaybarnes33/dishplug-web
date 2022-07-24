@@ -1,5 +1,7 @@
+import Image from "next/image";
 import React from "react";
 import { Col, Container, Nav, Row } from "react-bootstrap";
+import { FaUtensils } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -7,7 +9,11 @@ const Footer = () => {
       <Container>
         <Row>
           <Col md={4}>
-            <h2>Dishplug</h2>
+            <h2>
+              <>
+                <FaUtensils /> Dishplug
+              </>
+            </h2>
 
             <Row className="mt-5">
               <Col xs={6}>

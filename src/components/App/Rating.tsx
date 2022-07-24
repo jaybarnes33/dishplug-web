@@ -11,7 +11,7 @@ const Rating = ({
   color?: string;
 }) => {
   return (
-    <div style={{ marginTop: "10px", display: "flex", gap: "5px" }}>
+    <div style={{ display: "flex", gap: "5px" }}>
       <span>
         {value >= 1 ? (
           <FaStar color={color} size={24} />

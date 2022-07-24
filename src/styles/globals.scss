@@ -36,7 +36,6 @@ a {
 }
 * {
   box-sizing: border-box;
-  margin: 0 !important;
 }
 
 .bg-change {
@@ -46,4 +45,12 @@ a {
 .navbar {
   transition: background-color ease-in-out 30ms;
   z-index: 99;
+}
+
+.desktop-only {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: block;
+  }
 }

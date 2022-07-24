@@ -2,14 +2,22 @@ import React from "react";
 import { Card, CardImg, NavLink } from "react-bootstrap";
 import Image from "next/image";
 import Link from "next/link";
-const CTA = ({ text, href }: { text: string; href: string }) => {
+const CTA = ({
+  text,
+  href,
+  image,
+}: {
+  text: string;
+  href: string;
+  image: string;
+}) => {
   return (
     <Card style={{ border: "none" }}>
       <CardImg
         as={Image}
-        src={"/pizza.jpg"}
-        height={400}
-        width={500}
+        src={image}
+        height={300}
+        width={300}
         objectFit="cover"
       />
       <Card.Body>
