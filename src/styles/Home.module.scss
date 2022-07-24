@@ -1,5 +1,5 @@
 .intro {
-  background: var(--dp-dark) url("/friedrice.jpg");
+  background: var(--dp-primary);
   min-height: 70vh;
   color: var(--dp-dark);
   background-size: cover;
@@ -8,7 +8,7 @@
   .text {
     font-weight: 700;
     font-size: 3rem;
-    background-color: rgba($color: #f4f4f4, $alpha: 0.2);
+
     @media screen and (max-width: 768px) {
       font-size: 2rem;
 
