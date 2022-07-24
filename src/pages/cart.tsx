@@ -19,7 +19,7 @@ const Cart = () => {
         <h1 className="text-center">Cart</h1>
         <ListGroup variant="flush">
           {foods.map((item, index) => (
-            <ListGroup.Item>
+            <ListGroup.Item key={index}>
               <Row className="d-flex align-items-center">
                 <Col xs={2}>
                   <Image src={item.image} fluid rounded />
