@@ -11,8 +11,8 @@ const Search = () => {
 
   return (
     <>
-      <section className="mt-4">
-        <Container fluid className="py-5">
+      <section className="mt-4" style={{ minHeight: "70vh" }}>
+        <Container className="py-5">
           <Row>
             {foods.map((food, index) => (
               <Col xs={6} md={4} lg={3} key={index}>

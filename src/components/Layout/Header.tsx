@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { Badge, Button, Container, Nav, Navbar } from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/NavbarCollapse";
 import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
-import Search from "../App/Search/Search";
+import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import Image from "next/image";
 const Header = () => {
@@ -33,6 +33,8 @@ const Header = () => {
         <Navbar.Toggle aria-controls="#my-nav" />
         <>
           <NavbarCollapse id="my-nav">
+            <div className="ms-auto"></div>
+            <Search />
             <Nav className="ms-auto gap-3">
               <Nav.Item as={Link} href="/login">
                 <Button variant="light">

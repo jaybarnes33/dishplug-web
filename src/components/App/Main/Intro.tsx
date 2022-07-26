@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "@/styles/Home.module.scss";
 import { Col, Container, Row } from "react-bootstrap";
 import Search from "../Search/Search";
-import { useEffect } from "react";
+
 const Intro = () => {
   return (
     <div
