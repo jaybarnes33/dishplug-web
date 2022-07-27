@@ -53,10 +53,10 @@ const Header = () => {
             <div className="ms-auto"></div>
             <Search />
             <Nav className="ms-auto gap-3">
-              {user ? (
+              {!user?.isAnonymous ? (
                 <Nav.Item as={Link} href="/login">
                   <Button variant="light">
-                    <FaUser className="me-1" /> {user.displayName}
+                    <FaUser className="me-1" /> {user?.displayName}
                   </Button>
                 </Nav.Item>
               ) : (
