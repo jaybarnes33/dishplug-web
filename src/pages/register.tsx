@@ -16,7 +16,7 @@ const initialValues = {
   lastName: "",
   email: "",
   phone: "",
-  password: ""
+  password: "",
 };
 
 const validationSchema = Yup.object().shape({
@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(8)
     .required("Password field can't be empty")
-    .label("Password")
+    .label("Password"),
 });
 
 const Register = () => {
@@ -46,7 +46,7 @@ const Register = () => {
         "Check your messages and enter the code your received"
       );
 
-      setOtp(otp);
+      setOtp(otp!);
     }
   }, [recaptchaResponse]);
 
@@ -82,7 +82,7 @@ const Register = () => {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit
+      onSubmit,
     });
 
   const confirmOtp = useCallback(
@@ -99,12 +99,12 @@ const Register = () => {
       const res = await fetch("/api/users/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           uid: newUser.uid,
-          ...values
-        })
+          ...values,
+        }),
       });
 
       const data = await res.json();
