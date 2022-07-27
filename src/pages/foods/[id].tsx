@@ -1,21 +1,18 @@
 import Rating from "@/components/App/Rating";
-import foods from "@/data/foods";
-import { addToCart } from "@/redux/cart.slice";
 import { FoodType } from "@/types";
-import { iteratorSymbol } from "immer/dist/internal";
 import { currencyFormat } from "@/helpers/utils";
 import admin from "@/lib/firebase/node";
 
 import type {
   GetStaticPaths,
   GetStaticProps,
-  InferGetStaticPropsType,
+  InferGetStaticPropsType
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
 import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
-import { useAppDispatch } from "@/redux/hooks";
+import { useCart } from "@/components/Context/Cart";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -26,14 +23,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    paths.push(...products.docs.map((doc) => ({ params: { id: doc.id } })));
+    paths.push(...products.docs.map(doc => ({ params: { id: doc.id } })));
   }
-
-  console.log(paths);
 
   return {
     paths,
-    fallback: false, // can also be true or 'blocking'
+    fallback: false // can also be true or 'blocking'
   };
 };
 
@@ -48,7 +43,7 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    const food = products.docs.find((doc) => doc.id === params?.id);
+    const food = products.docs.find(doc => doc.id === params?.id);
 
     if (!food) {
       throw new Error(`missing document for ${params?.id}`);
@@ -65,7 +60,17 @@ export const getStaticProps: GetStaticProps<{
 };
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const dispatch = useAppDispatch();
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: food.id,
+      name: food.name,
+      price: food.price,
+      image: food.image
+    });
+  };
+
   return (
     <>
       <Head>
@@ -96,11 +101,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
-                  <Button
-                    variant="dark"
-                    size="lg"
-                    onClick={() => dispatch(addToCart(food))}
-                  >
+                  <Button variant="dark" size="lg" onClick={handleAddToCart}>
                     Add to cart
                   </Button>
                 </ListGroup.Item>

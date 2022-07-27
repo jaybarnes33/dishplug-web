@@ -3,14 +3,22 @@ import { Button, Card, CardImg } from "react-bootstrap";
 import Image from "next/image";
 import { FoodType } from "@/types";
 import Rating from "../../Rating";
-import { FaRegHeart, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/cart.slice";
 import { currencyFormat } from "@/helpers/utils";
+import { useCart } from "@/components/Context/Cart";
 
 const Food = ({ food }: { food: FoodType }) => {
-  const dispatch = useDispatch();
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: food.id,
+      name: food.name,
+      price: food.price,
+      image: food.image
+    });
+  };
 
   return (
     <Card style={{ border: "none" }} className="position-relative my-3">
@@ -26,7 +34,7 @@ const Food = ({ food }: { food: FoodType }) => {
       <Button
         variant="light"
         size="sm"
-        onClick={() => dispatch(addToCart(food))}
+        onClick={handleAddToCart}
         style={{ position: "absolute", right: 0, top: 0 }}
       >
         <FaShoppingCart color="red" />

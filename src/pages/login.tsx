@@ -68,7 +68,7 @@ const Login = () => {
       replace("/");
     } catch (error) {
       if (error instanceof AuthError) {
-        console.log(error);
+        console.log(error.message);
       }
     } finally {
       actions.setSubmitting(false);

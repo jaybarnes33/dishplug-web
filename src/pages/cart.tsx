@@ -1,14 +1,5 @@
-import QuantitySelector from "@/components/App/CartSelector/CartSelector";
-import foods from "@/data/foods";
-import {
-  decrementQuantity,
-  incrementQuantity,
-  removeFromCart,
-} from "@/redux/cart.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { RootState } from "@/redux/store";
-import { addDecimals } from "@/utils";
-import React from "react";
+import { useCart } from "@/components/Context/Cart";
+import { currencyFormat } from "@/helpers/utils";
 import {
   Button,
   Card,
@@ -16,32 +7,50 @@ import {
   Container,
   Image,
   ListGroup,
-  ListGroupItem,
-  Row,
+  Row
 } from "react-bootstrap";
-import { FaMinusCircle, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
+import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 
 const Cart = () => {
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart);
+  const {
+    cart,
+    totalAmount,
+    itemsInCart,
+    increment,
+    decrement,
+    removeFromCart
+  } = useCart();
 
-  const getTotalPrice = () => {
-    return cartItems.reduce(
-      (accumulator, item) => accumulator + item.quantity * item.price,
-      0
-    );
+  const handleInc = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    const { id } = event.currentTarget.dataset;
+    if (!id) throw new Error("icon button requires a data-id attribute");
+    increment(id);
   };
+
+  const handleDec = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    const { id } = event.currentTarget.dataset;
+    if (!id) throw new Error("icon button requires a data-id attribute");
+    decrement(id);
+  };
+
+  const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { id } = event.currentTarget.dataset;
+    if (!id) throw new Error("icon button requires a data-id attribute");
+    removeFromCart(id);
+  };
+
   return (
     <div className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
       <Container>
+        <h1 className="text-center">Cart</h1>
         <Row>
           <Col md={8}>
-            <ListGroup>
-              {cartItems.map((item, index) => (
-                <ListGroup.Item key={index}>
+            <ListGroup variant="flush">
+              {cart?.map(item => (
+                <ListGroup.Item key={item.id}>
                   <Row className="d-flex align-items-center">
                     <Col xs={2}>
-                      <Image src={item.image} fluid rounded />
+                      <Image src={item.image} alt="" fluid rounded />
                     </Col>
                     <Col xs={3}>{item.name}</Col>
                     <Col xs={2}>GH{item.price}</Col>
@@ -50,13 +59,9 @@ const Cart = () => {
                       md={2}
                       className="d-flex gap-2 align-items-center"
                     >
-                      <FaPlusCircle
-                        onClick={() => dispatch(incrementQuantity(item.id))}
-                      />
+                      <FaPlusCircle data-id={item.id} onClick={handleInc} />
                       {item.quantity}
-                      <FaMinusCircle
-                        onClick={() => dispatch(decrementQuantity(item.id))}
-                      />
+                      <FaMinusCircle data-id={item.id} onClick={handleDec} />
                     </Col>{" "}
                     <Col
                       xs={2}
@@ -66,9 +71,10 @@ const Cart = () => {
                       <Button
                         variant="outline-danger"
                         size="sm"
-                        onClick={() => dispatch(removeFromCart(item.id))}
+                        data-id={item.id}
+                        onClick={handleRemove}
                       >
-                        <FaRegTrashAlt />
+                        Checkout
                       </Button>
                     </Col>
                   </Row>
@@ -81,30 +87,16 @@ const Cart = () => {
               <Card>
                 <ListGroup.Item>
                   <p className="subtotal py-3">
-                    Total
-                    {" (" +
-                      cartItems.reduce((acc, item) => acc + item.quantity, 0) +
-                      ") "}
-                    items
+                    Total ({itemsInCart}) items
                     <br />
-                    GH₵
-                    {addDecimals(
-                      Number(
-                        cartItems
-                          .reduce(
-                            (acc, item) => acc + item.quantity * item.price,
-                            0
-                          )
-                          .toFixed(2)
-                      )
-                    )}
+                    {currencyFormat(totalAmount)}
                   </p>
                 </ListGroup.Item>
                 <ListGroup.Item className="d-grid">
                   <Button
                     size="lg"
                     className="btn-block btn-dark"
-                    disabled={cartItems.length === 0}
+                    // disabled={cartItems.length === 0}
                     // onClick={checkOutHandler}
                   >
                     Checkout
