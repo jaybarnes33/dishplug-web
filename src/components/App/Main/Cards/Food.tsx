@@ -5,10 +5,11 @@ import { FoodType } from "@/types";
 import Rating from "../../Rating";
 import { FaRegHeart, FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
+
 const Food = ({ food }: { food: FoodType }) => {
   return (
     <Card style={{ border: "none" }} className="position-relative my-3">
-      <Link href={`/foods/1`}>
+      <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
           src={food.image}

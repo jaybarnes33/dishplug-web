@@ -7,11 +7,18 @@ import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase/client";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
-  const router = useRouter();
+  const { replace } = useRouter();
   const { user } = useAuth();
+
+  const logout = async () => {
+    await signOut(auth);
+    replace("/login");
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -22,6 +29,7 @@ const Header = () => {
       }
     });
   });
+
   return (
     <Navbar fixed="top" expand="lg" collapseOnSelect ref={nav}>
       <Container>

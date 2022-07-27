@@ -1,11 +1,15 @@
-import foods from "@/data/foods";
+import { FoodType } from "@/types";
 import Link from "next/link";
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaArrowRight } from "react-icons/fa";
 import Food from "../Cards/Food";
 
-const Featured = () => {
+interface IProps {
+  foods: FoodType[];
+}
+
+const Featured = ({ foods }: IProps) => {
   return (
     <Container>
       <h2 className="pt-5 pb-1  text-center">Featured Food</h2>
