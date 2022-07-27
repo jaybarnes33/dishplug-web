@@ -1,5 +1,6 @@
 import Rating from "@/components/App/Rating";
 import foods from "@/data/foods";
+import { addToCart } from "@/redux/cart.slice";
 import { FoodType } from "@/types";
 import { iteratorSymbol } from "immer/dist/internal";
 import Head from "next/head";
@@ -8,8 +9,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 const Food = () => {
+  const dispatch = useDispatch();
   const { query } = useRouter();
 
   const [food, setFood] = useState<FoodType>({
@@ -63,11 +66,12 @@ const Food = () => {
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
-                  <Button variant="dark" size="lg">
+                  <Button
+                    variant="dark"
+                    size="lg"
+                    onClick={() => dispatch(addToCart(food))}
+                  >
                     Add to cart
-                  </Button>
-                  <Button variant="outline-dark" size="lg">
-                    Order now
                   </Button>
                 </ListGroup.Item>
               </ListGroup>
