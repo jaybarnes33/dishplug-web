@@ -15,6 +15,7 @@ export type TCart = Omit<FoodType, "rating" | "description"> & {
 interface IContextProps {
   cart: TCart[] | null;
   itemsInCart: number;
+  totalAmount: number;
   addToCart: (item: Omit<TCart, "quantity">) => void;
   removeFromCart: (id: string) => void;
   increment: (id: string) => void;
@@ -26,6 +27,7 @@ const CartContext = createContext<IContextProps | null>(null);
 const CartProvider = ({ children }: IProviderProps) => {
   const { user } = useAuth();
   const [itemsInCart, setItemsInCart] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [cart, setCart] = useState<TCart[] | null>(null);
 
   useEffect(() => {
@@ -55,15 +57,18 @@ const CartProvider = ({ children }: IProviderProps) => {
   useEffect(() => {
     if (cart) {
       let count = 0;
+      let totalAmount = 0;
 
       cart.forEach(item => {
         count += item.quantity;
+        totalAmount += item.price * item.quantity;
 
         if (!item.quantity) {
           removeFromCart(item.id);
         }
       });
 
+      setTotalAmount(totalAmount);
       setItemsInCart(count);
     }
   }, [cart]);
@@ -133,6 +138,7 @@ const CartProvider = ({ children }: IProviderProps) => {
         cart,
         itemsInCart,
         addToCart,
+        totalAmount,
         removeFromCart,
         increment,
         decrement
