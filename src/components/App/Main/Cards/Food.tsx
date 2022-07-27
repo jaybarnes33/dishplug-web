@@ -7,6 +7,7 @@ import { FaRegHeart, FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/cart.slice";
+
 const Food = ({ food }: { food: FoodType }) => {
   const dispatch = useDispatch();
 

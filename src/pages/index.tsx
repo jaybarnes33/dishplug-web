@@ -6,8 +6,53 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Featured from "@/components/App/Main/Featured/Featured";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { FoodType } from "@/types";
+import admin from "@/lib/firebase/node";
+import { collection, FirestoreDataConverter } from "firebase/firestore/lite";
 
-export default function Home() {
+// const foodConverter:FirestoreDataConverter<FoodType[]> = {
+//   toFirestore(store) {
+//     return store.
+//   }
+//   // toFirestore: (city) => {
+//   //     return {
+//   //         name: city.name,
+//   //         state: city.state,
+//   //         country: city.country
+//   //         };
+//   // },
+//   fromFirestore: (snapshot, options) => {
+//       const data = snapshot.data(options);
+//       return new City(data.name, data.state, data.country);
+//   }
+// };
+
+export const getStaticProps: GetStaticProps<{
+  foods: FoodType[];
+}> = async ({}) => {
+  const db = admin.firestore();
+  const foods: FoodType[] = [];
+
+  const storesRef = db.collection("stores");
+  const docs = await storesRef.listDocuments();
+
+  for (const doc of docs) {
+    const products = await doc.collection("products").limit(4).get();
+    const foodDocs = products.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as unknown as FoodType[];
+
+    foods.push(...foodDocs);
+  }
+
+  return { props: { foods }, revalidate: 60 };
+};
+
+export default function Home({
+  foods
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +63,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <Intro />
-        <Featured />
+        <Featured foods={foods} />
         {/* <Join /> */}
       </main>
     </div>
