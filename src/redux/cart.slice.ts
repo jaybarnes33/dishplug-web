@@ -1,10 +1,14 @@
-//@ts-nocheck
 import { FoodType } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface Item extends FoodType {
+  quantity: number;
+}
+
+const initialState: Item[] = [];
 const cartSlice = createSlice({
   name: "cart",
-  initialState: [],
+  initialState,
   reducers: {
     addToCart: (state, action) => {
       const itemExists = state.find((item) => item.id === action.payload.id);
@@ -16,15 +20,15 @@ const cartSlice = createSlice({
     },
     incrementQuantity: (state, action) => {
       const item = state.find((item) => item.id === action.payload);
-      item.quantity++;
+      item!.quantity++;
     },
     decrementQuantity: (state, action) => {
       const item = state.find((item) => item.id === action.payload);
-      if (item.quantity === 1) {
+      if (item!.quantity === 1) {
         const index = state.findIndex((item) => item.id === action.payload);
         state.splice(index, 1);
       } else {
-        item.quantity--;
+        item!.quantity--;
       }
     },
     removeFromCart: (state, action) => {

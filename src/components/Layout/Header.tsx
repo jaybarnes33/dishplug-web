@@ -9,10 +9,11 @@ import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
-  //@ts-ignore
-  const cart = useSelector((state) => state.cart);
+
+  const cart = useSelector((state: RootState) => state.cart);
   const router = useRouter();
   useEffect(() => {
     window.addEventListener("scroll", () => {

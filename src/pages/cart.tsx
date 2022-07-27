@@ -1,4 +1,3 @@
-//@ts-nocheck
 import QuantitySelector from "@/components/App/CartSelector/CartSelector";
 import foods from "@/data/foods";
 import {
@@ -6,6 +5,8 @@ import {
   incrementQuantity,
   removeFromCart,
 } from "@/redux/cart.slice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 import React from "react";
 import {
   Button,
@@ -17,11 +18,10 @@ import {
   Row,
 } from "react-bootstrap";
 import { FaMinusCircle, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart);
   return (
     <div className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
       <Container>
@@ -41,7 +41,7 @@ const Cart = () => {
                   />
                   {item.quantity}
                   <FaMinusCircle
-                    oncClick={() => dispatch(decrementQuantity(item.id))}
+                    onClick={() => dispatch(decrementQuantity(item.id))}
                   />
                 </Col>{" "}
                 <Col xs={2} md={2} className="d-flex justify-content-center">
