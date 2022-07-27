@@ -1,65 +1,92 @@
 import Rating from "@/components/App/Rating";
-import foods from "@/data/foods";
-import { FoodType } from "@/types";
-import { iteratorSymbol } from "immer/dist/internal";
+import { currencyFormat } from "@/helpers/utils";
+import admin from "@/lib/firebase/node";
+import type { FoodType } from "@/types";
+import type {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType
+} from "next";
 import Head from "next/head";
 import Image from "next/image";
 
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 
-const Food = () => {
-  const { query } = useRouter();
+export const getStaticPaths: GetStaticPaths = async () => {
+  const db = admin.firestore();
+  const storesRef = db.collection("stores");
+  const docs = await storesRef.listDocuments();
 
-  const [food, setFood] = useState<FoodType>({
-    id: 0,
-    name: "",
-    price: 0,
-    image: "",
-    rating: 0,
-  });
-  useEffect(() => {
-    console.log(query.id);
-    setFood(foods[Number(query.id)]);
-  }, [query]);
+  const paths = [];
+
+  for (const doc of docs) {
+    const products = await doc.collection("products").get();
+    paths.push(...products.docs.map(doc => ({ params: { id: doc.id } })));
+  }
+
+  console.log(paths);
+
+  return {
+    paths,
+    fallback: false // can also be true or 'blocking'
+  };
+};
+
+export const getStaticProps: GetStaticProps<{
+  food: FoodType;
+}> = async ({ params }) => {
+  const db = admin.firestore();
+  const storesRef = db.collection("stores");
+  const docs = await storesRef.listDocuments();
+
+  let foodDoc: FoodType | null = null;
+
+  for (const doc of docs) {
+    const products = await doc.collection("products").get();
+    const food = products.docs.find(doc => doc.id === params?.id);
+
+    if (!food) {
+      throw new Error(`missing document for ${params?.id}`);
+    }
+
+    foodDoc = { id: food.id, ...food.data() } as unknown as FoodType;
+  }
+
+  if (!foodDoc) {
+    throw new Error(`missing document for ${params?.id}`);
+  }
+
+  return { props: { food: foodDoc }, revalidate: 60 };
+};
+
+const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
-        <title>{food?.name}</title>
+        <title>{food.name}</title>
       </Head>
       <div className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
         <Container className="pt-5">
           <Row className="d-flex align-items-center">
             <Col md={6} className="position-relative" style={{ height: 500 }}>
-              {food?.image && (
-                <Image
-                  src={food?.image}
-                  layout="fill"
-                  alt=""
-                  objectFit="contain"
-                />
-              )}
+              <Image
+                src={food.image}
+                layout="fill"
+                alt=""
+                objectFit="contain"
+              />
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h1>{food?.name}</h1>
-                  <Rating value={food?.rating} />
+                  <h1>{food.name}</h1>
+                  <Rating value={food.rating} />
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <h2 className="text-danger">GH{food?.price}.00</h2>
+                  <h2 className="text-danger">{currencyFormat(food.price)}</h2>
                 </ListGroup.Item>
-                <ListGroup.Item>{food?.rating} reviews</ListGroup.Item>
-                <ListGroup.Item>
-                  {food?.description} Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Recusandae illum quo velit rem. Laudantium
-                  dolore optio, sed labore maxime nesciunt corrupti ex facere
-                  blanditiis dolorum aliquam nihil ut quaerat libero earum unde
-                  cum. Deleniti quod mollitia consequuntur modi nostrum placeat
-                  voluptatibus facere, quidem at error, tempore esse, totam
-                  ipsum saepe?
-                </ListGroup.Item>
+                <ListGroup.Item>{food.rating || 0} reviews</ListGroup.Item>
+                <ListGroup.Item>{food.description}</ListGroup.Item>
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
