@@ -6,13 +6,20 @@ import NavbarCollapse from "react-bootstrap/NavbarCollapse";
 import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
+import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import { useAuth } from "../Context/Auth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
+import { useAppSelector } from "@/redux/hooks";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
   const { replace } = useRouter();
+
+  const cart = useAppSelector(state => state.cart);
+  const router = useRouter();
   const { user } = useAuth();
 
   const logout = async () => {
@@ -72,7 +79,7 @@ const Header = () => {
                   <>
                     <FaShoppingCart className="me-1" size={24} />
                     <sup>
-                      <Badge bg="danger">0</Badge>
+                      <Badge bg="danger">{cart.length}</Badge>
                     </sup>
                   </>
                 </Button>

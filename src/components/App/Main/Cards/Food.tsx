@@ -5,11 +5,15 @@ import { FoodType } from "@/types";
 import Rating from "../../Rating";
 import { FaRegHeart, FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/cart.slice";
 
 const Food = ({ food }: { food: FoodType }) => {
+  const dispatch = useDispatch();
+
   return (
     <Card style={{ border: "none" }} className="position-relative my-3">
-      <Link href={`/foods/${food.id}`}>
+      <Link href={`/foods/${food.id - 1}`}>
         <CardImg
           as={Image}
           src={food.image}
@@ -21,6 +25,7 @@ const Food = ({ food }: { food: FoodType }) => {
       <Button
         variant="light"
         size="sm"
+        onClick={() => dispatch(addToCart(food))}
         style={{ position: "absolute", right: 0, top: 0 }}
       >
         <FaShoppingCart color="red" />

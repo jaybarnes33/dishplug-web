@@ -1,5 +1,12 @@
 import QuantitySelector from "@/components/App/CartSelector/CartSelector";
 import foods from "@/data/foods";
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from "@/redux/cart.slice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 import React from "react";
 import {
   Button,
@@ -10,15 +17,17 @@ import {
   ListGroup,
   Row,
 } from "react-bootstrap";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaMinusCircle, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
 
 const Cart = () => {
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart);
   return (
     <div className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
       <Container>
         <h1 className="text-center">Cart</h1>
         <ListGroup variant="flush">
-          {foods.map((item, index) => (
+          {cartItems.map((item, index) => (
             <ListGroup.Item key={index}>
               <Row className="d-flex align-items-center">
                 <Col xs={2}>
@@ -26,16 +35,21 @@ const Cart = () => {
                 </Col>
                 <Col xs={3}>{item.name}</Col>
                 <Col xs={2}>GH{item.price}</Col>
-                <Col xs={3} md={2}>
-                  <QuantitySelector
-                    id=""
-                    stock={5}
-                    quantity={Math.round(Math.random() * 10) + 1}
-                    onChange={(e) => console.log("hello")}
+                <Col xs={3} md={2} className="d-flex gap-2 align-items-center">
+                  <FaPlusCircle
+                    onClick={() => dispatch(incrementQuantity(item.id))}
+                  />
+                  {item.quantity}
+                  <FaMinusCircle
+                    onClick={() => dispatch(decrementQuantity(item.id))}
                   />
                 </Col>{" "}
                 <Col xs={2} md={2} className="d-flex justify-content-center">
-                  <Button variant="outline-danger" size="sm">
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => dispatch(removeFromCart(item.id))}
+                  >
                     <FaRegTrashAlt />
                   </Button>
                 </Col>

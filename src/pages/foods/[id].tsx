@@ -32,7 +32,14 @@ const Food = () => {
         <Container className="pt-5">
           <Row className="d-flex align-items-center">
             <Col md={6} className="position-relative" style={{ height: 500 }}>
-              {food?.image && <Image src={food?.image} layout="fill" alt="" />}
+              {food?.image && (
+                <Image
+                  src={food?.image}
+                  layout="fill"
+                  alt=""
+                  objectFit="contain"
+                />
+              )}
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">
@@ -56,10 +63,10 @@ const Food = () => {
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
-                  <Button variant="danger" size="lg">
+                  <Button variant="dark" size="lg">
                     Add to cart
                   </Button>
-                  <Button variant="outline-danger" size="lg">
+                  <Button variant="outline-dark" size="lg">
                     Order now
                   </Button>
                 </ListGroup.Item>
