@@ -4,6 +4,7 @@ export interface FoodType {
   description?: string;
   rating: number;
   image: string;
+  id: number;
 }
 
 export interface VendorType {
