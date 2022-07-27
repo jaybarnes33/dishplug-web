@@ -1,16 +1,17 @@
 import { useRouter } from "next/router";
-import React, { ElementRef } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Badge, Button, Container, Nav, Navbar } from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/NavbarCollapse";
 import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
-import Search from "../App/Search/Search";
 import Link from "next/link";
-import Image from "next/image";
+import { useAuth } from "../Context/Auth";
+
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
   const router = useRouter();
+  const { user } = useAuth();
+
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
@@ -34,17 +35,27 @@ const Header = () => {
         <>
           <NavbarCollapse id="my-nav">
             <Nav className="ms-auto gap-3">
-              <Nav.Item as={Link} href="/login">
-                <Button variant="light">
-                  <>
-                    <FaUser className="me-1" />
-                    Sign in
-                  </>
-                </Button>
-              </Nav.Item>
-              <Nav.Item as={Link} href="/register">
-                <Button variant="dark">Sign up</Button>
-              </Nav.Item>
+              {user ? (
+                <Nav.Item as={Link} href="/login">
+                  <Button variant="light">
+                    <FaUser className="me-1" /> {user.displayName}
+                  </Button>
+                </Nav.Item>
+              ) : (
+                <>
+                  <Nav.Item as={Link} href="/login">
+                    <Button variant="light">
+                      <>
+                        <FaUser className="me-1" />
+                        Sign in
+                      </>
+                    </Button>
+                  </Nav.Item>
+                  <Nav.Item as={Link} href="/register">
+                    <Button variant="dark">Sign up</Button>
+                  </Nav.Item>
+                </>
+              )}
               <Nav.Item as={Link} href="/cart">
                 <Button variant=" ">
                   <>
