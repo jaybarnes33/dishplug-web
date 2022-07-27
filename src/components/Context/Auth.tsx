@@ -13,13 +13,17 @@ interface IProviderProps {
 }
 
 interface IContextProps {
+  token: string;
   user: User | null;
+  isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<IContextProps | null>(null);
 
 const AuthProvider = ({ children }: IProviderProps) => {
+  const [token, setToken] = useState("");
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const anonymous = localStorage.getItem("anonymous");
@@ -28,6 +32,7 @@ const AuthProvider = ({ children }: IProviderProps) => {
       setPersistence(auth, browserLocalPersistence).then(() => {
         signInAnonymously(auth).then(({ user }) => {
           setUser(user);
+          user.getIdToken().then(setToken);
           localStorage.setItem("anonymous", user.uid);
         });
       });
@@ -38,12 +43,16 @@ const AuthProvider = ({ children }: IProviderProps) => {
     onAuthStateChanged(auth, user => {
       if (user) {
         setUser(user);
+        user.getIdToken().then(setToken);
+        if (!user.isAnonymous) setIsAuthenticated(true);
       }
     });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, token, isAuthenticated }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
