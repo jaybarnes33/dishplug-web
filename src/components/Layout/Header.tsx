@@ -18,7 +18,7 @@ const Header = () => {
   const nav = useRef<HTMLElement>(null);
   const { replace } = useRouter();
 
-  const cart = useAppSelector(state => state.cart);
+  const cart = useAppSelector((state) => state.cart);
   const router = useRouter();
   const { user } = useAuth();
 
