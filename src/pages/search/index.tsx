@@ -41,7 +41,7 @@ const Search = ({
       setFoods(
         items.filter((item) =>
           [item.name, item.description].some((i) =>
-            i?.toLowerCase().includes(String(keyword))
+            i?.toLowerCase().includes(String(keyword.toLowerCase()))
           )
         )
       );
