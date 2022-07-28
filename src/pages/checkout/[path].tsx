@@ -2,10 +2,10 @@ import Details from "@/components/App/Checkout/Details";
 import Shipping from "@/components/App/Checkout/Shipping";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { ReactNode } from "react";
 import { Nav } from "react-bootstrap";
 
-const components: Record<string, any> = {
+const components: Record<string, ReactNode> = {
   shipping: <Shipping />,
   placeorder: <Details />,
 };

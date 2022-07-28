@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import Image from "next/image";
+import { Col, Container, Row } from "react-bootstrap";
 import styles from "@/styles/form.module.scss";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 const FormWrapper = ({ children }: { children: ReactNode }) => {
@@ -16,11 +15,6 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
         <Row className={styles.formWrapper}>
           <Col md={6} className="desktop-only px-5">
             <div className={styles.imgWrapper}>
-              <img
-                src="/assets/formvector.svg"
-                alt=""
-                className={styles.formvector}
-              />
               <p>
                 Order food and have it delivered to your doorstep in minutes
               </p>

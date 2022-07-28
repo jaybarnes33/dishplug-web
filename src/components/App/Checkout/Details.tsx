@@ -14,13 +14,13 @@ import {
 import { usePaystackPayment } from "react-paystack";
 
 const Details = () => {
-  const [location, setLocation] = useState({
+  const [location] = useState({
     location: "Hilda Hostel",
     phone: "+233543288549",
     landmark: "Room",
   });
 
-  const { cart, totalAmount, itemsInCart } = useCart();
+  const { cart, totalAmount } = useCart();
 
   const initializePayment = usePaystackPayment({
     email: "ohenesetwumasi@gmail.com",
@@ -33,7 +33,8 @@ const Details = () => {
   });
 
   // you can call this function anything
-  const onSuccess = (reference: Record<string, any>) => {
+  const onSuccess = (reference: Record<string, string | number>) => {
+    console.log(reference);
     console.log("success");
   };
 

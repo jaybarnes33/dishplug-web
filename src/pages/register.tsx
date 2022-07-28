@@ -45,8 +45,9 @@ const Register = () => {
       const otp = window.prompt(
         "Check your messages and enter the code your received"
       );
-
-      setOtp(otp!);
+      if (otp) {
+        setOtp(otp);
+      }
     }
   }, [recaptchaResponse]);
 

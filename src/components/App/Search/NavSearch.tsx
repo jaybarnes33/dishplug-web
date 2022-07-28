@@ -1,5 +1,3 @@
-import foods from "@/data/foods";
-import { FoodType } from "@/types";
 import { useRouter } from "next/router";
 import React, {
   ChangeEvent,
@@ -8,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 
 function Search() {
@@ -28,6 +26,7 @@ function Search() {
   };
 
   useEffect(() => {
+    console.log(router.pathname);
     if (router.pathname == "/") {
       window.addEventListener("scroll", () => {
         if (window.scrollY < 300) {
@@ -36,8 +35,10 @@ function Search() {
           searchRef.current?.classList.remove("d-none");
         }
       });
+    } else {
+      searchRef.current?.classList.remove("d-none");
     }
-  });
+  }, [router]);
 
   return (
     <Form

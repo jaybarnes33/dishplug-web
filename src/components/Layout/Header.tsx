@@ -6,20 +6,20 @@ import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase/client";
+// import { signOut } from "firebase/auth";
+// import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
-  const { replace } = useRouter();
+  // const { replace } = useRouter();
   const { itemsInCart } = useCart();
   const { user } = useAuth();
   const { pathname } = useRouter();
-  const logout = async () => {
-    await signOut(auth);
-    replace("/login");
-  };
+  // const logout = async () => {
+  //   await signOut(auth);
+  //   replace("/login");
+  // };
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -50,7 +50,7 @@ const Header = () => {
 
             <Nav className="ms-auto gap-3">
               {!user?.isAnonymous ? (
-                <Nav.Item as={Link} href="/login">
+                <Nav.Item as={Link} href="/profile">
                   <Button variant="light">
                     <FaUser className="me-1" /> {user?.displayName}
                   </Button>
