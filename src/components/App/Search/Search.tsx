@@ -19,7 +19,7 @@ function Search() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search?keyword=${keyword}`);
+    router.push(`/search?keyword=${keyword.toLowerCase()}`);
   };
 
   const searchRef = useRef<HTMLFormElement>(null);
