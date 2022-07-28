@@ -18,22 +18,22 @@
       background: none !important;
     }
   }
-  &::before {
-    content: "";
-    width: 30%;
-    border: 1px solid #afafaf;
-    position: absolute;
-    left: 10px;
-    bottom: 80px;
-  }
-  &::after {
-    content: "";
-    width: 30%;
-    border: 1px solid #afafaf;
-    position: absolute;
-    right: 10px;
-    bottom: 80px;
-  }
+  // &::before {
+  //   content: "";
+  //   width: 30%;
+  //   border: 1px solid #afafaf;
+  //   position: absolute;
+  //   left: 10px;
+  //   bottom: 80px;
+  // }
+  // &::after {
+  //   content: "";
+  //   width: 30%;
+  //   border: 1px solid #afafaf;
+  //   position: absolute;
+  //   right: 10px;
+  //   bottom: 80px;
+  // }
 }
 .imgWrapper {
   position: relative;

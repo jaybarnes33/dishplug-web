@@ -6,8 +6,8 @@ import { FaUtensils } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="border-top border-grey py-5">
-      <Container>
-        <Row>
+      <Container className="text-center">
+        {/* <Row>
           <Col md={4}>
             <h2>
               <>
@@ -60,6 +60,8 @@ const Footer = () => {
             <Nav.Link>Contact Support</Nav.Link>
           </Col>
         </Row>
+        */}
+        &copy; Dishplug
       </Container>
     </footer>
   );

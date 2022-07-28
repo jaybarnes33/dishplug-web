@@ -4,10 +4,14 @@ import Image from "next/image";
 import styles from "@/styles/form.module.scss";
 import router, { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 const FormWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
   return (
     <Container>
+      <Head>
+        <title>{pathname === "/login" ? "Login" : "Register"}</title>
+      </Head>
       <>
         <Row className={styles.formWrapper}>
           <Col md={6} className="desktop-only px-5">
@@ -35,8 +39,8 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
 
             {children}
             <div className={styles.continueWith}>
-              Or continue with
-              <div
+              {/* Or continue with */}
+              {/* <div
                 className={`${styles.buttons} buttons d-flex gap-3 justify-content-center`}
               >
                 <Image
@@ -54,7 +58,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
                   alt="facebook"
                   quality={100}
                 />
-              </div>
+              </div> */}
               <div className="mt-3">
                 {pathname === "/login" ? (
                   <p>
