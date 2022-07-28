@@ -1,7 +1,19 @@
 import { firestore } from "@/lib/firebase/client";
 import { FoodType } from "@/types";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore/lite";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc
+} from "firebase/firestore/lite";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { useAuth } from "./Auth";
 
 interface IProviderProps {
@@ -54,6 +66,21 @@ const CartProvider = ({ children }: IProviderProps) => {
     }
   }, [user]);
 
+  const removeFromCart = useCallback(
+    (id: string) => {
+      if (!user) throw new Error("user can't be null");
+
+      setCart(prevCart => {
+        if (!prevCart) return null;
+        return prevCart.filter(item => item.id !== id);
+      });
+
+      const buyersRef = collection(firestore, "buyers");
+      deleteDoc(doc(buyersRef, user.uid, "cart", id));
+    },
+    [user]
+  );
+
   useEffect(() => {
     if (cart) {
       let count = 0;
@@ -71,7 +98,7 @@ const CartProvider = ({ children }: IProviderProps) => {
       setTotalAmount(totalAmount);
       setItemsInCart(count);
     }
-  }, [cart]);
+  }, [cart, removeFromCart]);
 
   useEffect(() => {
     if (cart && user) {
@@ -98,13 +125,6 @@ const CartProvider = ({ children }: IProviderProps) => {
       }
 
       return [...prevCart, { ...item, quantity: 1 }];
-    });
-  };
-
-  const removeFromCart = (id: string) => {
-    setCart(prevCart => {
-      if (!prevCart) return null;
-      return prevCart.filter(item => item.id !== id);
     });
   };
 
