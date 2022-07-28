@@ -1,5 +1,6 @@
 import AuthProvider from "@/components/Context/Auth";
 import CartProvider from "@/components/Context/Cart";
+import ItemsProvider from "@/components/Context/Items";
 import Footer from "@/components/Layout/Footer";
 import Header from "@/components/Layout/Header";
 import "@/styles/bootstrap.css";
@@ -9,11 +10,13 @@ import { AppProps } from "next/app";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <CartProvider>
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
-      </CartProvider>
+      <ItemsProvider>
+        <CartProvider>
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+        </CartProvider>
+      </ItemsProvider>
     </AuthProvider>
   );
 }

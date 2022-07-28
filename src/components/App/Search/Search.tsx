@@ -1,5 +1,3 @@
-import foods from "@/data/foods";
-import { FoodType } from "@/types";
 import { useRouter } from "next/router";
 import React, {
   ChangeEvent,
@@ -9,13 +7,11 @@ import React, {
   useState,
 } from "react";
 import { Button, Container, Form, InputGroup } from "react-bootstrap";
-import { FaSearch } from "react-icons/fa";
 
 function Search() {
   const router = useRouter();
-  const [keyword, setKeyword] = useState(
-    String(router.query?.keyword != undefined ? router.query?.keyword : "")
-  );
+
+  const [keyword, setKeyword] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);

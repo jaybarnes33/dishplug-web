@@ -6,8 +6,8 @@ import { FaUtensils } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="border-top border-grey py-5">
-      <Container className="text-center">
-        {/* <Row>
+      <Container>
+        <Row>
           <Col md={4}>
             <h2>
               <>
@@ -38,7 +38,7 @@ const Footer = () => {
                 </svg>
               </Col>
               <Col xs={6}>
-                <img
+                <Image
                   src="/playstore.png"
                   alt="Download from Playstore"
                   width={135}
@@ -60,8 +60,6 @@ const Footer = () => {
             <Nav.Link>Contact Support</Nav.Link>
           </Col>
         </Row>
-        */}
-        &copy; Dishplug
       </Container>
     </footer>
   );

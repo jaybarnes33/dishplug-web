@@ -6,7 +6,7 @@ import admin from "@/lib/firebase/node";
 import type {
   GetStaticPaths,
   GetStaticProps,
-  InferGetStaticPropsType
+  InferGetStaticPropsType,
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -23,12 +23,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    paths.push(...products.docs.map(doc => ({ params: { id: doc.id } })));
+    paths.push(...products.docs.map((doc) => ({ params: { id: doc.id } })));
   }
 
   return {
     paths,
-    fallback: false // can also be true or 'blocking'
+    fallback: false, // can also be true or 'blocking'
   };
 };
 
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    const food = products.docs.find(doc => doc.id === params?.id);
+    const food = products.docs.find((doc) => doc.id === params?.id);
 
     if (!food) {
       throw new Error(`missing document for ${params?.id}`);
@@ -67,7 +67,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       id: food.id,
       name: food.name,
       price: food.price,
-      image: food.image
+      image: food.image,
     });
   };
 
@@ -77,15 +77,10 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <title>{food.name}</title>
       </Head>
       <div className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
-        <Container className="pt-5">
+        <Container>
           <Row className="d-flex align-items-center">
             <Col md={6} className="position-relative" style={{ height: 500 }}>
-              <Image
-                src={food.image}
-                layout="fill"
-                alt=""
-                objectFit="contain"
-              />
+              <Image src={food.image} layout="fill" alt="" objectFit="cover" />
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">

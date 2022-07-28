@@ -1,32 +1,10 @@
-import CTA from "@/components/App/Main/Cards/CTA";
-import Join from "@/components/App/Main/Join/Join";
 import Intro from "@/components/App/Main/Intro";
-import Header from "@/components/Layout/Header";
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
-import { collection, FirestoreDataConverter } from "firebase/firestore/lite";
-
-// const foodConverter:FirestoreDataConverter<FoodType[]> = {
-//   toFirestore(store) {
-//     return store.
-//   }
-//   // toFirestore: (city) => {
-//   //     return {
-//   //         name: city.name,
-//   //         state: city.state,
-//   //         country: city.country
-//   //         };
-//   // },
-//   fromFirestore: (snapshot, options) => {
-//       const data = snapshot.data(options);
-//       return new City(data.name, data.state, data.country);
-//   }
-// };
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
@@ -39,9 +17,9 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").limit(4).get();
-    const foodDocs = products.docs.map(doc => ({
+    const foodDocs = products.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);
@@ -51,7 +29,7 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export default function Home({
-  foods
+  foods,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className={styles.container}>
