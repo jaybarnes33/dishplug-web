@@ -1,5 +1,6 @@
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
+import { useRouter } from "next/router";
 import {
   Button,
   Card,
@@ -7,9 +8,9 @@ import {
   Container,
   Image,
   ListGroup,
-  Row
+  Row,
 } from "react-bootstrap";
-import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import { FaMinusCircle, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
 
 const Cart = () => {
   const {
@@ -18,7 +19,7 @@ const Cart = () => {
     itemsInCart,
     increment,
     decrement,
-    removeFromCart
+    removeFromCart,
   } = useCart();
 
   const handleInc = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
@@ -26,6 +27,7 @@ const Cart = () => {
     if (!id) throw new Error("icon button requires a data-id attribute");
     increment(id);
   };
+  const router = useRouter();
 
   const handleDec = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     const { id } = event.currentTarget.dataset;
@@ -46,7 +48,7 @@ const Cart = () => {
         <Row>
           <Col md={8}>
             <ListGroup variant="flush">
-              {cart?.map(item => (
+              {cart?.map((item) => (
                 <ListGroup.Item key={item.id}>
                   <Row className="d-flex align-items-center">
                     <Col xs={2}>
@@ -74,7 +76,7 @@ const Cart = () => {
                         data-id={item.id}
                         onClick={handleRemove}
                       >
-                        Checkout
+                        <FaRegTrashAlt />
                       </Button>
                     </Col>
                   </Row>
@@ -96,8 +98,8 @@ const Cart = () => {
                   <Button
                     size="lg"
                     className="btn-block btn-dark"
-                    // disabled={cartItems.length === 0}
-                    // onClick={checkOutHandler}
+                    disabled={itemsInCart === 0}
+                    onClick={() => router.push("/checkout/shipping")}
                   >
                     Checkout
                   </Button>

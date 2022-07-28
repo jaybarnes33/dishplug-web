@@ -15,7 +15,7 @@ const Header = () => {
   const { replace } = useRouter();
   const { itemsInCart } = useCart();
   const { user } = useAuth();
-
+  const { pathname } = useRouter();
   const logout = async () => {
     await signOut(auth);
     replace("/login");
@@ -31,6 +31,7 @@ const Header = () => {
     });
   });
 
+  const noSearch = ["/login", "/register"];
   return (
     <Navbar fixed="top" expand="lg" collapseOnSelect ref={nav}>
       <Container>
@@ -45,7 +46,8 @@ const Header = () => {
         <>
           <NavbarCollapse id="my-nav">
             <div className="ms-auto"></div>
-            <Search />
+            {!noSearch.includes(pathname) && <Search />}
+
             <Nav className="ms-auto gap-3">
               {!user?.isAnonymous ? (
                 <Nav.Item as={Link} href="/login">
