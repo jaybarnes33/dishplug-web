@@ -22,7 +22,7 @@ function Search() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search?keyword=${keyword.toLowerCase()}`);
+    router.push(`/search?keyword=${keyword}`);
   };
 
   const handleScroll = () => {

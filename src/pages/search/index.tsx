@@ -18,10 +18,10 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").limit(4).get();
-    const foodDocs = products.docs.map(productDoc => ({
+    const foodDocs = products.docs.map((productDoc) => ({
       id: productDoc.id,
       storeId: doc.id,
-      ...productDoc.data()
+      ...productDoc.data(),
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);
@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps<{
 };
 
 const Search = ({
-  foods: items
+  foods: items,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [foods, setFoods] = useState<FoodType[]>([]);
 
@@ -40,9 +40,9 @@ const Search = ({
     console.log(keyword);
     if (items) {
       setFoods(
-        items.filter(item =>
-          [item.name, item.description].some(i =>
-            i?.toLowerCase().includes(String(keyword))
+        items.filter((item) =>
+          [item.name, item.description].some((i) =>
+            i?.toLowerCase().includes(String(keyword.toLowerCase()))
           )
         )
       );
