@@ -1,7 +1,20 @@
 import { firestore } from "@/lib/firebase/client";
 import { FoodType } from "@/types";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore/lite";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+  writeBatch
+} from "firebase/firestore/lite";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { useAuth } from "./Auth";
 
 interface IProviderProps {
@@ -20,6 +33,7 @@ interface IContextProps {
   removeFromCart: (id: string) => void;
   increment: (id: string) => void;
   decrement: (id: string) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<IContextProps | null>(null);
@@ -54,6 +68,21 @@ const CartProvider = ({ children }: IProviderProps) => {
     }
   }, [user]);
 
+  const removeFromCart = useCallback(
+    (id: string) => {
+      if (!user) throw new Error("user can't be null");
+
+      setCart(prevCart => {
+        if (!prevCart) return null;
+        return prevCart.filter(item => item.id !== id);
+      });
+
+      const buyersRef = collection(firestore, "buyers");
+      deleteDoc(doc(buyersRef, user.uid, "cart", id));
+    },
+    [user]
+  );
+
   useEffect(() => {
     if (cart) {
       let count = 0;
@@ -71,7 +100,7 @@ const CartProvider = ({ children }: IProviderProps) => {
       setTotalAmount(totalAmount);
       setItemsInCart(count);
     }
-  }, [cart]);
+  }, [cart, removeFromCart]);
 
   useEffect(() => {
     if (cart && user) {
@@ -101,11 +130,19 @@ const CartProvider = ({ children }: IProviderProps) => {
     });
   };
 
-  const removeFromCart = (id: string) => {
-    setCart(prevCart => {
-      if (!prevCart) return null;
-      return prevCart.filter(item => item.id !== id);
+  const clearCart = () => {
+    if (!user) throw new Error("User can't be null");
+
+    cart?.forEach(async item => {
+      const buyersRef = collection(firestore, "buyers");
+      const itemDoc = doc(buyersRef, user.uid, "cart", item.id);
+      const batch = writeBatch(firestore);
+
+      batch.delete(itemDoc);
+      batch.commit();
     });
+
+    setCart([]);
   };
 
   const increment = (id: string) => {
@@ -141,7 +178,8 @@ const CartProvider = ({ children }: IProviderProps) => {
         totalAmount,
         removeFromCart,
         increment,
-        decrement
+        decrement,
+        clearCart
       }}
     >
       {children}
