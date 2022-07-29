@@ -16,7 +16,8 @@ const Food = ({ food }: { food: FoodType }) => {
       id: food.id,
       name: food.name,
       price: food.price,
-      image: food.image
+      image: food.image,
+      storeId: food.storeId
     });
   };
 

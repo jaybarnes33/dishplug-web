@@ -5,7 +5,8 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  setDoc
+  setDoc,
+  writeBatch
 } from "firebase/firestore/lite";
 import {
   createContext,
@@ -32,6 +33,7 @@ interface IContextProps {
   removeFromCart: (id: string) => void;
   increment: (id: string) => void;
   decrement: (id: string) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<IContextProps | null>(null);
@@ -128,6 +130,21 @@ const CartProvider = ({ children }: IProviderProps) => {
     });
   };
 
+  const clearCart = () => {
+    if (!user) throw new Error("User can't be null");
+
+    cart?.forEach(async item => {
+      const buyersRef = collection(firestore, "buyers");
+      const itemDoc = doc(buyersRef, user.uid, "cart", item.id);
+      const batch = writeBatch(firestore);
+
+      batch.delete(itemDoc);
+      batch.commit();
+    });
+
+    setCart([]);
+  };
+
   const increment = (id: string) => {
     setCart(prevCart => {
       if (!prevCart) return null;
@@ -161,7 +178,8 @@ const CartProvider = ({ children }: IProviderProps) => {
         totalAmount,
         removeFromCart,
         increment,
-        decrement
+        decrement,
+        clearCart
       }}
     >
       {children}

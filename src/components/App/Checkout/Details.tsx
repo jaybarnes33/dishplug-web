@@ -1,7 +1,12 @@
-import { useCart } from "@/components/Context/Cart";
+import { useAuth } from "@/components/Context/Auth";
+import { TCart, useCart } from "@/components/Context/Cart";
+import { currencyFormat } from "@/helpers/utils";
+import { firestore } from "@/lib/firebase/client";
+import { IPageProps } from "@/pages/checkout/[path]";
+import { addDoc, collection, Timestamp } from "firebase/firestore/lite";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Alert,
   Button,
@@ -9,32 +14,53 @@ import {
   Col,
   Image,
   ListGroup,
-  Row,
+  Row
 } from "react-bootstrap";
 import { usePaystackPayment } from "react-paystack";
 
-const Details = () => {
-  const [location] = useState({
-    location: "Hilda Hostel",
-    phone: "+233543288549",
-    landmark: "Room",
-  });
-
-  const { cart, totalAmount } = useCart();
+const Details = ({ details }: IPageProps) => {
+  const { user } = useAuth();
+  const { replace } = useRouter();
+  const { cart, totalAmount, clearCart } = useCart();
 
   const initializePayment = usePaystackPayment({
-    email: "ohenesetwumasi@gmail.com",
+    email: user?.email || "ohenesetwumasi@gmail.com",
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
     publicKey:
       process.env.NODE_ENV === "production"
         ? "pk_live_431916a691d52dc8f388801fc429c9425681a465"
-        : "pk_test_aa01df6d676c2ada1658bbf3bb2a04aa3c50985a",
+        : "pk_test_aa01df6d676c2ada1658bbf3bb2a04aa3c50985a"
   });
 
   // you can call this function anything
-  const onSuccess = (reference: Record<string, string | number>) => {
-    console.log(reference);
+  const onSuccess = (
+    response: Record<string, string | number>,
+    items: TCart[] | null
+  ) => {
+    addDoc(collection(firestore, "orders"), {
+      reference: response.reference,
+      transaction: response.transaction,
+      status: "pending",
+      amount: totalAmount,
+      customer: {
+        id: user?.uid,
+        name: details.name
+      },
+      deliveryLocation: details.location,
+      date: Timestamp.fromDate(new Date()),
+      type: "delivery",
+      item: items?.map(item => ({
+        id: item.id,
+        name: item.name,
+        soldFor: item.price,
+        quantity: item.quantity
+      })),
+      vendors: [...new Set(items?.map(item => item.storeId))]
+    })
+      .then(clearCart)
+      .then(() => replace("/foods"));
+
     console.log("success");
   };
 
@@ -55,7 +81,7 @@ const Details = () => {
             <ListGroup.Item>
               <h2>Customer Details</h2>
               <strong className={"fw-bold"}>Address: </strong>
-              {location.landmark},{location.location}, <br /> {location.phone},
+              {details.location}, <br /> {details.phone},
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -100,7 +126,7 @@ const Details = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>GH₵{totalAmount}</Col>
+                  <Col>{currencyFormat(totalAmount)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -113,7 +139,7 @@ const Details = () => {
               <ListGroup.Item>
                 <Row>
                   <Col className={"fw-bold"}>Total</Col>
-                  <Col className={"fw-bold"}>GH₵{totalAmount}</Col>
+                  <Col className={"fw-bold"}>{currencyFormat(totalAmount)}</Col>
                 </Row>
               </ListGroup.Item>
             </ListGroup>
@@ -129,7 +155,12 @@ const Details = () => {
                 size="lg"
                 variant="dark"
                 // disabled={cartItems.length === 0}
-                onClick={() => initializePayment(onSuccess, onClose)}
+                onClick={() =>
+                  initializePayment(
+                    (res: Record<string, string>) => onSuccess(res, cart),
+                    onClose
+                  )
+                }
               >
                 Place Order
               </Button>
