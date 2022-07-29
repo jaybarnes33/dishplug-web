@@ -3,7 +3,7 @@ import {
   onAuthStateChanged,
   setPersistence,
   signInAnonymously,
-  User
+  User,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "@/lib/firebase/client";
@@ -40,11 +40,15 @@ const AuthProvider = ({ children }: IProviderProps) => {
   }, []);
 
   useEffect(() => {
-    onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
         user.getIdToken().then(setToken);
         if (!user.isAnonymous) setIsAuthenticated(true);
+      } else {
+        setUser(null);
+        setToken("");
+        setIsAuthenticated(false);
       }
     });
   }, []);

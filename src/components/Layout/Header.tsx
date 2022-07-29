@@ -1,25 +1,32 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
-import { Badge, Button, Container, Nav, Navbar } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/NavbarCollapse";
 import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
-// import { signOut } from "firebase/auth";
-// import { auth } from "@/lib/firebase/client";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
   // const { replace } = useRouter();
   const { itemsInCart } = useCart();
-  const { user } = useAuth();
-  const { pathname } = useRouter();
-  // const logout = async () => {
-  //   await signOut(auth);
-  //   replace("/login");
-  // };
+  const { user, isAuthenticated } = useAuth();
+  const { pathname, replace } = useRouter();
+  const logout = async () => {
+    await signOut(auth);
+    replace("/login");
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -49,12 +56,20 @@ const Header = () => {
             {!noSearch.includes(pathname) && <Search />}
 
             <Nav className="ms-auto gap-3">
-              {!user?.isAnonymous ? (
-                <Nav.Item as={Link} href="/profile">
-                  <Button variant="light">
-                    <FaUser className="me-1" /> {user?.displayName}
-                  </Button>
-                </Nav.Item>
+              {isAuthenticated ? (
+                <>
+                  <NavDropdown title={user?.displayName}>
+                    <NavDropdown.Item>
+                      <span onClick={async () => await logout()}>Logout</span>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link href="/orders">Orders</Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link href="/profile">Profile</Link>
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
               ) : (
                 <>
                   <Nav.Item as={Link} href="/login">
