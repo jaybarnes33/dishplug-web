@@ -55,6 +55,15 @@ a {
   }
 }
 
-input {
-  background-color: var(--dp-light) !important;
+.navbar {
+  form {
+    .input-group-text {
+      border: none;
+    }
+    * {
+      border-radius: 50px;
+      border: none;
+      background-color: rgb(238, 238, 238);
+    }
+  }
 }

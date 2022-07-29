@@ -4,7 +4,7 @@ import React, {
   FormEvent,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
@@ -49,14 +49,14 @@ function Search() {
   return (
     <Form onSubmit={handleSubmit} ref={searchRef} className="d-none">
       <InputGroup>
-        <InputGroup.Text>
+        {/* <InputGroup.Text>
           <FaSearch />
-        </InputGroup.Text>
+        </InputGroup.Text>  */}
         <Form.Control
           value={keyword}
           placeholder="Hey, what do you want to eat?"
           onChange={handleChange}
-          style={{ width: 500 }}
+          style={{ width: "min(90vw, 500px)" }}
           type="search"
           size="lg"
         />

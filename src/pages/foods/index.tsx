@@ -4,12 +4,16 @@ import admin from "@/lib/firebase/node";
 import { FoodType } from "@/types";
 
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import React from "react";
+import Head from "next/head";
+
 import { Col, Container, Row } from "react-bootstrap";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <section className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
+      <Head>
+        <title>Foods</title>
+      </Head>
       <h2 className="text-center">Foods</h2>
       <Container>
         <Row>
@@ -35,10 +39,10 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").limit(4).get();
-    const foodDocs = products.docs.map(product => ({
+    const foodDocs = products.docs.map((product) => ({
       id: product.id,
       storeId: product.id,
-      ...product.data()
+      ...product.data(),
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);
