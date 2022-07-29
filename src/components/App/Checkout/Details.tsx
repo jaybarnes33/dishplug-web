@@ -13,6 +13,7 @@ import {
   Button,
   Card,
   Col,
+  Container,
   Image,
   ListGroup,
   Row
@@ -59,13 +60,13 @@ const Details = ({ details }: IPageProps) => {
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      item: items?.map(item => ({
+      items: items?.map(item => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
         quantity: item.quantity
       })),
-      vendors: [...new Set(items?.map(item => item.storeId))]
+      stores: [...new Set(items?.map(item => item.storeId))]
     })
       .then(clearCart)
       .then(() => replace("/foods"));
@@ -80,7 +81,7 @@ const Details = ({ details }: IPageProps) => {
   };
 
   return (
-    <div>
+    <Container>
       <Head>
         <title>Checkout</title>
       </Head>
@@ -177,7 +178,7 @@ const Details = ({ details }: IPageProps) => {
           </Card>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 };
 
