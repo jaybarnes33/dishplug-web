@@ -4,13 +4,14 @@ import React, {
   FormEvent,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 
 function Search() {
   const router = useRouter();
+  const searchRef = useRef<HTMLFormElement>(null);
   const [keyword, setKeyword] = useState(
     String(router.query?.keyword != undefined ? router.query?.keyword : "")
   );
@@ -19,33 +20,34 @@ function Search() {
     setKeyword(e.target.value);
   };
 
-  const searchRef = useRef<HTMLFormElement>(null);
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/search?keyword=${keyword.toLowerCase()}`);
   };
 
-  useEffect(() => {
-    console.log(router.pathname);
-    if (router.pathname == "/") {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY < 300) {
-          searchRef.current?.classList.add("d-none");
-        } else {
-          searchRef.current?.classList.remove("d-none");
-        }
-      });
+  const handleScroll = () => {
+    if (window.scrollY < 300) {
+      searchRef.current?.classList.add("d-none");
     } else {
       searchRef.current?.classList.remove("d-none");
     }
-  }, [router]);
+  };
+
+  useEffect(() => {
+    if (router.pathname === "/") {
+      searchRef.current?.classList.add("d-none");
+      window.addEventListener("scroll", handleScroll);
+    } else {
+      searchRef.current?.classList.remove("d-none");
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [router.pathname]);
 
   return (
-    <Form
-      className={`${router.pathname == "/" ? "d-none" : "d-block"}`}
-      onSubmit={handleSubmit}
-      ref={searchRef}
-    >
+    <Form onSubmit={handleSubmit} ref={searchRef} className="d-none">
       <InputGroup>
         <InputGroup.Text>
           <FaSearch />

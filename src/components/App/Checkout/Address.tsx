@@ -11,6 +11,7 @@ const Address = ({ updateDetails }: IPageProps) => {
 
   const onSubmit = (values: TValues) => {
     updateDetails(values);
+    localStorage.setItem("address-info", JSON.stringify(values));
     replace("/checkout/placeorder");
   };
 

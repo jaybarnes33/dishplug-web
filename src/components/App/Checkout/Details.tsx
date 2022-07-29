@@ -7,6 +7,7 @@ import { addDoc, collection, Timestamp } from "firebase/firestore/lite";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
@@ -21,7 +22,15 @@ import { usePaystackPayment } from "react-paystack";
 const Details = ({ details }: IPageProps) => {
   const { user } = useAuth();
   const { replace } = useRouter();
+  const [addressInfo, setAddressInfo] = useState(details);
   const { cart, totalAmount, clearCart } = useCart();
+
+  useEffect(() => {
+    const storedDetails = localStorage.getItem("address-info");
+    if (storedDetails) {
+      setAddressInfo(JSON.parse(storedDetails));
+    }
+  }, []);
 
   const initializePayment = usePaystackPayment({
     email: user?.email || "ohenesetwumasi@gmail.com",
@@ -45,9 +54,9 @@ const Details = ({ details }: IPageProps) => {
       amount: totalAmount,
       customer: {
         id: user?.uid,
-        name: details.name
+        name: addressInfo.name
       },
-      deliveryLocation: details.location,
+      deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
       item: items?.map(item => ({
@@ -81,7 +90,7 @@ const Details = ({ details }: IPageProps) => {
             <ListGroup.Item>
               <h2>Customer Details</h2>
               <strong className={"fw-bold"}>Address: </strong>
-              {details.location}, <br /> {details.phone},
+              {addressInfo.location}, <br /> {addressInfo.phone},
             </ListGroup.Item>
 
             <ListGroup.Item>
