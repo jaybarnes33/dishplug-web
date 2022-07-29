@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 function Search() {
   const router = useRouter();
@@ -19,7 +19,7 @@ function Search() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search?keyword=${keyword.toLowerCase()}`);
+    router.push(`/search?keyword=${keyword}`);
   };
 
   const searchRef = useRef<HTMLFormElement>(null);

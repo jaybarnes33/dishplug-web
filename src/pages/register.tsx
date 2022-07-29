@@ -39,7 +39,7 @@ const Register = () => {
   const [verificationId, setVerificationId] = useState("");
   const [otp, setOtp] = useState("");
   const { replace } = useRouter();
-
+  const [error, setError] = useState("");
   useEffect(() => {
     if (recaptchaResponse) {
       const otp = window.prompt(
@@ -73,6 +73,7 @@ const Register = () => {
     } catch (error) {
       if (error instanceof AuthError) {
         console.log(error);
+        setError(error.message);
       }
     } finally {
       actions.setSubmitting(false);
@@ -111,6 +112,7 @@ const Register = () => {
       const data = await res.json();
 
       if (!res.ok) {
+        setError(data.message);
         throw new AuthError(data.code, data.message);
       }
 
@@ -127,6 +129,7 @@ const Register = () => {
 
   return (
     <FormWrapper>
+      {error && <p className="text-danger">{error}</p>}
       <Form noValidate onSubmit={handleSubmit}>
         <Row>
           <Col md={6}>
