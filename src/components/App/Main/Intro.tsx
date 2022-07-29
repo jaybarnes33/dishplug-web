@@ -14,7 +14,7 @@ const Intro = () => {
             <p className={` ${styles.text} `}>
               <span>Hungry?</span> Order food and have it delivered in minutes.
             </p>
-            {/* <Search /> */}
+            <Search />
           </Col>
           <Col md={6} className="d-flex justify-content-center">
             <video loop autoPlay={true} muted>
