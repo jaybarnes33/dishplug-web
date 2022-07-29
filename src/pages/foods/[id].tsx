@@ -49,7 +49,11 @@ export const getStaticProps: GetStaticProps<{
       throw new Error(`missing document for ${params?.id}`);
     }
 
-    foodDoc = { id: food.id, ...food.data() } as unknown as FoodType;
+    foodDoc = {
+      id: food.id,
+      storeId: doc.id,
+      ...food.data()
+    } as unknown as FoodType;
   }
 
   if (!foodDoc) {
