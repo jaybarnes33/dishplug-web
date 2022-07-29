@@ -21,7 +21,7 @@ const Header = () => {
   const nav = useRef<HTMLElement>(null);
   // const { replace } = useRouter();
   const { itemsInCart } = useCart();
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { pathname, replace } = useRouter();
   const logout = async () => {
     await signOut(auth);
@@ -41,7 +41,7 @@ const Header = () => {
   const noSearch = ["/login", "/register"];
   return (
     <Navbar fixed="top" ref={nav}>
-      <Container className="d-flex flex-wrap flex-md-nowrap">
+      <Container className="d-flex flex-wrap flex-md-nowrap justify-content-between">
         <Navbar.Brand className="order-1">
           <Link href="/" passHref>
             <span>

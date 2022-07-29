@@ -22,10 +22,10 @@ const Featured = ({ foods }: IProps) => {
       </Row>
       <div className="d-flex justify-content-end mt-2">
         <Link href="/foods">
-          <small style={{ fontSize: "1rem" }}>
+          <a style={{ fontSize: "1rem" }}>
             View all
             <FaArrowRight />
-          </small>
+          </a>
         </Link>
       </div>
     </Container>

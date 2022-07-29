@@ -1,37 +1,37 @@
 import { useRouter } from "next/router";
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 function Search() {
   const router = useRouter();
-
+  const searchRef = useRef<HTMLFormElement>(null);
   const [keyword, setKeyword] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/search?keyword=${keyword}`);
   };
 
-  const searchRef = useRef<HTMLFormElement>(null);
+  const handleScroll = () => {
+    if (window.scrollY >= 300) {
+      searchRef.current?.classList.add("d-none");
+    } else {
+      searchRef.current?.classList.remove("d-none");
+    }
+  };
+
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY >= 300) {
-        searchRef.current?.classList.add("d-none");
-      } else {
-        searchRef.current?.classList.remove("d-none");
-      }
-    });
-  });
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <Form className="d-flex gap-2" onSubmit={handleSubmit} ref={searchRef}>
       <Form.Control
