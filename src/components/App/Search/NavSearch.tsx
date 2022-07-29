@@ -25,36 +25,32 @@ function Search() {
     router.push(`/search?keyword=${keyword}`);
   };
 
-  useEffect(() => {
-    console.log(router.pathname);
-    if (router.pathname == "/") {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY < 300) {
-          searchRef.current?.classList.add("d-none");
-        } else {
-          searchRef.current?.classList.remove("d-none");
-        }
-      });
-    } else {
-      searchRef.current?.classList.remove("d-none");
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   console.log(router.pathname);
+  //   if (router.pathname == "/") {
+  //     window.addEventListener("scroll", () => {
+  //       if (window.scrollY < 300) {
+  //         searchRef.current?.classList.add("d-none");
+  //       } else {
+  //         searchRef.current?.classList.remove("d-none");
+  //       }
+  //     });
+  //   } else {
+  //     searchRef.current?.classList.remove("d-none");
+  //   }
+  // }, [router]);
 
   return (
-    <Form
-      className={`${router.pathname == "/" ? "d-none" : "d-block"}`}
-      onSubmit={handleSubmit}
-      ref={searchRef}
-    >
-      <InputGroup>
-        <InputGroup.Text>
+    <Form onSubmit={handleSubmit} ref={searchRef}>
+      <InputGroup className="d-flex">
+        {/* <InputGroup.Text>
           <FaSearch />
-        </InputGroup.Text>
+        </InputGroup.Text> */}
         <Form.Control
           value={keyword}
           placeholder="Hey, what do you want to eat?"
           onChange={handleChange}
-          style={{ width: 500 }}
+          style={{ width: "min(90vw, 500px)" }}
           type="search"
           size="lg"
         />

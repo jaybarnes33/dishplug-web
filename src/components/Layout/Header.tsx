@@ -8,7 +8,7 @@ import {
   Navbar,
   NavDropdown,
 } from "react-bootstrap";
-import NavbarCollapse from "react-bootstrap/NavbarCollapse";
+
 import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
@@ -40,63 +40,60 @@ const Header = () => {
 
   const noSearch = ["/login", "/register"];
   return (
-    <Navbar fixed="top" expand="lg" collapseOnSelect ref={nav}>
-      <Container>
-        <Navbar.Brand>
+    <Navbar fixed="top" ref={nav}>
+      <Container className="d-flex flex-wrap flex-md-nowrap">
+        <Navbar.Brand className="order-1">
           <Link href="/" passHref>
             <span>
               <FaUtensils /> Dishplug
             </span>
           </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="#my-nav" />
-        <>
-          <NavbarCollapse id="my-nav">
-            <div className="ms-auto"></div>
-            {!noSearch.includes(pathname) && <Search />}
 
-            <Nav className="ms-auto gap-3">
-              {isAuthenticated ? (
-                <>
-                  <NavDropdown title={user?.displayName}>
-                    <NavDropdown.Item>
-                      <span onClick={async () => await logout()}>Logout</span>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link href="/orders">Orders</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link href="/profile">Profile</Link>
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              ) : (
-                <>
-                  <Nav.Item as={Link} href="/login">
-                    <Button variant="light">
-                      <>
-                        <FaUser className="me-1" />
-                        Sign in
-                      </>
-                    </Button>
-                  </Nav.Item>
-                  <Nav.Item as={Link} href="/register">
-                    <Button variant="dark">Sign up</Button>
-                  </Nav.Item>
-                </>
-              )}
-              <Nav.Item as={Link} href="/cart">
-                <Button variant=" ">
-                  <>
-                    <FaShoppingCart className="me-1" size={24} />
-                    <sup>
-                      <Badge bg="danger">{itemsInCart}</Badge>
-                    </sup>
-                  </>
-                </Button>
-              </Nav.Item>
-            </Nav>
-          </NavbarCollapse>
+        <>
+          <Nav className="mx-auto order-3 order-md-2">
+            {!noSearch.includes(pathname) && <Search />}
+          </Nav>
+
+          <Nav className="ms-auto gap-3 order-2 order-md-3">
+            {isAuthenticated ? (
+              <>
+                <NavDropdown title={<FaUser color="black" />}>
+                  <NavDropdown.Item>
+                    <span onClick={async () => await logout()}>Logout</span>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link href="/orders">Orders</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link href="/profile">Profile</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              <>
+                <Nav.Item as={Link} href="/login">
+                  <Button variant="light">
+                    <>
+                      <FaUser className="me-1" />
+                      Sign in
+                    </>
+                  </Button>
+                </Nav.Item>
+                <Nav.Item as={Link} href="/register">
+                  <Button variant="dark">Sign up</Button>
+                </Nav.Item>
+              </>
+            )}
+            <Nav.Item as={Link} href="/cart">
+              <Button variant=" ">
+                <FaShoppingCart className="me-1" size={24} />
+                <sup>
+                  <Badge bg="danger">{itemsInCart}</Badge>
+                </sup>
+              </Button>
+            </Nav.Item>
+          </Nav>
         </>
       </Container>
     </Navbar>
