@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { FormikConfig, useFormik } from "formik";
-import { Button, Form, Toast } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import FormWrapper from "@/components/Layout/FormWrapper";
 import { emailRegex, phoneRegex } from "@/helpers/constants";
 import { AuthError } from "@/helpers/constructors";
@@ -38,6 +38,7 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
   const { replace } = useRouter();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const onSubmit: FormikConfig<typeof initialValues>["onSubmit"] = async (
     values,
     actions
@@ -45,7 +46,7 @@ const Login = () => {
     try {
       const email = emailRegex.test(values.identity) ? values.identity : "";
       const phone = phoneRegex.test(values.identity) ? values.identity : "";
-
+      setLoading(true);
       const res = await fetch("/api/users/login", {
         method: "POST",
         headers: {
@@ -66,6 +67,7 @@ const Login = () => {
 
       await signInWithCustomToken(auth, data.token);
       replace("/");
+      setLoading(false);
     } catch (error) {
       if (error instanceof AuthError) {
         console.log(error.message);
@@ -124,6 +126,7 @@ const Login = () => {
             disabled={isSubmitting}
           >
             Login
+            {loading && <Spinner animation="grow" />}
           </Button>
         </div>
       </Form>
