@@ -11,7 +11,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <AuthProvider>
       <CartProvider>
         <Header />
-        <Component {...pageProps} />
+        <div style={{ minHeight: "90vh" }}>
+          <Component {...pageProps} />
+        </div>
+
         <Footer />
       </CartProvider>
     </AuthProvider>

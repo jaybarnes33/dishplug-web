@@ -5,17 +5,17 @@ import { FaUtensils } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="border-top border-grey py-5">
+    <footer className="border-top border-grey py-2">
       <Container>
         <Row>
-          <Col md={4}>
+          <Col md={12} className="text-center">
             <h2>
               <>
                 <FaUtensils /> Dishplug
               </>
             </h2>
 
-            <Row className="mt-5">
+            <Row className="mt-5 d-none">
               <Col xs={6}>
                 <svg
                   version="1.1"
@@ -47,17 +47,17 @@ const Footer = () => {
               </Col>
             </Row>
           </Col>
-          <Col md={4}>
-            <Nav.Link>Become a vendor</Nav.Link>
-            <Nav.Link>Sign up to deliver</Nav.Link>
-            <Nav.Link>Gift cards</Nav.Link>
-            <Nav.Link>Promotions</Nav.Link>
+          <Col md={4} className="text-muted d-none">
+            <Nav.Link disabled>Become a vendor</Nav.Link>
+            <Nav.Link disabled>Sign up to deliver</Nav.Link>
+            <Nav.Link disabled>Gift cards</Nav.Link>
+            <Nav.Link disabled>Promotions</Nav.Link>
           </Col>
-          <Col md={4}>
-            <Nav.Link>Restaurants near me</Nav.Link>
-            <Nav.Link>View all foods</Nav.Link>
-            <Nav.Link>About Dishplug</Nav.Link>
-            <Nav.Link>Contact Support</Nav.Link>
+          <Col md={4} className="d-none">
+            <Nav.Link disabled>Restaurants near me</Nav.Link>
+            <Nav.Link disabled>View all foods</Nav.Link>
+            <Nav.Link disabled>About Dishplug</Nav.Link>
+            <Nav.Link disabled>Contact Support</Nav.Link>
           </Col>
         </Row>
       </Container>
