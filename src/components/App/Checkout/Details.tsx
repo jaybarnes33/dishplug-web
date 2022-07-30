@@ -34,13 +34,10 @@ const Details = ({ details }: IPageProps) => {
   }, []);
 
   const initializePayment = usePaystackPayment({
-    email: user?.email || "ohenesetwumasi@gmail.com",
+    email: user?.email || "anonymous@email.com",
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
-    publicKey:
-      process.env.NODE_ENV === "production"
-        ? "pk_live_431916a691d52dc8f388801fc429c9425681a465"
-        : "pk_test_aa01df6d676c2ada1658bbf3bb2a04aa3c50985a"
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
   });
 
   // you can call this function anything
