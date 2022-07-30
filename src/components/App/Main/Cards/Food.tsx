@@ -26,7 +26,7 @@ const Food = ({ food }: { food: FoodType }) => {
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
-          src={food.image}
+          src={food.image || ""}
           height={400}
           width={450}
           objectFit="cover"
