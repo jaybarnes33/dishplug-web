@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Badge,
   Button,
@@ -7,6 +7,7 @@ import {
   Nav,
   Navbar,
   NavDropdown,
+  Spinner
 } from "react-bootstrap";
 
 import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
@@ -19,13 +20,21 @@ import { useCart } from "../Context/Cart";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
-  // const { replace } = useRouter();
   const { itemsInCart } = useCart();
   const { isAuthenticated } = useAuth();
   const { pathname, replace } = useRouter();
+  const [loggingOut, setLoggingOut] = useState(false);
+
   const logout = async () => {
-    await signOut(auth);
-    replace("/login");
+    try {
+      setLoggingOut(true);
+      await signOut(auth);
+      replace("/login");
+    } catch (error) {
+      await logout();
+    } finally {
+      setLoggingOut(false);
+    }
   };
 
   useEffect(() => {
@@ -58,9 +67,22 @@ const Header = () => {
           <Nav className="ms-auto gap-3 order-2 order-md-3">
             {isAuthenticated ? (
               <>
-                <NavDropdown title={<FaUser color="black" />}>
+                <NavDropdown
+                  title={
+                    <>
+                      {loggingOut && (
+                        <Spinner
+                          animation="border"
+                          size="sm"
+                          style={{ marginRight: "0.25rem" }}
+                        />
+                      )}
+                      <FaUser color="black" />
+                    </>
+                  }
+                >
                   <NavDropdown.Item>
-                    <span onClick={async () => await logout()}>Logout</span>
+                    <span onClick={logout}>Logout</span>
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                     <Link href="/orders">Orders</Link>
