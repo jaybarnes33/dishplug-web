@@ -8,13 +8,13 @@ import React, { useState } from "react";
 
 const components = {
   address: { component: Address, icon: <FaMapMarkerAlt /> },
-  placeorder: { component: Details, icon: <FaCheckCircle /> }
+  placeorder: { component: Details, icon: <FaCheckCircle /> },
 };
 
 const initialValues = {
   name: "",
   location: "",
-  phone: ""
+  phone: "",
 };
 
 type TComponents = typeof components;
@@ -26,7 +26,7 @@ export interface IPageProps {
 
 const Checkout = () => {
   const {
-    query: { path }
+    query: { path },
   } = useRouter();
   const [userDetails, setUserDetails] = useState(initialValues);
 
@@ -44,6 +44,7 @@ const Checkout = () => {
             className="text-muted"
             as={Link}
             href={`/checkout/${item}`}
+            passHref
             key={index}
           >
             <span
