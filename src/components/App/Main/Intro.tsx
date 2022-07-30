@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "@/styles/Home.module.scss";
 import { Col, Container, Row } from "react-bootstrap";
 import Search from "../Search/Search";
