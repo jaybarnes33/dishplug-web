@@ -114,7 +114,7 @@ const CartProvider = ({ children }: IProviderProps) => {
 
   const addToCart = (item: Omit<TCart, "quantity">) => {
     setCart(prevCart => {
-      if (!prevCart) return null;
+      if (!prevCart) return [{ ...item, quantity: 1 }];
 
       const updatingItem = prevCart.find(({ id }) => id === item.id);
 
