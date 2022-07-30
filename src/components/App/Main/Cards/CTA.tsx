@@ -5,7 +5,7 @@ import Link from "next/link";
 const CTA = ({
   text,
   href,
-  image,
+  image
 }: {
   text: string;
   href: string;
@@ -13,13 +13,15 @@ const CTA = ({
 }) => {
   return (
     <Card style={{ border: "none" }}>
-      <CardImg
-        as={Image}
-        src={image}
-        height={300}
-        width={300}
-        objectFit="cover"
-      />
+      {!!image && (
+        <CardImg
+          as={Image}
+          src={image}
+          height={300}
+          width={300}
+          objectFit="cover"
+        />
+      )}
       <Card.Body>
         <Link href={href}>
           <a className="link">
