@@ -52,7 +52,8 @@ const Details = ({ details }: IPageProps) => {
       amount: totalAmount,
       customer: {
         id: user?.uid,
-        name: addressInfo.name
+        name: addressInfo.name,
+        phone: addressInfo.phone
       },
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
