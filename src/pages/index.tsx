@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps<{
   const docs = await storesRef.listDocuments();
 
   for (const doc of docs) {
-    const products = await doc.collection("products").limit(4).get();
+    const products = await doc.collection("products").get();
     const foodDocs = products.docs.map(productDoc => ({
       id: productDoc.id,
       storeId: doc.id,
@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps<{
     foods.push(...foodDocs);
   }
 
-  return { props: { foods }, revalidate: 60 };
+  return { props: { foods }, revalidate: 1 };
 };
 
 export default function Home({
