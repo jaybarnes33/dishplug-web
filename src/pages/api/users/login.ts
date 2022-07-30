@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { compare } from "bcryptjs";
 import "firebase/auth";
 import admin from "@/lib/firebase/node";
-import { getIdToken } from "firebase/auth";
 
 export default async function handler(
   req: NextApiRequest,
@@ -53,7 +52,7 @@ export default async function handler(
         code: error.errorInfo.code,
         get message() {
           return this.code === "auth/user-not-found"
-            ? "Phone number doesn't exist, please check and try again"
+            ? "Phone number or Email doesn't exist, please check and try again"
             : error.errorInfo.message;
         }
       });

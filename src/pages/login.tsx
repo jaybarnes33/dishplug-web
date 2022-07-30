@@ -4,13 +4,17 @@ import { Button, Form, Spinner } from "react-bootstrap";
 import FormWrapper from "@/components/Layout/FormWrapper";
 import { emailRegex, phoneRegex } from "@/helpers/constants";
 import { AuthError } from "@/helpers/constructors";
-import { signInWithCustomToken } from "firebase/auth";
+import {
+  browserLocalPersistence,
+  setPersistence,
+  signInWithCustomToken
+} from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 const initialValues = {
   identity: "",
-  password: "",
+  password: ""
 };
 
 const validationSchema = Yup.object().shape({
@@ -32,7 +36,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(8)
     .required("Password field can't be empty")
-    .label("Password"),
+    .label("Password")
 });
 
 const Login = () => {
@@ -50,13 +54,13 @@ const Login = () => {
       const res = await fetch("/api/users/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           email,
           phone,
-          password: values.password,
-        }),
+          password: values.password
+        })
       });
 
       const data = await res.json();
@@ -65,6 +69,7 @@ const Login = () => {
         throw new AuthError(data.code, data.message);
       }
 
+      await setPersistence(auth, browserLocalPersistence);
       await signInWithCustomToken(auth, data.token);
       replace("/");
       setLoading(false);
@@ -82,7 +87,7 @@ const Login = () => {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit,
+      onSubmit
     });
 
   return (
