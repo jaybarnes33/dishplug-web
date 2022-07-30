@@ -13,15 +13,13 @@ const CTA = ({
 }) => {
   return (
     <Card style={{ border: "none" }}>
-      {!!image && (
-        <CardImg
-          as={Image}
-          src={image}
-          height={300}
-          width={300}
-          objectFit="cover"
-        />
-      )}
+      <CardImg
+        as={Image}
+        src={image || ""}
+        height={300}
+        width={300}
+        objectFit="cover"
+      />
       <Card.Body>
         <Link href={href}>
           <a className="link">

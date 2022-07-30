@@ -103,7 +103,7 @@ const Details = ({ details }: IPageProps) => {
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image}
+                            src={item.image || ""}
                             alt={item.name}
                             fluid
                             rounded
