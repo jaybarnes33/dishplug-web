@@ -1,7 +1,6 @@
 import {
   browserLocalPersistence,
   onAuthStateChanged,
-  onIdTokenChanged,
   setPersistence,
   signInAnonymously,
   signInWithCustomToken,
@@ -69,8 +68,6 @@ const AuthProvider = ({ children }: IProviderProps) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
-      console.log(user);
-
       if (user) {
         setUser(user);
         user.getIdToken().then(setToken);
