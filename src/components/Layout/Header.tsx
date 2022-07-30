@@ -72,17 +72,31 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Nav.Item as={Link} href="/login">
-                  <Button variant="light">
-                    <>
-                      <FaUser className="me-1" />
-                      Sign in
-                    </>
-                  </Button>
-                </Nav.Item>
-                <Nav.Item as={Link} href="/register">
-                  <Button variant="dark">Sign up</Button>
-                </Nav.Item>
+                <Nav className="d-none d-md-flex gap-2">
+                  <Nav.Item as={Link} href="/login">
+                    <Button variant="light">
+                      <>
+                        <FaUser className="me-1" />
+                        Sign in
+                      </>
+                    </Button>
+                  </Nav.Item>
+                  <Nav.Item as={Link} href="/register">
+                    <Button variant="dark">Sign up</Button>
+                  </Nav.Item>
+                </Nav>
+
+                <NavDropdown
+                  title={<FaUser color="black" />}
+                  className="d-block d-md-none"
+                >
+                  <NavDropdown.Item>
+                    <Link href="/login">Sign in</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link href="/register">Sign up</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
               </>
             )}
             <Nav.Item as={Link} href="/cart">
