@@ -10,7 +10,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <section className="mt-4 pt-5" style={{ minHeight: "70vh" }}>
+    <section className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
       <Head>
         <title>Foods</title>
       </Head>
@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps<{
     const products = await doc.collection("products").limit(4).get();
     const foodDocs = products.docs.map((product) => ({
       id: product.id,
-      storeId: product.id,
+      storeId: doc.id,
       ...product.data(),
     })) as unknown as FoodType[];
 
