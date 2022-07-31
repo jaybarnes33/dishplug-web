@@ -43,17 +43,16 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
+
     const food = products.docs.find((doc) => doc.id === params?.id);
 
-    if (!food) {
-      throw new Error(`missing document for ${params?.id}`);
+    if (food) {
+      foodDoc = {
+        id: food.id,
+        storeId: doc.id,
+        ...food.data(),
+      } as unknown as FoodType;
     }
-
-    foodDoc = {
-      id: food.id,
-      storeId: doc.id,
-      ...food.data(),
-    } as unknown as FoodType;
   }
 
   if (!foodDoc) {
