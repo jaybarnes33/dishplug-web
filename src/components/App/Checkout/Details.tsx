@@ -35,7 +35,7 @@ const Details = ({ details }: IPageProps) => {
   }, []);
 
   const initializePayment = usePaystackPayment({
-    email: user?.email || "anonymous@email.com",
+    email: addressInfo.email,
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
