@@ -15,12 +15,20 @@ const initialValues = {
   name: "",
   location: "",
   phone: "",
+  email: "",
+  paymentMethod: "",
 };
 
 type TComponents = typeof components;
 export type TValues = typeof initialValues;
 export interface IPageProps {
-  details: { name: string; location: string; phone: string };
+  details: {
+    name: string;
+    location: string;
+    phone: string;
+    email: string;
+    paymentMethod: string;
+  };
   updateDetails: (details: TValues) => void;
 }
 
