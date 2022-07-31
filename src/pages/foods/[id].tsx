@@ -88,7 +88,12 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <Container>
           <Row className="d-flex align-items-center">
             <Col md={6} className="position-relative" style={{ height: 500 }}>
-              <Image src={food.image} layout="fill" alt="" objectFit="cover" />
+              <Image
+                src={food.image || ""}
+                layout="fill"
+                alt=""
+                objectFit="cover"
+              />
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">
