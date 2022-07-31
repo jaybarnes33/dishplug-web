@@ -56,6 +56,7 @@ const Details = ({ details }: IPageProps) => {
         name: addressInfo.name,
         phone: addressInfo.phone,
       },
+      paid: true,
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
@@ -92,6 +93,7 @@ const Details = ({ details }: IPageProps) => {
         soldFor: item.price,
         quantity: item.quantity,
       })),
+      paid: false,
       paymentOnDelivery: true,
       stores: [...new Set(items?.map((item) => item.storeId))],
     })
