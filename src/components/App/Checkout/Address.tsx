@@ -78,18 +78,22 @@ const Address = ({ updateDetails, details }: IPageProps) => {
           <div>
             <Form.Check
               {...getFieldProps("paymentMethod")}
+              id="delivery"
               type="radio"
               value="delivery"
               inline
-              label="Payment on delivery"
+              required
             />
+            <Form.Label htmlFor="delivery">Delivery</Form.Label>
             <Form.Check
               {...getFieldProps("paymentMethod")}
+              id="online"
               type="radio"
               inline
-              label="Online payment"
+              required
               value="online"
             />
+            <Form.Label htmlFor="Online">Online</Form.Label>
           </div>
         </Form.Group>
 
