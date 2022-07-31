@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, CardImg } from "react-bootstrap";
+import { Badge, Button, Card, CardImg } from "react-bootstrap";
 import Image from "next/image";
 import { FoodType } from "@/types";
 import Rating from "../../Rating";
@@ -22,14 +22,17 @@ const Food = ({ food }: { food: FoodType }) => {
   };
 
   return (
-    <Card style={{ border: "none" }} className="position-relative my-3">
+    <Card
+      style={{ border: "none", maxWidth: 200 }}
+      className="position-relative my-3"
+    >
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
           src={food.image || ""}
-          height={400}
-          width={450}
-          objectFit="cover"
+          height={200}
+          width={200}
+          objectFit="contain"
         />
       </Link>
       <Button
@@ -39,10 +42,13 @@ const Food = ({ food }: { food: FoodType }) => {
       >
         <FaShoppingCart color="red" size={20} />
       </Button>
+      <Badge bg="dark" style={{ position: "absolute", left: 0, top: 0 }}>
+        Promo
+      </Badge>
       <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
         <Link href={`/foods/${food.id}`}>
           <div className="d-flex flex-column flex-sm-row mb-2">
-            <h5 className="w-100">{food.name}</h5>
+            <h5>{food.name}</h5>
             <span className="text-danger">{currencyFormat(food.price)}</span>
           </div>
         </Link>
