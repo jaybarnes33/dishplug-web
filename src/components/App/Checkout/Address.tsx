@@ -61,10 +61,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             placeholder="Ex. 0240000000"
             required
           />
-          <small>
-            Please enter a working phone number, your delivery guy will call on
-            this line
-          </small>
+          <small>your delivery guy will call on this line</small>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
@@ -78,22 +75,26 @@ const Address = ({ updateDetails, details }: IPageProps) => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Payment Mode</Form.Label>
-          <Form.Check
-            {...getFieldProps("paymentMethod")}
-            type="radio"
-            value="delivery"
-            label="Payment on delivery"
-          />
-          <Form.Check
-            {...getFieldProps("paymentMethod")}
-            type="radio"
-            label="Online payment"
-            value="online"
-          />
+          <div>
+            <Form.Check
+              {...getFieldProps("paymentMethod")}
+              type="radio"
+              value="delivery"
+              inline
+              label="Payment on delivery"
+            />
+            <Form.Check
+              {...getFieldProps("paymentMethod")}
+              type="radio"
+              inline
+              label="Online payment"
+              value="online"
+            />
+          </div>
         </Form.Group>
 
         <div className="d-flex justify-content-center">
-          <Button type="submit" size="lg" variant="warning">
+          <Button type="submit" variant="warning">
             Continue
           </Button>
         </div>
