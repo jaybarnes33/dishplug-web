@@ -13,6 +13,10 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
     <section className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
       <Head>
         <title>Foods</title>
+        <meta
+          name="keywords"
+          content="Food delivery in Ghana, Food in Tarkwa, UMaT Food, Tarkwa Fried Rice, Hostel Crust Pizza"
+        />
       </Head>
       <h2 className="text-center">Foods</h2>
       <Container>
@@ -39,10 +43,10 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    const foodDocs = products.docs.map(product => ({
+    const foodDocs = products.docs.map((product) => ({
       id: product.id,
       storeId: doc.id,
-      ...product.data()
+      ...product.data(),
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);
