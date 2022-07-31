@@ -17,6 +17,7 @@ import {
   Image,
   ListGroup,
   Row,
+  Spinner,
 } from "react-bootstrap";
 import { usePaystackPayment } from "react-paystack";
 
@@ -25,7 +26,7 @@ const Details = ({ details }: IPageProps) => {
   const { replace } = useRouter();
   const [addressInfo, setAddressInfo] = useState(details);
   const { cart, totalAmount, clearCart } = useCart();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const storedDetails = localStorage.getItem("address-info");
     if (storedDetails) {
@@ -66,6 +67,35 @@ const Details = ({ details }: IPageProps) => {
       })),
       stores: [...new Set(items?.map((item) => item.storeId))],
     })
+      .then(clearCart)
+      .then(() => replace("/foods"));
+
+    console.log("success");
+  };
+
+  const checkoutWithoutPayment = async (items: TCart[] | null) => {
+    setLoading(true);
+    addDoc(collection(firestore, "orders"), {
+      status: "pending",
+      amount: totalAmount,
+      customer: {
+        id: user?.uid,
+        name: addressInfo.name,
+        phone: addressInfo.phone,
+      },
+      deliveryLocation: addressInfo.location,
+      date: Timestamp.fromDate(new Date()),
+      type: "delivery",
+      items: items?.map((item) => ({
+        id: item.id,
+        name: item.name,
+        soldFor: item.price,
+        quantity: item.quantity,
+      })),
+      paymentOnDelivery: true,
+      stores: [...new Set(items?.map((item) => item.storeId))],
+    })
+      .then(() => setLoading(false))
       .then(clearCart)
       .then(() => replace("/foods"));
 
@@ -158,20 +188,33 @@ const Details = ({ details }: IPageProps) => {
                 </ListGroup.Item>
               )} */}
 
-              <Button
-                type="button"
-                size="lg"
-                variant="dark"
-                // disabled={cartItems.length === 0}
-                onClick={() =>
-                  initializePayment(
-                    (res: Record<string, string>) => onSuccess(res, cart),
-                    onClose
-                  )
-                }
-              >
-                Place Order
-              </Button>
+              {details.paymentMethod === "online" && (
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="dark"
+                  // disabled={cartItems.length === 0}
+                  onClick={() =>
+                    initializePayment(
+                      (res: Record<string, string>) => onSuccess(res, cart),
+                      onClose
+                    )
+                  }
+                >
+                  Place Order {loading && <Spinner animation="border" />}
+                </Button>
+              )}
+              {details.paymentMethod === "delivery" && (
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="dark"
+                  // disabled={cartItems.length === 0}
+                  onClick={() => checkoutWithoutPayment(cart)}
+                >
+                  Place Order
+                </Button>
+              )}
             </ListGroup.Item>
           </Card>
         </Col>

@@ -5,7 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Button, Container, Form } from "react-bootstrap";
 
-const Address = ({ updateDetails }: IPageProps) => {
+const Address = ({ updateDetails, details }: IPageProps) => {
   const { user } = useAuth();
   const { replace } = useRouter();
 
@@ -19,9 +19,11 @@ const Address = ({ updateDetails }: IPageProps) => {
     initialValues: {
       name: user?.displayName || "",
       location: "",
-      phone: user?.phoneNumber || ""
+      phone: user?.phoneNumber || "",
+      email: user?.email || "",
+      paymentMethod: details.paymentMethod,
     },
-    onSubmit
+    onSubmit,
   });
 
   return (
@@ -59,13 +61,40 @@ const Address = ({ updateDetails }: IPageProps) => {
             placeholder="Ex. 0240000000"
             required
           />
-          <small>
-            Please enter a working phone number, your delivery guy will call on
-            this line
-          </small>
+          <small>your delivery guy will call on this line</small>
         </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            {...getFieldProps("email")}
+            id="email"
+            placeholder="Ex. doe@mail.com"
+            required
+          />
+          <small>Please enter a valid email</small>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Payment Mode</Form.Label>
+          <div>
+            <Form.Check
+              {...getFieldProps("paymentMethod")}
+              type="radio"
+              value="delivery"
+              inline
+              label="Payment on delivery"
+            />
+            <Form.Check
+              {...getFieldProps("paymentMethod")}
+              type="radio"
+              inline
+              label="Online payment"
+              value="online"
+            />
+          </div>
+        </Form.Group>
+
         <div className="d-flex justify-content-center">
-          <Button type="submit" size="lg" variant="warning">
+          <Button type="submit" variant="warning">
             Continue
           </Button>
         </div>
