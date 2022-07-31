@@ -17,7 +17,7 @@ import {
   Image,
   ListGroup,
   Row,
-  Spinner,
+  Spinner
 } from "react-bootstrap";
 import { usePaystackPayment } from "react-paystack";
 
@@ -38,7 +38,7 @@ const Details = ({ details }: IPageProps) => {
     email: user?.email || "anonymous@email.com",
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
   });
 
   // you can call this function anything
@@ -54,20 +54,24 @@ const Details = ({ details }: IPageProps) => {
       customer: {
         id: user?.uid,
         name: addressInfo.name,
-        phone: addressInfo.phone,
+        phone: addressInfo.phone
       },
       paid: true,
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map((item) => ({
+      items: items?.map(item => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity,
+        quantity: item.quantity
       })),
-      stores: [...new Set(items?.map((item) => item.storeId))],
+      stores: [...new Set(items?.map(item => item.storeId))]
     })
+      .then(() => {
+        const { paymentMethod, ...rest } = addressInfo;
+        localStorage.setItem("order-details", JSON.stringify(rest));
+      })
       .then(clearCart)
       .then(() => replace("/foods"));
 
@@ -82,20 +86,20 @@ const Details = ({ details }: IPageProps) => {
       customer: {
         id: user?.uid,
         name: addressInfo.name,
-        phone: addressInfo.phone,
+        phone: addressInfo.phone
       },
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map((item) => ({
+      items: items?.map(item => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity,
+        quantity: item.quantity
       })),
       paid: false,
       paymentOnDelivery: true,
-      stores: [...new Set(items?.map((item) => item.storeId))],
+      stores: [...new Set(items?.map(item => item.storeId))]
     })
       .then(() => setLoading(false))
       .then(clearCart)
@@ -190,7 +194,7 @@ const Details = ({ details }: IPageProps) => {
                 </ListGroup.Item>
               )} */}
 
-              {details.paymentMethod === "online" && (
+              {addressInfo.paymentMethod === "online" && (
                 <Button
                   type="button"
                   size="lg"
@@ -206,7 +210,7 @@ const Details = ({ details }: IPageProps) => {
                   Place Order {loading && <Spinner animation="border" />}
                 </Button>
               )}
-              {details.paymentMethod === "delivery" && (
+              {addressInfo.paymentMethod === "delivery" && (
                 <Button
                   type="button"
                   size="lg"

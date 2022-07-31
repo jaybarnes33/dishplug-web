@@ -1,13 +1,24 @@
 import { useAuth } from "@/components/Context/Auth";
+import { formatPhone } from "@/helpers/utils";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
 import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 
 const Address = ({ updateDetails, details }: IPageProps) => {
   const { user } = useAuth();
   const { replace } = useRouter();
+  const [storedInfo, setStoredInfo] = useState<Omit<
+    typeof details,
+    "paymentMethod"
+  > | null>(null);
+
+  useEffect(() => {
+    const storedInfo = localStorage.getItem("order-details");
+    if (storedInfo) setStoredInfo(JSON.parse(storedInfo));
+  }, []);
 
   const onSubmit = (values: TValues) => {
     updateDetails(values);
@@ -17,13 +28,13 @@ const Address = ({ updateDetails, details }: IPageProps) => {
 
   const { getFieldProps, handleSubmit } = useFormik({
     initialValues: {
-      name: user?.displayName || "",
-      location: "",
-      phone: user?.phoneNumber || "",
-      email: user?.email || "",
-      paymentMethod: details.paymentMethod,
+      name: user?.displayName || storedInfo?.name || "",
+      location: storedInfo?.location || "",
+      phone: formatPhone(user?.phoneNumber || storedInfo?.phone || "", "local"),
+      email: user?.email || storedInfo?.email || "",
+      paymentMethod: details.paymentMethod
     },
-    onSubmit,
+    onSubmit
   });
 
   return (
