@@ -79,6 +79,12 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
     <>
       <Head>
         <title>{food.name}</title>
+        <meta
+          name="keywords"
+          content={`Tarkwa ${food.name}, ${food.description}`}
+        />
+        <meta name="description" content={food.description} />
+        <meta property="og:image" content={food.image} />
       </Head>
       <div
         className="mt-4 pt-5 d-flex align-items-center"

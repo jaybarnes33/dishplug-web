@@ -6,6 +6,7 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { firestore } from "@/lib/firebase/client";
 const Orders = () => {
   const [orders, setOrders] = useState<TUserOrder[]>([]);
+  const { user } = useAuth();
   useEffect(() => {
     (async () => {
       const ordersRef = collection(firestore, "orders");
@@ -20,8 +21,7 @@ const Orders = () => {
         setOrders(data);
       });
     })();
-  }, []);
-  const { user } = useAuth();
+  }, [user?.uid]);
   return (
     <div className="mt-5 pt-5">
       <Container className="mt-4">

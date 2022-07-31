@@ -17,10 +17,10 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").limit(4).get();
-    const foodDocs = products.docs.map(productDoc => ({
+    const foodDocs = products.docs.map((productDoc) => ({
       id: productDoc.id,
       storeId: doc.id,
-      ...productDoc.data()
+      ...productDoc.data(),
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);
@@ -30,13 +30,17 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export default function Home({
-  foods
+  foods,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className={styles.container}>
       <Head>
         <title>Dishplug || Have your food delivered in minutes.</title>
         <meta name="description" content="Your meal is just a click away." />
+        <meta
+          name="keywords"
+          content="Food delivery in Ghana, Food in Tarkwa, UMaT Food, Tarkwa Fried Rice, Hostel Crust Pizza"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
