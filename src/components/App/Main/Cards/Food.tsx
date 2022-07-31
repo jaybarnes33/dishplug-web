@@ -17,7 +17,7 @@ const Food = ({ food }: { food: FoodType }) => {
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId
+      storeId: food.storeId,
     });
   };
 
@@ -34,11 +34,10 @@ const Food = ({ food }: { food: FoodType }) => {
       </Link>
       <Button
         variant="light"
-        size="sm"
         onClick={handleAddToCart}
         style={{ position: "absolute", right: 0, top: 0 }}
       >
-        <FaShoppingCart color="red" />
+        <FaShoppingCart color="red" size={20} />
       </Button>
       <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
         <Link href={`/foods/${food.id}`}>
