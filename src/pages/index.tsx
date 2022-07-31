@@ -41,6 +41,7 @@ export default function Home({
           name="keywords"
           content="Food delivery in Ghana, Food in Tarkwa, UMaT Food, Tarkwa Fried Rice, Hostel Crust Pizza"
         />
+        <meta property="og:image" content="/logo2.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
