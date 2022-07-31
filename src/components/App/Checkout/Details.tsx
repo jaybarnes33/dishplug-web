@@ -3,7 +3,7 @@ import { TCart, useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
-import { addDoc, collection, Timestamp } from "firebase/firestore/lite";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -16,7 +16,7 @@ import {
   Container,
   Image,
   ListGroup,
-  Row
+  Row,
 } from "react-bootstrap";
 import { usePaystackPayment } from "react-paystack";
 
@@ -37,7 +37,7 @@ const Details = ({ details }: IPageProps) => {
     email: user?.email || "anonymous@email.com",
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
   });
 
   // you can call this function anything
@@ -53,18 +53,18 @@ const Details = ({ details }: IPageProps) => {
       customer: {
         id: user?.uid,
         name: addressInfo.name,
-        phone: addressInfo.phone
+        phone: addressInfo.phone,
       },
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map(item => ({
+      items: items?.map((item) => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
       })),
-      stores: [...new Set(items?.map(item => item.storeId))]
+      stores: [...new Set(items?.map((item) => item.storeId))],
     })
       .then(clearCart)
       .then(() => replace("/foods"));
