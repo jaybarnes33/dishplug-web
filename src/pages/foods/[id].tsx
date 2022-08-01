@@ -97,7 +97,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 src={food.image || ""}
                 layout="fill"
                 alt=""
-                objectFit="cover"
+                objectFit="contain"
               />
               {["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
                 food.storeId
