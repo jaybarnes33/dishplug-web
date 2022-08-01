@@ -122,7 +122,6 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                     size="lg"
                     onClick={handleAddToCart}
                     disabled={
-                      food.name.toLowerCase().includes("pizza") ||
                       food.name.toLowerCase().includes("season") ||
                       food.name.toLowerCase().includes("sunday")
                     }

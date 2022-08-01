@@ -35,8 +35,7 @@ const Food = ({ food }: { food: FoodType }) => {
           objectFit="contain"
         />
       </Link>
-      {!food.name.toLowerCase().includes("pizza") &&
-      !food.name.toLowerCase().includes("season") &&
+      {!food.name.toLowerCase().includes("season") &&
       !food.name.toLowerCase().includes("sunday") &&
       !["75zBdBfJlCZP3i5Qdk8R"].includes(food.storeId) ? (
         <Button
