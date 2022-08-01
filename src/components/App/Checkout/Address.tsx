@@ -32,9 +32,9 @@ const Address = ({ updateDetails, details }: IPageProps) => {
       location: storedInfo?.location || "",
       phone: formatPhone(user?.phoneNumber || storedInfo?.phone || "", "local"),
       email: user?.email || storedInfo?.email || "",
-      paymentMethod: details.paymentMethod
+      paymentMethod: details.paymentMethod,
     },
-    onSubmit
+    onSubmit,
   });
 
   return (

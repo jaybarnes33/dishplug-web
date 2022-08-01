@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { FaArrowRight } from "react-icons/fa";
+
 import CTA from "../Cards/CTA";
 
 const Join = () => {

@@ -1,19 +1,27 @@
 import Image from "next/image";
 import React from "react";
 import { Col, Container, Nav, Row } from "react-bootstrap";
-import { FaUtensils } from "react-icons/fa";
+import { FaPhoneAlt, FaUtensils } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="border-top border-grey py-2">
       <Container>
         <Row>
-          <Col md={12} className="text-center">
-            <h2>
+          <Col
+            md={12}
+            className="text-center d-flex justify-content-between align-items-center flex-wrap"
+          >
+            <p>
+              <a href="tel:+233543288549">
+                <FaPhoneAlt className="mx-2" /> Call Support
+              </a>
+            </p>
+            <h6>
               <>
                 <FaUtensils /> Dishplug
               </>
-            </h2>
+            </h6>
 
             <Row className="mt-5 d-none">
               <Col xs={6}>

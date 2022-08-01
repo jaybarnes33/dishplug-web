@@ -11,7 +11,7 @@ import type {
 import Head from "next/head";
 import Image from "next/image";
 
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Badge, Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useCart } from "@/components/Context/Cart";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -99,6 +99,9 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 alt=""
                 objectFit="cover"
               />
+              {["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
+                food.storeId
+              ) && <Badge bg="dark"></Badge>}
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">
@@ -114,7 +117,15 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
-                  <Button variant="dark" size="lg" onClick={handleAddToCart}>
+                  <Button
+                    variant="dark"
+                    size="lg"
+                    onClick={handleAddToCart}
+                    disabled={[
+                      "75zBdBfJlCZP3i5Qdk8R",
+                      "ghrgy8qgGAJEpvS8CtNV",
+                    ].includes(food.storeId)}
+                  >
                     Add to cart
                   </Button>
                 </ListGroup.Item>
