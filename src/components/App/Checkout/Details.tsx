@@ -70,6 +70,7 @@ const Details = ({ details }: IPageProps) => {
       stores: [...new Set(items?.map((item) => item.storeId))],
     })
       .then(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { paymentMethod, ...rest } = addressInfo;
         localStorage.setItem("order-details", JSON.stringify(rest));
       })
