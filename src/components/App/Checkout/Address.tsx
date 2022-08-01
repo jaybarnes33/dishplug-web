@@ -1,13 +1,24 @@
 import { useAuth } from "@/components/Context/Auth";
+import { formatPhone } from "@/helpers/utils";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
 import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 
 const Address = ({ updateDetails, details }: IPageProps) => {
   const { user } = useAuth();
   const { replace } = useRouter();
+  const [storedInfo, setStoredInfo] = useState<Omit<
+    typeof details,
+    "paymentMethod"
+  > | null>(null);
+
+  useEffect(() => {
+    const storedInfo = localStorage.getItem("order-details");
+    if (storedInfo) setStoredInfo(JSON.parse(storedInfo));
+  }, []);
 
   const onSubmit = (values: TValues) => {
     updateDetails(values);
@@ -17,10 +28,10 @@ const Address = ({ updateDetails, details }: IPageProps) => {
 
   const { getFieldProps, handleSubmit } = useFormik({
     initialValues: {
-      name: user?.displayName || "",
-      location: "",
-      phone: user?.phoneNumber || "",
-      email: user?.email || "",
+      name: user?.displayName || storedInfo?.name || "",
+      location: storedInfo?.location || "",
+      phone: formatPhone(user?.phoneNumber || storedInfo?.phone || "", "local"),
+      email: user?.email || storedInfo?.email || "",
       paymentMethod: details.paymentMethod,
     },
     onSubmit,
@@ -76,28 +87,22 @@ const Address = ({ updateDetails, details }: IPageProps) => {
         <Form.Group>
           <Form.Label>Payment Mode</Form.Label>
           <div>
-            <Form.Group>
-              <Form.Check
-                {...getFieldProps("paymentMethod")}
-                id="delivery"
-                type="radio"
-                value="delivery"
-                inline
-                required
-              />
-              <Form.Label htmlFor="delivery">Pay on Delivery</Form.Label>
-            </Form.Group>
-            <Form.Group>
-              <Form.Check
-                {...getFieldProps("paymentMethod")}
-                id="online"
-                type="radio"
-                required
-                inline
-                value="online"
-              />
-              <Form.Label htmlFor="online">Pay Now</Form.Label>
-            </Form.Group>
+            <Form.Check
+              {...getFieldProps("paymentMethod")}
+              type="radio"
+              id="payment-on-delivery"
+              value="delivery"
+              inline
+              label="Payment on delivery"
+            />
+            <Form.Check
+              {...getFieldProps("paymentMethod")}
+              type="radio"
+              inline
+              id="online-payment"
+              label="Pay now"
+              value="online"
+            />
           </div>
         </Form.Group>
 

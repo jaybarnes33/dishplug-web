@@ -35,7 +35,7 @@ const Details = ({ details }: IPageProps) => {
   }, []);
 
   const initializePayment = usePaystackPayment({
-    email: addressInfo?.email || "anonymous@email.com",
+    email: addressInfo.email,
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
@@ -69,6 +69,10 @@ const Details = ({ details }: IPageProps) => {
       })),
       stores: [...new Set(items?.map((item) => item.storeId))],
     })
+      .then(() => {
+        const { paymentMethod, ...rest } = addressInfo;
+        localStorage.setItem("order-details", JSON.stringify(rest));
+      })
       .then(clearCart)
       .then(() => replace("/foods"));
 
@@ -192,7 +196,7 @@ const Details = ({ details }: IPageProps) => {
                 </ListGroup.Item>
               )} */}
 
-              {details.paymentMethod === "online" && (
+              {addressInfo.paymentMethod === "online" && (
                 <Button
                   type="button"
                   size="lg"
@@ -208,7 +212,7 @@ const Details = ({ details }: IPageProps) => {
                   Place Order {loading && <Spinner animation="border" />}
                 </Button>
               )}
-              {details.paymentMethod === "delivery" && (
+              {addressInfo.paymentMethod === "delivery" && (
                 <Button
                   type="button"
                   size="lg"
