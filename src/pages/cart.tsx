@@ -8,7 +8,7 @@ import {
   Container,
   Image,
   ListGroup,
-  Row
+  Row,
 } from "react-bootstrap";
 import { FaMinusCircle, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
 
@@ -19,7 +19,7 @@ const Cart = () => {
     itemsInCart,
     increment,
     decrement,
-    removeFromCart
+    removeFromCart,
   } = useCart();
 
   const handleInc = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
@@ -43,12 +43,12 @@ const Cart = () => {
 
   return (
     <div className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
-      <Container>
+      <Container fluid>
         <h1 className="text-center">Cart</h1>
         <Row>
           <Col md={8}>
             <ListGroup variant="flush">
-              {cart?.map(item => (
+              {cart?.map((item) => (
                 <ListGroup.Item key={item.id}>
                   <Row className="d-flex align-items-center">
                     <Col xs={2}>

@@ -47,7 +47,7 @@ const Food = ({ food }: { food: FoodType }) => {
       </Badge>
       <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
         <Link href={`/foods/${food.id}`}>
-          <div className="d-flex flex-column flex-sm-row mb-2">
+          <div className="d-flex flex-column mb-2">
             <h5>{food.name}</h5>
             <span className="text-danger">{currencyFormat(food.price)}</span>
           </div>
