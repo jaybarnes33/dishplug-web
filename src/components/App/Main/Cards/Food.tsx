@@ -10,7 +10,7 @@ import { useCart } from "@/components/Context/Cart";
 
 const Food = ({ food }: { food: FoodType }) => {
   const { addToCart } = useCart();
-
+  console.log(food);
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
@@ -35,16 +35,22 @@ const Food = ({ food }: { food: FoodType }) => {
           objectFit="contain"
         />
       </Link>
-      <Button
-        variant="light"
-        onClick={handleAddToCart}
-        style={{ position: "absolute", right: 0, top: 0 }}
-      >
-        <FaShoppingCart color="red" size={20} />
-      </Button>
-      <Badge bg="dark" style={{ position: "absolute", left: 0, top: 0 }}>
-        Promo
-      </Badge>
+      {!["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
+        food.storeId
+      ) ? (
+        <Button
+          variant="light"
+          onClick={handleAddToCart}
+          style={{ position: "absolute", right: 0, top: 0 }}
+        >
+          <FaShoppingCart color="red" size={20} />
+        </Button>
+      ) : (
+        <Badge bg="dark" style={{ position: "absolute", right: 0, top: 0 }}>
+          Not available
+        </Badge>
+      )}
+
       <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
         <Link href={`/foods/${food.id}`}>
           <div className="d-flex flex-column mb-2">
