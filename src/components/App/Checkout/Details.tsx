@@ -3,6 +3,7 @@ import { TCart, useCart } from "@/components/Context/Cart";
 import { currencyFormat, sendNotification } from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
+import { sendSMS } from "@/utils";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Head from "next/head";
 import Link from "next/link";
@@ -17,7 +18,7 @@ import {
   Image,
   ListGroup,
   Row,
-  Spinner
+  Spinner,
 } from "react-bootstrap";
 import { usePaystackPayment } from "react-paystack";
 
@@ -38,7 +39,7 @@ const Details = ({ details }: IPageProps) => {
     email: addressInfo.email,
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
   });
 
   // you can call this function anything
@@ -46,7 +47,7 @@ const Details = ({ details }: IPageProps) => {
     response: Record<string, string | number>,
     items: TCart[] | null
   ) => {
-    const stores = [...new Set(items?.map(item => item.storeId))];
+    const stores = [...new Set(items?.map((item) => item.storeId))];
 
     addDoc(collection(firestore, "orders"), {
       reference: response.reference,
@@ -57,19 +58,19 @@ const Details = ({ details }: IPageProps) => {
         id: user?.uid,
         name: addressInfo.name,
         phone: addressInfo.phone,
-        email: addressInfo.email
+        email: addressInfo.email,
       },
       paid: true,
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map(item => ({
+      items: items?.map((item) => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
       })),
-      stores
+      stores,
     })
       .then(() => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -77,23 +78,28 @@ const Details = ({ details }: IPageProps) => {
         localStorage.setItem("order-details", JSON.stringify(rest));
       })
       .then(clearCart)
-      .then(() =>
-        stores.forEach(store =>
+      .then(() => {
+        stores.forEach((store) =>
           sendNotification({
             name: addressInfo.name,
             phone: addressInfo.phone,
             paid: true,
             location: addressInfo.location,
             topic: `${store}-new_order`,
-            items: items?.map(item => item.name) || []
+            items: items?.map((item) => item.name) || [],
           })
-        )
-      )
+        );
+
+        sendSMS(
+          addressInfo.phone,
+          `Hi ${addressInfo.name}, your order has been sent, your food will be delivered in no time`
+        );
+      })
       .then(() => replace("/foods"));
   };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
-    const stores = [...new Set(items?.map(item => item.storeId))];
+    const stores = [...new Set(items?.map((item) => item.storeId))];
 
     setLoading(true);
     addDoc(collection(firestore, "orders"), {
@@ -103,25 +109,25 @@ const Details = ({ details }: IPageProps) => {
         id: user?.uid,
         name: addressInfo.name,
         phone: addressInfo.phone,
-        email: addressInfo.email
+        email: addressInfo.email,
       },
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map(item => ({
+      items: items?.map((item) => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
       })),
       paid: false,
       paymentOnDelivery: true,
-      stores
+      stores,
     })
       .then(() => setLoading(false))
       .then(clearCart)
-      .then(() =>
-        stores.forEach(store =>
+      .then(() => {
+        stores.forEach((store) =>
           sendNotification({
             name: addressInfo.name,
             phone: addressInfo.phone,
@@ -130,11 +136,15 @@ const Details = ({ details }: IPageProps) => {
             topic: `${store}-new_order`,
             items:
               (items || [])
-                .filter(item => item.storeId === store)
-                .map(item => item.name) || []
+                .filter((item) => item.storeId === store)
+                .map((item) => item.name) || [],
           })
-        )
-      )
+        );
+        sendSMS(
+          addressInfo.phone,
+          `Hi ${addressInfo.name}, your order has been sent, your food will be delivered in no time`
+        );
+      })
       .then(() => replace("/foods"));
   };
 
