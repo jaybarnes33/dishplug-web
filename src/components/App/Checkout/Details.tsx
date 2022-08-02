@@ -76,8 +76,6 @@ const Details = ({ details }: IPageProps) => {
       })
       .then(clearCart)
       .then(() => replace("/foods"));
-
-    console.log("success");
   };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
@@ -107,8 +105,6 @@ const Details = ({ details }: IPageProps) => {
       .then(() => setLoading(false))
       .then(clearCart)
       .then(() => replace("/foods"));
-
-    console.log("success");
   };
 
   // you can call this function anything
@@ -118,7 +114,7 @@ const Details = ({ details }: IPageProps) => {
   };
 
   return (
-    <Container>
+    <Container fluid>
       <Head>
         <title>Checkout</title>
       </Head>

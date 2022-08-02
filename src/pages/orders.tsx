@@ -12,12 +12,11 @@ const Orders = () => {
       const ordersRef = collection(firestore, "orders");
       const q = query(ordersRef, where("customer.id", "==", user?.uid));
 
-      onSnapshot(q, snapshot => {
-        const data = snapshot.docs.map(doc => ({
+      onSnapshot(q, (snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...(doc.data() as Omit<TUserOrder, "id">)
+          ...(doc.data() as Omit<TUserOrder, "id">),
         }));
-
         setOrders(data);
       });
     })();
@@ -41,7 +40,7 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map(order => (
+              {orders.map((order) => (
                 <tr key={order.id}>
                   <td>{order.date.toDate().toDateString()}</td>
                   <td>{order.status}</td>
