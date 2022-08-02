@@ -128,7 +128,10 @@ const Details = ({ details }: IPageProps) => {
             paid: false,
             location: addressInfo.location,
             topic: `${store}-new_order`,
-            items: items?.map(item => item.name) || []
+            items:
+              (items || [])
+                .filter(item => item.storeId === store)
+                .map(item => item.name) || []
           })
         )
       )
