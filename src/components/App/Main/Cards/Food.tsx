@@ -17,7 +17,7 @@ const Food = ({ food }: { food: FoodType }) => {
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId
+      storeId: food.storeId,
     });
   };
 
@@ -37,7 +37,6 @@ const Food = ({ food }: { food: FoodType }) => {
       </Link>
       {!food.name.toLowerCase().includes("season") &&
       !food.name.toLowerCase().includes("sunday") &&
-      !food.name.toLowerCase().includes("pizza") &&
       !["75zBdBfJlCZP3i5Qdk8R", "YFCveCnKxblPWRtyytdq"].includes(
         food.storeId
       ) &&
