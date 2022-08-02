@@ -125,9 +125,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                       // food.name.toLowerCase().includes("season") ||
                       food.name.toLowerCase().includes("sunday") ||
                       food.name.toLowerCase().includes("waakye") ||
-                      ["75zBdBfJlCZP3i5Qdk8R", "YFCveCnKxblPWRtyytdq"].includes(
-                        food.storeId
-                      )
+                      ["75zBdBfJlCZP3i5Qdk8R"].includes(food.storeId)
                     }
                   >
                     Add to cart
