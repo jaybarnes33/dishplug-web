@@ -37,9 +37,7 @@ const Food = ({ food }: { food: FoodType }) => {
       </Link>
       {!food.name.toLowerCase().includes("season") &&
       !food.name.toLowerCase().includes("sunday") &&
-      !["75zBdBfJlCZP3i5Qdk8R", "YFCveCnKxblPWRtyytdq"].includes(
-        food.storeId
-      ) &&
+      !["75zBdBfJlCZP3i5Qdk8R"].includes(food.storeId) &&
       !food.name.toLowerCase().includes("waakye") ? (
         <Button
           variant="light"
