@@ -17,7 +17,7 @@ const Food = ({ food }: { food: FoodType }) => {
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId,
+      storeId: food.storeId
     });
   };
 
@@ -29,7 +29,7 @@ const Food = ({ food }: { food: FoodType }) => {
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
-          src={food.image || ""}
+          src={food.image || "/"}
           height={200}
           width={200}
           objectFit="contain"

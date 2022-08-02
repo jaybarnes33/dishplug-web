@@ -87,9 +87,9 @@ const Header = () => {
                   <NavDropdown.Item>
                     <Link href="/orders">Orders</Link>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  {/* <NavDropdown.Item>
                     <Link href="/profile">Profile</Link>
-                  </NavDropdown.Item>
+                  </NavDropdown.Item> */}
                 </NavDropdown>
               </>
             ) : (

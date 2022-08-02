@@ -1,5 +1,6 @@
 import AuthProvider from "@/components/Context/Auth";
 import CartProvider from "@/components/Context/Cart";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Footer from "@/components/Layout/Footer";
 import Header from "@/components/Layout/Header";
 import "@/styles/bootstrap.css";
@@ -14,7 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <CartProvider>
           <Header />
           <div style={{ minHeight: "90vh" }}>
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
           </div>
 
           <Footer />

@@ -17,7 +17,7 @@ import {
   Image,
   ListGroup,
   Row,
-  Spinner,
+  Spinner
 } from "react-bootstrap";
 import { usePaystackPayment } from "react-paystack";
 
@@ -38,7 +38,7 @@ const Details = ({ details }: IPageProps) => {
     email: addressInfo.email,
     amount: Math.ceil(totalAmount * 100),
     currency: "GHS",
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
   });
 
   // you can call this function anything
@@ -55,19 +55,19 @@ const Details = ({ details }: IPageProps) => {
         id: user?.uid,
         name: addressInfo.name,
         phone: addressInfo.phone,
-        email: addressInfo.email,
+        email: addressInfo.email
       },
       paid: true,
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map((item) => ({
+      items: items?.map(item => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity,
+        quantity: item.quantity
       })),
-      stores: [...new Set(items?.map((item) => item.storeId))],
+      stores: [...new Set(items?.map(item => item.storeId))]
     })
       .then(() => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -87,20 +87,20 @@ const Details = ({ details }: IPageProps) => {
         id: user?.uid,
         name: addressInfo.name,
         phone: addressInfo.phone,
-        email: addressInfo.email,
+        email: addressInfo.email
       },
       deliveryLocation: addressInfo.location,
       date: Timestamp.fromDate(new Date()),
       type: "delivery",
-      items: items?.map((item) => ({
+      items: items?.map(item => ({
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity,
+        quantity: item.quantity
       })),
       paid: false,
       paymentOnDelivery: true,
-      stores: [...new Set(items?.map((item) => item.storeId))],
+      stores: [...new Set(items?.map(item => item.storeId))]
     })
       .then(() => setLoading(false))
       .then(clearCart)

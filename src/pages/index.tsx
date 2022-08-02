@@ -16,11 +16,11 @@ export const getStaticProps: GetStaticProps<{
   const docs = await storesRef.listDocuments();
 
   for (const doc of docs) {
-    const products = await doc.collection("products").limit(4).get();
-    const foodDocs = products.docs.map((productDoc) => ({
+    const products = await doc.collection("products").limit(2).get();
+    const foodDocs = products.docs.map(productDoc => ({
       id: productDoc.id,
       storeId: doc.id,
-      ...productDoc.data(),
+      ...productDoc.data()
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);
@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export default function Home({
-  foods,
+  foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className={styles.container}>
