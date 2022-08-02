@@ -1,6 +1,6 @@
 import { useAuth } from "@/components/Context/Auth";
 import { TCart, useCart } from "@/components/Context/Cart";
-import { currencyFormat } from "@/helpers/utils";
+import { currencyFormat, sendNotification } from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
@@ -46,6 +46,8 @@ const Details = ({ details }: IPageProps) => {
     response: Record<string, string | number>,
     items: TCart[] | null
   ) => {
+    const stores = [...new Set(items?.map(item => item.storeId))];
+
     addDoc(collection(firestore, "orders"), {
       reference: response.reference,
       transaction: response.transaction,
@@ -67,7 +69,7 @@ const Details = ({ details }: IPageProps) => {
         soldFor: item.price,
         quantity: item.quantity
       })),
-      stores: [...new Set(items?.map(item => item.storeId))]
+      stores
     })
       .then(() => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -75,10 +77,24 @@ const Details = ({ details }: IPageProps) => {
         localStorage.setItem("order-details", JSON.stringify(rest));
       })
       .then(clearCart)
+      .then(() =>
+        stores.forEach(store =>
+          sendNotification({
+            name: addressInfo.name,
+            phone: addressInfo.phone,
+            paid: true,
+            location: addressInfo.location,
+            topic: `${store}-new_order`,
+            items: items?.map(item => item.name) || []
+          })
+        )
+      )
       .then(() => replace("/foods"));
   };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
+    const stores = [...new Set(items?.map(item => item.storeId))];
+
     setLoading(true);
     addDoc(collection(firestore, "orders"), {
       status: "pending",
@@ -100,10 +116,22 @@ const Details = ({ details }: IPageProps) => {
       })),
       paid: false,
       paymentOnDelivery: true,
-      stores: [...new Set(items?.map(item => item.storeId))]
+      stores
     })
       .then(() => setLoading(false))
       .then(clearCart)
+      .then(() =>
+        stores.forEach(store =>
+          sendNotification({
+            name: addressInfo.name,
+            phone: addressInfo.phone,
+            paid: false,
+            location: addressInfo.location,
+            topic: `${store}-new_order`,
+            items: items?.map(item => item.name) || []
+          })
+        )
+      )
       .then(() => replace("/foods"));
   };
 
