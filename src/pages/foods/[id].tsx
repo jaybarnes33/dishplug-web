@@ -6,7 +6,7 @@ import admin from "@/lib/firebase/node";
 import type {
   GetStaticPaths,
   GetStaticProps,
-  InferGetStaticPropsType
+  InferGetStaticPropsType,
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -23,12 +23,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    paths.push(...products.docs.map(doc => ({ params: { id: doc.id } })));
+    paths.push(...products.docs.map((doc) => ({ params: { id: doc.id } })));
   }
 
   return {
     paths,
-    fallback: "blocking" // can also be true or 'blocking'
+    fallback: "blocking", // can also be true or 'blocking'
   };
 };
 
@@ -44,13 +44,13 @@ export const getStaticProps: GetStaticProps<{
   for (const doc of docs) {
     const products = await doc.collection("products").get();
 
-    const food = products.docs.find(doc => doc.id === params?.id);
+    const food = products.docs.find((doc) => doc.id === params?.id);
 
     if (food) {
       foodDoc = {
         id: food.id,
         storeId: doc.id,
-        ...food.data()
+        ...food.data(),
       } as unknown as FoodType;
     }
   }
@@ -71,7 +71,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId
+      storeId: food.storeId,
     });
   };
 
@@ -122,11 +122,12 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                     size="lg"
                     onClick={handleAddToCart}
                     disabled={
-                      food.name.toLowerCase().includes("season") ||
+                      // food.name.toLowerCase().includes("season") ||
                       food.name.toLowerCase().includes("sunday") ||
                       food.name.toLowerCase().includes("waakye") ||
-                      food.name.toLowerCase().includes("pizza") ||
-                      food.storeId === "YFCveCnKxblPWRtyytdq"
+                      ["75zBdBfJlCZP3i5Qdk8R", "YFCveCnKxblPWRtyytdq"].includes(
+                        food.storeId
+                      )
                     }
                   >
                     Add to cart
