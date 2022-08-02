@@ -118,7 +118,7 @@ const Details = ({ details }: IPageProps) => {
   };
 
   return (
-    <Container>
+    <Container fluid>
       <Head>
         <title>Checkout</title>
       </Head>
