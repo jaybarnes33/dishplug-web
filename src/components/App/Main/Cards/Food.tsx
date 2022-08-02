@@ -10,7 +10,7 @@ import { useCart } from "@/components/Context/Cart";
 
 const Food = ({ food }: { food: FoodType }) => {
   const { addToCart } = useCart();
-  console.log(food);
+
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
@@ -37,9 +37,11 @@ const Food = ({ food }: { food: FoodType }) => {
       </Link>
       {!food.name.toLowerCase().includes("season") &&
       !food.name.toLowerCase().includes("sunday") &&
+      !food.name.toLowerCase().includes("pizza") &&
       !["75zBdBfJlCZP3i5Qdk8R", "YFCveCnKxblPWRtyytdq"].includes(
         food.storeId
-      ) ? (
+      ) &&
+      !food.name.toLowerCase().includes("waakye") ? (
         <Button
           variant="light"
           onClick={handleAddToCart}

@@ -17,7 +17,6 @@ const Orders = () => {
           id: doc.id,
           ...(doc.data() as Omit<TUserOrder, "id">),
         }));
-        console.log(data);
         setOrders(data);
       });
     })();

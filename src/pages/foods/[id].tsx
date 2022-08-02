@@ -123,7 +123,10 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                     onClick={handleAddToCart}
                     disabled={
                       food.name.toLowerCase().includes("season") ||
-                      food.name.toLowerCase().includes("sunday")
+                      food.name.toLowerCase().includes("sunday") ||
+                      food.name.toLowerCase().includes("waakye") ||
+                      food.name.toLowerCase().includes("pizza") ||
+                      food.storeId === "YFCveCnKxblPWRtyytdq"
                     }
                   >
                     Add to cart
