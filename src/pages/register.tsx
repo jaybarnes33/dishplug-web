@@ -72,7 +72,6 @@ const Register = () => {
       setVerificationId(verificationId);
     } catch (error) {
       if (error instanceof AuthError) {
-        console.log(error);
         setError(error.message);
       }
     } finally {

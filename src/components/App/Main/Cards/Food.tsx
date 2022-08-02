@@ -10,7 +10,7 @@ import { useCart } from "@/components/Context/Cart";
 
 const Food = ({ food }: { food: FoodType }) => {
   const { addToCart } = useCart();
-  console.log(food);
+
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
