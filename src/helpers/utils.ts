@@ -18,3 +18,25 @@ export const formatPhone = (
 
   return phone.startsWith("+233") ? phone.replace("+233", "0") : phone;
 };
+
+export interface IPayload {
+  name: string;
+  phone: string;
+  location: string;
+  paid: boolean;
+  topic: string;
+  items: string[];
+}
+
+export const sendNotification = (payload: IPayload) => {
+  fetch(
+    `${process.env.NEXT_PUBLIC_VENDORS_ORIGIN}/api/messages/send-notification`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    }
+  );
+};
