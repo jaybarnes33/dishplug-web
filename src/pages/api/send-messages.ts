@@ -11,7 +11,7 @@ export default async function handler(
     const { phone, name } = req.body;
     await sendSMS(
       phone,
-      `Hi ${name}, your order has been sent, your food will be delivered in no time`
+      `Hi ${name}, your order has been received, your food will be delivered in no time`
     );
 
     res.status(200).json({ message: "SMS sent successfully" });

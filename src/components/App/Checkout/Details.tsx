@@ -4,6 +4,7 @@ import { currencyFormat, sendNotification } from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
 import { sendSMS } from "@/utils";
+import axios from "axios";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Head from "next/head";
 import Link from "next/link";
@@ -90,10 +91,10 @@ const Details = ({ details }: IPageProps) => {
           })
         );
 
-        sendSMS(
-          addressInfo.phone,
-          `Hi ${addressInfo.name}, your order has been sent, your food will be delivered in no time`
-        );
+        axios.post("/api/send-messages", {
+          phone: addressInfo.phone,
+          name: addressInfo.name,
+        });
       })
       .then(() => replace("/foods"));
   };
@@ -140,10 +141,10 @@ const Details = ({ details }: IPageProps) => {
                 .map((item) => item.name) || [],
           })
         );
-        sendSMS(
-          addressInfo.phone,
-          `Hi ${addressInfo.name}, your order has been sent, your food will be delivered in no time`
-        );
+        axios.post("/api/send-messages", {
+          phone: addressInfo.phone,
+          name: addressInfo.name,
+        });
       })
       .then(() => replace("/foods"));
   };
