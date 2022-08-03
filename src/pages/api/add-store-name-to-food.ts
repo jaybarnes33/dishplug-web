@@ -16,11 +16,7 @@ export default async function handler(
     products.forEach(doc => {
       const [, storeId] = doc.ref.path.split("/");
 
-      db.doc(doc.ref.path).set({
-        name: doc.data().name,
-        price: doc.data().price,
-        description: doc.data().description,
-        image: doc.data().image,
+      db.doc(doc.ref.path).update({
         store_name: stores.docs.find(store => store.id === storeId)?.data().name
       });
     });

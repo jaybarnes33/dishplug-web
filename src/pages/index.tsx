@@ -11,7 +11,7 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({}) => {
   const db = admin.firestore();
 
-  const products = await db.collectionGroup("products").limit(2).get();
+  const products = await db.collectionGroup("products").limit(8).get();
 
   const foods = products.docs.map(doc => {
     const [, storeId] = doc.ref.path.split("/");
