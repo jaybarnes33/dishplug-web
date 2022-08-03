@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps<{
     } as unknown as FoodType;
   });
 
-  return { props: { foods }, revalidate: 60 };
+  return { props: { foods }, revalidate: 1 };
 };
 
 export default Foods;
