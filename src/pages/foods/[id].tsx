@@ -36,6 +36,7 @@ export const getStaticProps: GetStaticProps<{
   const food = foodDoc
     ? ({
         id: foodDoc.id,
+        storeId: foodDoc.ref.path.split("/")[1],
         ...foodDoc.data(),
       } as FoodType)
     : null;
@@ -44,7 +45,7 @@ export const getStaticProps: GetStaticProps<{
     throw new Error(`missing document for ${params?.id}`);
   }
 
-  return { props: { food }, revalidate: 60 };
+  return { props: { food }, revalidate: 1 };
 };
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
