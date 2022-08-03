@@ -6,7 +6,7 @@ import admin from "@/lib/firebase/node";
 import type {
   GetStaticPaths,
   GetStaticProps,
-  InferGetStaticPropsType,
+  InferGetStaticPropsType
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -16,19 +16,13 @@ import { useCart } from "@/components/Context/Cart";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
-  const storesRef = db.collection("stores");
-  const docs = await storesRef.listDocuments();
+  const products = await db.collectionGroup("products").get();
 
-  const paths = [];
-
-  for (const doc of docs) {
-    const products = await doc.collection("products").get();
-    paths.push(...products.docs.map((doc) => ({ params: { id: doc.id } })));
-  }
+  const paths = products.docs.map(doc => ({ params: { id: doc.id } }));
 
   return {
     paths,
-    fallback: "blocking", // can also be true or 'blocking'
+    fallback: "blocking" // can also be true or 'blocking'
   };
 };
 
@@ -36,30 +30,21 @@ export const getStaticProps: GetStaticProps<{
   food: FoodType;
 }> = async ({ params }) => {
   const db = admin.firestore();
-  const storesRef = db.collection("stores");
-  const docs = await storesRef.listDocuments();
+  const products = await db.collectionGroup("products").get();
+  const foodDoc = products.docs.find(doc => doc.id === params?.id);
 
-  let foodDoc: FoodType | null = null;
+  const food = foodDoc
+    ? ({
+        id: foodDoc.id,
+        ...foodDoc.data()
+      } as FoodType)
+    : null;
 
-  for (const doc of docs) {
-    const products = await doc.collection("products").get();
-
-    const food = products.docs.find((doc) => doc.id === params?.id);
-
-    if (food) {
-      foodDoc = {
-        id: food.id,
-        storeId: doc.id,
-        ...food.data(),
-      } as unknown as FoodType;
-    }
-  }
-
-  if (!foodDoc) {
+  if (!food) {
     throw new Error(`missing document for ${params?.id}`);
   }
 
-  return { props: { food: foodDoc }, revalidate: 1 };
+  return { props: { food }, revalidate: 60 };
 };
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -72,6 +57,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       price: food.price,
       image: food.image,
       storeId: food.storeId,
+      store_name: food.store_name
     });
   };
 
@@ -107,7 +93,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h1>{food.name}</h1>
-                  <Rating value={food.rating} />
+                  <Rating value={food.rating || 0} />
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <h2 className="text-danger">{currencyFormat(food.price)}</h2>
