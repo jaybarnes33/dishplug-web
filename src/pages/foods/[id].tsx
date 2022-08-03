@@ -36,6 +36,7 @@ export const getStaticProps: GetStaticProps<{
   const food = foodDoc
     ? ({
         id: foodDoc.id,
+        storeId: foodDoc.ref.path.split("/")[1],
         ...foodDoc.data()
       } as FoodType)
     : null;
