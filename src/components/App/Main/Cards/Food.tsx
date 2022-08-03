@@ -2,7 +2,6 @@ import React from "react";
 import { Badge, Button, Card, CardImg } from "react-bootstrap";
 import Image from "next/image";
 import { FoodType } from "@/types";
-import Rating from "../../Rating";
 import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { currencyFormat } from "@/helpers/utils";
@@ -17,7 +16,7 @@ const Food = ({ food }: { food: FoodType }) => {
       price: food.price,
       image: food.image,
       storeId: food.storeId,
-      storeName: food.storeName,
+      store_name: food.store_name
     });
   };
 
@@ -59,7 +58,7 @@ const Food = ({ food }: { food: FoodType }) => {
           </Link>
           <span className="text-danger">{currencyFormat(food.price)}</span>
           <Link href={`/stores/${food.storeId}`}>
-            <small> {food.storeName}</small>
+            <small> {food.store_name}</small>
           </Link>
         </div>
       </Card.Body>

@@ -21,7 +21,7 @@ interface IProviderProps {
   children: React.ReactNode;
 }
 
-export type TCart = Omit<FoodType, "storeName" | "description"> & {
+export type TCart = Omit<FoodType, "description"> & {
   quantity: number;
 };
 

@@ -6,8 +6,9 @@ export interface FoodType {
   description?: string;
   image: string;
   id: string;
+  rating?: number;
   storeId: string;
-  storeName: string;
+  store_name: string;
 }
 
 export interface VendorType {

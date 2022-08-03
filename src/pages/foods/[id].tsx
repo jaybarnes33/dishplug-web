@@ -57,7 +57,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       price: food.price,
       image: food.image,
       storeId: food.storeId,
-      storeName: food.store_name
+      store_name: food.store_name
     });
   };
 
@@ -93,7 +93,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h1>{food.name}</h1>
-                  <Rating value={food.rating} />
+                  <Rating value={food.rating || 0} />
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <h2 className="text-danger">{currencyFormat(food.price)}</h2>
