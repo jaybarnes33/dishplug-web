@@ -15,7 +15,6 @@ export default async function handler(
 
     products.forEach(doc => {
       const [, storeId] = doc.ref.path.split("/");
-      console.log(storeId);
 
       db.doc(doc.ref.path).set({
         name: doc.data().name,
