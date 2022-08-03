@@ -56,7 +56,8 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId
+      storeId: food.storeId,
+      storeName: food.store_name
     });
   };
 
