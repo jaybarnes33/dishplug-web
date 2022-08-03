@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps<{
     } as FoodType;
   });
 
-  return { props: { foods }, revalidate: 60 };
+  return { props: { foods }, revalidate: 1 };
 };
 
 const Search = ({
