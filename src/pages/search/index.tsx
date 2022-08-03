@@ -18,10 +18,12 @@ export const getStaticProps: GetStaticProps<{
 
   for (const doc of docs) {
     const products = await doc.collection("products").get();
-    const foodDocs = products.docs.map((productDoc) => ({
-      id: productDoc.id,
+    const name = (await doc.get()).data()?.name;
+    const foodDocs = products.docs.map((product) => ({
+      id: product.id,
       storeId: doc.id,
-      ...productDoc.data(),
+      storeName: name,
+      ...product.data(),
     })) as unknown as FoodType[];
 
     foods.push(...foodDocs);

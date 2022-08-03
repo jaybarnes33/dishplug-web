@@ -8,6 +8,7 @@ export interface FoodType {
   image: string;
   id: string;
   storeId: string;
+  storeName: string;
 }
 
 export interface VendorType {
