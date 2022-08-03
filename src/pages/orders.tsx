@@ -4,23 +4,26 @@ import { Alert, Container, Table } from "react-bootstrap";
 import { TUserOrder } from "@/types";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { firestore } from "@/lib/firebase/client";
+
 const Orders = () => {
   const [orders, setOrders] = useState<TUserOrder[]>([]);
   const { user } = useAuth();
+
   useEffect(() => {
     (async () => {
       const ordersRef = collection(firestore, "orders");
       const q = query(ordersRef, where("customer.id", "==", user?.uid));
 
-      onSnapshot(q, (snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
+      onSnapshot(q, snapshot => {
+        const data = snapshot.docs.map(doc => ({
           id: doc.id,
-          ...(doc.data() as Omit<TUserOrder, "id">),
+          ...(doc.data() as Omit<TUserOrder, "id">)
         }));
         setOrders(data);
       });
     })();
   }, [user?.uid]);
+
   return (
     <div className="mt-5 pt-5">
       <Container className="mt-4">
@@ -40,7 +43,7 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {orders.map(order => (
                 <tr key={order.id}>
                   <td>{order.date.toDate().toDateString()}</td>
                   <td>{order.status}</td>

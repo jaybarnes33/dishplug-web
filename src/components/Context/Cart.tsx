@@ -6,14 +6,14 @@ import {
   doc,
   getDocs,
   setDoc,
-  writeBatch,
+  writeBatch
 } from "firebase/firestore";
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useState
 } from "react";
 import { useAuth } from "./Auth";
 
@@ -21,7 +21,7 @@ interface IProviderProps {
   children: React.ReactNode;
 }
 
-export type TCart = Omit<FoodType, "rating" | "description"> & {
+export type TCart = Omit<FoodType, "storeName" | "description"> & {
   quantity: number;
 };
 
@@ -48,17 +48,17 @@ const CartProvider = ({ children }: IProviderProps) => {
     if (user) {
       const buyersRef = collection(firestore, "buyers");
       getDocs(collection(buyersRef, user.uid, "cart"))
-        .then((cart) => {
+        .then(cart => {
           let count = 0;
 
-          const cartData = cart.docs.map((doc) => ({
+          const cartData = cart.docs.map(doc => ({
             id: doc.id,
-            ...doc.data(),
+            ...doc.data()
           })) as unknown as TCart[];
 
           setCart(cartData);
 
-          cart.docs.forEach((doc) => {
+          cart.docs.forEach(doc => {
             count += doc.data().quantity;
           });
 
@@ -72,9 +72,9 @@ const CartProvider = ({ children }: IProviderProps) => {
     (id: string) => {
       if (!user) throw new Error("user can't be null");
 
-      setCart((prevCart) => {
+      setCart(prevCart => {
         if (!prevCart) return null;
-        return prevCart.filter((item) => item.id !== id);
+        return prevCart.filter(item => item.id !== id);
       });
 
       const buyersRef = collection(firestore, "buyers");
@@ -88,7 +88,7 @@ const CartProvider = ({ children }: IProviderProps) => {
       let count = 0;
       let totalAmount = 0;
 
-      cart.forEach((item) => {
+      cart.forEach(item => {
         count += item.quantity;
         totalAmount += item.price * item.quantity;
 
@@ -113,13 +113,13 @@ const CartProvider = ({ children }: IProviderProps) => {
   }, [cart, user]);
 
   const addToCart = (item: Omit<TCart, "quantity">) => {
-    setCart((prevCart) => {
+    setCart(prevCart => {
       if (!prevCart) return [{ ...item, quantity: 1 }];
 
       const updatingItem = prevCart.find(({ id }) => id === item.id);
 
       if (updatingItem) {
-        return prevCart.map((existingItem) =>
+        return prevCart.map(existingItem =>
           existingItem.id === updatingItem.id
             ? { ...existingItem, quantity: existingItem.quantity + 1 }
             : existingItem
@@ -133,7 +133,7 @@ const CartProvider = ({ children }: IProviderProps) => {
   const clearCart = () => {
     if (!user) throw new Error("User can't be null");
 
-    cart?.forEach(async (item) => {
+    cart?.forEach(async item => {
       const buyersRef = collection(firestore, "buyers");
       const itemDoc = doc(buyersRef, user.uid, "cart", item.id);
       const batch = writeBatch(firestore);
@@ -146,10 +146,10 @@ const CartProvider = ({ children }: IProviderProps) => {
   };
 
   const increment = (id: string) => {
-    setCart((prevCart) => {
+    setCart(prevCart => {
       if (!prevCart) return null;
 
-      return prevCart.map((existingItem) =>
+      return prevCart.map(existingItem =>
         existingItem.id === id
           ? { ...existingItem, quantity: existingItem.quantity + 1 }
           : existingItem
@@ -158,10 +158,10 @@ const CartProvider = ({ children }: IProviderProps) => {
   };
 
   const decrement = (id: string) => {
-    setCart((prevCart) => {
+    setCart(prevCart => {
       if (!prevCart) return null;
 
-      return prevCart.map((existingItem) =>
+      return prevCart.map(existingItem =>
         existingItem.id === id
           ? { ...existingItem, quantity: existingItem.quantity - 1 }
           : existingItem
@@ -179,7 +179,7 @@ const CartProvider = ({ children }: IProviderProps) => {
         removeFromCart,
         increment,
         decrement,
-        clearCart,
+        clearCart
       }}
     >
       {children}

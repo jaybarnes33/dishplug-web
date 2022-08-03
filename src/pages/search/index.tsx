@@ -11,27 +11,23 @@ export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
-  const foods: FoodType[] = [];
+  const products = await db.collectionGroup("products").get();
 
-  const storesRef = db.collection("stores");
-  const docs = await storesRef.listDocuments();
+  const foods = products.docs.map(doc => {
+    const [, storeId] = doc.ref.path.split("/");
 
-  for (const doc of docs) {
-    const products = await doc.collection("products").get();
-    const foodDocs = products.docs.map((productDoc) => ({
-      id: productDoc.id,
-      storeId: doc.id,
-      ...productDoc.data(),
-    })) as unknown as FoodType[];
-
-    foods.push(...foodDocs);
-  }
+    return {
+      id: doc.id,
+      storeId,
+      ...doc.data()
+    } as FoodType;
+  });
 
   return { props: { foods }, revalidate: 60 };
 };
 
 const Search = ({
-  foods: items,
+  foods: items
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [foods, setFoods] = useState<FoodType[]>([]);
 
@@ -39,8 +35,8 @@ const Search = ({
   useEffect(() => {
     if (items) {
       setFoods(
-        items.filter((item) =>
-          [item.name, item.description].some((i) =>
+        items.filter(item =>
+          [item.name, item.description].some(i =>
             i?.toLowerCase().includes(String(keyword.toLowerCase()))
           )
         )

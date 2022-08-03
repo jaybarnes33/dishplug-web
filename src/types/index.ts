@@ -4,10 +4,10 @@ export interface FoodType {
   name: string;
   price: number;
   description?: string;
-  rating: number;
   image: string;
   id: string;
   storeId: string;
+  storeName: string;
 }
 
 export interface VendorType {

@@ -36,23 +36,19 @@ export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
-  const foods: FoodType[] = [];
+  const products = await db.collectionGroup("products").get();
 
-  const storesRef = db.collection("stores");
-  const docs = await storesRef.listDocuments();
+  const foods = products.docs.map(doc => {
+    const [, storeId] = doc.ref.path.split("/");
 
-  for (const doc of docs) {
-    const products = await doc.collection("products").get();
-    const foodDocs = products.docs.map((product) => ({
-      id: product.id,
-      storeId: doc.id,
-      ...product.data(),
-    })) as unknown as FoodType[];
+    return {
+      id: doc.id,
+      storeId,
+      ...doc.data()
+    } as unknown as FoodType;
+  });
 
-    foods.push(...foodDocs);
-  }
-
-  return { props: { foods }, revalidate: 1 };
+  return { props: { foods }, revalidate: 60 };
 };
 
 export default Foods;
