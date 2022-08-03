@@ -6,7 +6,7 @@ import admin from "@/lib/firebase/node";
 import type {
   GetStaticPaths,
   GetStaticProps,
-  InferGetStaticPropsType
+  InferGetStaticPropsType,
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -18,11 +18,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
   const products = await db.collectionGroup("products").get();
 
-  const paths = products.docs.map(doc => ({ params: { id: doc.id } }));
+  const paths = products.docs.map((doc) => ({ params: { id: doc.id } }));
 
   return {
     paths,
-    fallback: "blocking" // can also be true or 'blocking'
+    fallback: "blocking", // can also be true or 'blocking'
   };
 };
 
@@ -31,12 +31,12 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({ params }) => {
   const db = admin.firestore();
   const products = await db.collectionGroup("products").get();
-  const foodDoc = products.docs.find(doc => doc.id === params?.id);
+  const foodDoc = products.docs.find((doc) => doc.id === params?.id);
 
   const food = foodDoc
     ? ({
         id: foodDoc.id,
-        ...foodDoc.data()
+        ...foodDoc.data(),
       } as FoodType)
     : null;
 
@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps<{
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { addToCart } = useCart();
-
+  console.log(food);
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
@@ -57,7 +57,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       price: food.price,
       image: food.image,
       storeId: food.storeId,
-      store_name: food.store_name
+      store_name: food.store_name,
     });
   };
 
@@ -108,10 +108,10 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                     size="lg"
                     onClick={handleAddToCart}
                     disabled={
-                      // food.name.toLowerCase().includes("season") ||
+                      food.name.toLowerCase().includes("cup") ||
+                      food.name.toLowerCase().includes("season") ||
                       food.name.toLowerCase().includes("sunday") ||
-                      food.name.toLowerCase().includes("waakye") ||
-                      ["75zBdBfJlCZP3i5Qdk8R"].includes(food.storeId)
+                      food.name.toLowerCase().includes("waakye")
                     }
                   >
                     Add to cart
