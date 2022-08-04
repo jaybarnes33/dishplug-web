@@ -11,7 +11,10 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({}) => {
   const db = admin.firestore();
 
-  const products = await db.collectionGroup("products").limit(8).get();
+  const products = await db
+    .collectionGroup("products")
+    .where("store_name", "==", "Hostel Crust")
+    .get();
 
   const foods = products.docs.map(doc => {
     const [, storeId] = doc.ref.path.split("/");
@@ -23,7 +26,12 @@ export const getStaticProps: GetStaticProps<{
     } as FoodType;
   });
 
-  return { props: { foods }, revalidate: 1 };
+  const sortedFoods = foods.filter(food =>
+    food.name.toLowerCase().includes("pizza")
+  );
+  sortedFoods.length = 4;
+
+  return { props: { foods: sortedFoods }, revalidate: 1 };
 };
 
 export default function Home({
