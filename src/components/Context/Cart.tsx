@@ -1,5 +1,6 @@
 import { firestore } from "@/lib/firebase/client";
 import { FoodType } from "@/types";
+import type { FirestoreDataConverter } from "firebase/firestore/lite";
 import {
   collection,
   deleteDoc,
@@ -7,7 +8,8 @@ import {
   getDocs,
   setDoc,
   writeBatch
-} from "firebase/firestore";
+} from "firebase/firestore/lite";
+import localforage from "localforage";
 import {
   createContext,
   useCallback,
@@ -21,8 +23,33 @@ interface IProviderProps {
   children: React.ReactNode;
 }
 
-export type TCart = Omit<FoodType, "description"> & {
+export type TCart = Omit<FoodType, "rating" | "description"> & {
   quantity: number;
+};
+
+const cartConverter: FirestoreDataConverter<TCart> = {
+  toFirestore(item) {
+    return {
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      quantity: item.quantity,
+      store: { id: item.storeId, name: item.store_name }
+    };
+  },
+  fromFirestore(snapshot) {
+    const data = snapshot.data();
+
+    return {
+      id: snapshot.id,
+      name: data.name,
+      price: data.price,
+      image: data.image,
+      quantity: data.quantity,
+      storeId: data.store.id,
+      store_name: data.store.name
+    };
+  }
 };
 
 interface IContextProps {
@@ -44,23 +71,35 @@ const CartProvider = ({ children }: IProviderProps) => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [cart, setCart] = useState<TCart[] | null>(null);
 
+  // initial local state with firestore
   useEffect(() => {
+    let count = 0;
+
     if (user) {
       const buyersRef = collection(firestore, "buyers");
-      getDocs(collection(buyersRef, user.uid, "cart"))
+      getDocs(
+        collection(buyersRef, user.uid, "cart").withConverter(cartConverter)
+      )
         .then(cart => {
-          let count = 0;
-
-          const cartData = cart.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          })) as unknown as TCart[];
-
+          const cartData = cart.docs.map(doc => doc.data());
           setCart(cartData);
 
-          cart.docs.forEach(doc => {
+          cart.forEach(doc => {
             count += doc.data().quantity;
           });
+
+          return count;
+        })
+        .then(setItemsInCart);
+    } else {
+      localforage
+        .getItem<TCart[]>("cart")
+        .then(storedCart => {
+          storedCart?.forEach(item => {
+            count += item.quantity;
+          });
+
+          if (storedCart) setCart(storedCart);
 
           return count;
         })
@@ -70,19 +109,20 @@ const CartProvider = ({ children }: IProviderProps) => {
 
   const removeFromCart = useCallback(
     (id: string) => {
-      if (!user) throw new Error("user can't be null");
+      const remainingItems = cart ? cart.filter(item => item.id !== id) : null;
+      setCart(remainingItems);
 
-      setCart(prevCart => {
-        if (!prevCart) return null;
-        return prevCart.filter(item => item.id !== id);
-      });
-
-      const buyersRef = collection(firestore, "buyers");
-      deleteDoc(doc(buyersRef, user.uid, "cart", id));
+      if (user) {
+        const buyersRef = collection(firestore, "buyers");
+        deleteDoc(doc(buyersRef, user.uid, "cart", id));
+      } else {
+        localforage.setItem("cart", remainingItems);
+      }
     },
-    [user]
+    [user, cart]
   );
 
+  // remove item from cart when quantity reaches 0
   useEffect(() => {
     if (cart) {
       let count = 0;
@@ -102,13 +142,18 @@ const CartProvider = ({ children }: IProviderProps) => {
     }
   }, [cart, removeFromCart]);
 
+  // update firestore with local state
   useEffect(() => {
-    if (cart && user) {
-      const buyersRef = collection(firestore, "buyers");
+    if (cart) {
+      if (user) {
+        const buyersRef = collection(firestore, "buyers");
 
-      cart.forEach(({ id, ...rest }) => {
-        setDoc(doc(buyersRef, user.uid, "cart", id), rest);
-      });
+        cart.forEach(({ id, ...rest }) => {
+          setDoc(doc(buyersRef, user.uid, "cart", id), rest);
+        });
+      } else {
+        localforage.setItem("cart", cart);
+      }
     }
   }, [cart, user]);
 
@@ -131,11 +176,9 @@ const CartProvider = ({ children }: IProviderProps) => {
   };
 
   const clearCart = () => {
-    if (!user) throw new Error("User can't be null");
-
     cart?.forEach(async item => {
       const buyersRef = collection(firestore, "buyers");
-      const itemDoc = doc(buyersRef, user.uid, "cart", item.id);
+      const itemDoc = doc(buyersRef, user?.uid || "", "cart", item.id);
       const batch = writeBatch(firestore);
 
       batch.delete(itemDoc);

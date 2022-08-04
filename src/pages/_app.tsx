@@ -5,10 +5,20 @@ import Footer from "@/components/Layout/Footer";
 import Header from "@/components/Layout/Header";
 import "@/styles/bootstrap.css";
 import "@/styles/globals.scss";
+import localforage from "localforage";
 import { AppProps } from "next/app";
+import { useEffect } from "react";
 import { SSRProvider } from "react-bootstrap";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    localforage.config({
+      name: "dishplug",
+      storeName: "anon_cart",
+      version: 1.0
+    });
+  }, []);
+
   return (
     <SSRProvider>
       <AuthProvider>
