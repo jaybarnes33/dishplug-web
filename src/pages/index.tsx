@@ -14,7 +14,6 @@ export const getStaticProps: GetStaticProps<{
   const products = await db
     .collectionGroup("products")
     .where("store_name", "==", "Hostel Crust")
-    .limit(4)
     .get();
 
   const foods = products.docs.map(doc => {
@@ -27,7 +26,12 @@ export const getStaticProps: GetStaticProps<{
     } as FoodType;
   });
 
-  return { props: { foods }, revalidate: 1 };
+  const sortedFoods = foods.filter(food =>
+    food.name.toLowerCase().includes("pizza")
+  );
+  sortedFoods.length = 4;
+
+  return { props: { foods: sortedFoods }, revalidate: 1 };
 };
 
 export default function Home({
