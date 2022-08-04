@@ -11,14 +11,15 @@ export default async function handler(
     const cart = await db.collectionGroup("cart").get();
 
     cart.forEach(item => {
+      console.log(item.data(), item.ref.path);
       db.doc(item.ref.path).set({
         name: item.data().name,
         image: item.data().image,
         price: item.data().price,
         quantity: item.data().quantity,
         store: {
-          id: item.data().storeId,
-          name: item.data().store_name
+          id: item.data().storeId || "",
+          name: item.data().store_name || ""
         }
       });
     });
