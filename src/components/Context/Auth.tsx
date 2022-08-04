@@ -1,18 +1,5 @@
-import {
-  browserLocalPersistence,
-  onAuthStateChanged,
-  setPersistence,
-  signInAnonymously,
-  signInWithCustomToken,
-  User
-} from "firebase/auth";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "@/lib/firebase/client";
 
 interface IProviderProps {
@@ -32,53 +19,19 @@ const AuthProvider = ({ children }: IProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const createAnon = useCallback(() => {
-    setPersistence(auth, browserLocalPersistence).then(() => {
-      signInAnonymously(auth).then(({ user }) => {
-        setUser(user);
-        user.getIdToken().then(setToken);
-        localStorage.setItem("anonymous", user.uid);
-      });
-    });
-  }, []);
-
-  const getAnon = useCallback(() => {
-    const anonymousUid = localStorage.getItem("anonymous");
-
-    fetch(`/api/users/anon?uid=${anonymousUid}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-        const token = data.token;
-        if (!token) throw new Error("failed to get anon");
-
-        signInWithCustomToken(auth, token);
-      })
-      .catch(createAnon);
-  }, [createAnon]);
-
-  useEffect(() => {
-    const anonymousUid = localStorage.getItem("anonymous");
-    if (!anonymousUid) createAnon();
-  }, [createAnon]);
-
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user) {
-        setUser(user);
+        setIsAuthenticated(true);
         user.getIdToken().then(setToken);
-        setIsAuthenticated(
-          Boolean(!user.isAnonymous && user.providerData.length)
-        );
       } else {
-        getAnon();
+        setToken("");
+        setIsAuthenticated(false);
       }
+
+      setUser(user);
     });
-  }, [getAnon]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, token, isAuthenticated }}>
