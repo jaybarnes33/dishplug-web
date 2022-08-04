@@ -1,6 +1,6 @@
 import { firestore } from "@/lib/firebase/client";
 import { FoodType } from "@/types";
-import type { FirestoreDataConverter } from "firebase/firestore/lite";
+import type { FirestoreDataConverter } from "firebase/firestore";
 import {
   collection,
   deleteDoc,
@@ -8,7 +8,7 @@ import {
   getDocs,
   setDoc,
   writeBatch
-} from "firebase/firestore/lite";
+} from "firebase/firestore";
 import localforage from "localforage";
 import {
   createContext,
@@ -176,14 +176,18 @@ const CartProvider = ({ children }: IProviderProps) => {
   };
 
   const clearCart = () => {
-    cart?.forEach(async item => {
-      const buyersRef = collection(firestore, "buyers");
-      const itemDoc = doc(buyersRef, user?.uid || "", "cart", item.id);
-      const batch = writeBatch(firestore);
+    if (user) {
+      cart?.forEach(async item => {
+        const buyersRef = collection(firestore, "buyers");
+        const itemDoc = doc(buyersRef, user.uid, "cart", item.id);
+        const batch = writeBatch(firestore);
 
-      batch.delete(itemDoc);
-      batch.commit();
-    });
+        batch.delete(itemDoc);
+        batch.commit();
+      });
+    } else {
+      localforage.removeItem("cart");
+    }
 
     setCart([]);
   };
