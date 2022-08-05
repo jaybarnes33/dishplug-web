@@ -69,7 +69,8 @@ const Details = ({ details }: IPageProps) => {
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        storeId: item.storeId
       })),
       stores
     })
@@ -119,7 +120,8 @@ const Details = ({ details }: IPageProps) => {
         id: item.id,
         name: item.name,
         soldFor: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        storeId: item.storeId
       })),
       paid: false,
       paymentOnDelivery: true,
