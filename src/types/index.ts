@@ -8,6 +8,7 @@ export interface FoodType {
   id: string;
   rating?: number;
   storeId: string;
+  available: boolean;
   store_name: string;
 }
 

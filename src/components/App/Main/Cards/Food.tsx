@@ -16,7 +16,7 @@ const Food = ({ food }: { food: FoodType }) => {
       price: food.price,
       image: food.image,
       storeId: food.storeId,
-      store_name: food.store_name,
+      store_name: food.store_name
     });
   };
 
@@ -34,8 +34,7 @@ const Food = ({ food }: { food: FoodType }) => {
           objectFit="contain"
         />
       </Link>
-      {!food.name.toLowerCase().includes("sunday") &&
-      !food.name.toLowerCase().includes("waakye") ? (
+      {food.available ? (
         <Button
           variant="light"
           onClick={handleAddToCart}
