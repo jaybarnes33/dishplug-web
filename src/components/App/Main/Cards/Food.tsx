@@ -22,7 +22,11 @@ const Food = ({ food }: { food: FoodType }) => {
 
   return (
     <Card
-      style={{ border: "none", maxWidth: 200 }}
+      style={{
+        border: "none",
+        maxWidth: 200,
+        cursor: "pointer"
+      }}
       className="position-relative my-3"
     >
       <Link href={`/foods/${food.id}`}>

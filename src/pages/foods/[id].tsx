@@ -6,7 +6,7 @@ import admin from "@/lib/firebase/node";
 import type {
   GetStaticPaths,
   GetStaticProps,
-  InferGetStaticPropsType,
+  InferGetStaticPropsType
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -18,11 +18,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
   const products = await db.collectionGroup("products").get();
 
-  const paths = products.docs.map((doc) => ({ params: { id: doc.id } }));
+  const paths = products.docs.map(doc => ({ params: { id: doc.id } }));
 
   return {
     paths,
-    fallback: "blocking", // can also be true or 'blocking'
+    fallback: "blocking" // can also be true or 'blocking'
   };
 };
 
@@ -31,13 +31,13 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({ params }) => {
   const db = admin.firestore();
   const products = await db.collectionGroup("products").get();
-  const foodDoc = products.docs.find((doc) => doc.id === params?.id);
+  const foodDoc = products.docs.find(doc => doc.id === params?.id);
 
   const food = foodDoc
     ? ({
         id: foodDoc.id,
         storeId: foodDoc.ref.path.split("/")[1],
-        ...foodDoc.data(),
+        ...foodDoc.data()
       } as FoodType)
     : null;
 
@@ -58,7 +58,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       price: food.price,
       image: food.image,
       storeId: food.storeId,
-      store_name: food.store_name,
+      store_name: food.store_name
     });
   };
 
@@ -107,13 +107,19 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   <Button
                     variant="dark"
                     size="lg"
-                    onClick={handleAddToCart}
-                    disabled={
-                      food.name.toLowerCase().includes("sunday") ||
-                      food.name.toLowerCase().includes("waakye")
+                    style={
+                      food.available
+                        ? undefined
+                        : {
+                            color: "#212121",
+                            border: "2px solid dark",
+                            backgroundColor: "transparent"
+                          }
                     }
+                    onClick={handleAddToCart}
+                    disabled={!food.available}
                   >
-                    Add to cart
+                    {food.available ? "Add to cart" : "NOT AVAILABLE"}
                   </Button>
                 </ListGroup.Item>
               </ListGroup>
