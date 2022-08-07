@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge, Button, Card, CardImg } from "react-bootstrap";
 import Image from "next/image";
-import { FoodType } from "@/types";
+import type { FoodType } from "@/types";
 import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { currencyFormat } from "@/helpers/utils";
