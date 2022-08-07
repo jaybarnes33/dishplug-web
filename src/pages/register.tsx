@@ -3,20 +3,21 @@ import { FormikConfig, useFormik } from "formik";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "yup-phone-lite";
 import FormWrapper from "@/components/Layout/FormWrapper";
-import { linkWithCredential, PhoneAuthProvider } from "firebase/auth";
+import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useRecaptcha } from "@/hooks/recaptcha";
 import { AuthError } from "@/helpers/constructors";
 import { useAuth } from "@/components/Context/Auth";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { formatPhone } from "@/helpers/utils";
 
 const initialValues = {
   firstName: "",
   lastName: "",
   email: "",
   phone: "",
-  password: "",
+  password: ""
 };
 
 const validationSchema = Yup.object().shape({
@@ -30,7 +31,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(8)
     .required("Password field can't be empty")
-    .label("Password"),
+    .label("Password")
 });
 
 const Register = () => {
@@ -40,6 +41,7 @@ const Register = () => {
   const [otp, setOtp] = useState("");
   const { replace } = useRouter();
   const [error, setError] = useState("");
+
   useEffect(() => {
     if (recaptchaResponse) {
       const otp = window.prompt(
@@ -65,7 +67,7 @@ const Register = () => {
       // 'recaptcha-container' is the ID of an element in the DOM.
       const provider = new PhoneAuthProvider(auth);
       const verificationId = await provider.verifyPhoneNumber(
-        values.phone.replace("0", "+233"),
+        formatPhone(values.phone),
         appVerifier
       );
 
@@ -83,7 +85,7 @@ const Register = () => {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit,
+      onSubmit
     });
 
   const confirmOtp = useCallback(
@@ -95,17 +97,20 @@ const Register = () => {
       }
 
       const phoneCredential = PhoneAuthProvider.credential(verificationId, otp);
-      const { user: newUser } = await linkWithCredential(user, phoneCredential);
+      const { user: newUser } = await signInWithCredential(
+        auth,
+        phoneCredential
+      );
 
       const res = await fetch("/api/users/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           uid: newUser.uid,
-          ...values,
-        }),
+          ...values
+        })
       });
 
       const data = await res.json();
