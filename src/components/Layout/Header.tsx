@@ -17,6 +17,7 @@ import { useAuth } from "../Context/Auth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
+import Image from "next/image";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
@@ -53,9 +54,17 @@ const Header = () => {
       <Container className="d-flex flex-wrap flex-md-nowrap justify-content-between">
         <Navbar.Brand className="order-1">
           <Link href="/" passHref>
-            <span>
+            {/* <span>
               <FaUtensils /> Dishplug
-            </span>
+            </span> */}
+            <Image
+              src={"/logoblack1.png"}
+              width={150}
+              height={50}
+              style={{ transform: "rotate(145deg)" }}
+              objectFit="contain"
+              alt="Dishplug"
+            />
           </Link>
         </Navbar.Brand>
 
