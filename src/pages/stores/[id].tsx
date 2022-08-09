@@ -5,7 +5,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { firestore } from "@/lib/firebase/client";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import Food from "@/components/App/Main/Cards/Food";
-import { FaMapMarkerAlt, FaPhone, FaPhoneAlt } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import Head from "next/head";
 
 const Shops = () => {
   const {
@@ -41,6 +42,10 @@ const Shops = () => {
 
   return (
     <div>
+      <Head>
+        <title>{store?.name}</title>
+        <meta name="description" content={store?.name} />
+      </Head>
       <div
         className="d-flex align-items-center"
         style={{ backgroundColor: "var(--dp-primary)", minHeight: "50vh" }}
