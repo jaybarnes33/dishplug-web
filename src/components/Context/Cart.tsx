@@ -114,7 +114,9 @@ const CartProvider = ({ children }: IProviderProps) => {
 
       if (user) {
         const buyersRef = collection(firestore, "buyers");
-        deleteDoc(doc(buyersRef, user.uid, "cart", id));
+        deleteDoc(
+          doc(buyersRef, user.uid, "cart", id).withConverter(cartConverter)
+        );
       } else {
         localforage.setItem("cart", remainingItems);
       }
@@ -149,7 +151,10 @@ const CartProvider = ({ children }: IProviderProps) => {
         const buyersRef = collection(firestore, "buyers");
 
         cart.forEach(({ id, ...rest }) => {
-          setDoc(doc(buyersRef, user.uid, "cart", id), rest);
+          setDoc(
+            doc(buyersRef, user.uid, "cart", id).withConverter(cartConverter),
+            rest
+          );
         });
       } else {
         localforage.setItem("cart", cart);
@@ -179,7 +184,9 @@ const CartProvider = ({ children }: IProviderProps) => {
     if (user) {
       cart?.forEach(async item => {
         const buyersRef = collection(firestore, "buyers");
-        const itemDoc = doc(buyersRef, user.uid, "cart", item.id);
+        const itemDoc = doc(buyersRef, user.uid, "cart", item.id).withConverter(
+          cartConverter
+        );
         const batch = writeBatch(firestore);
 
         batch.delete(itemDoc);
