@@ -41,3 +41,15 @@ interface IOrder {
   stores: string[];
 }
 export type TUserOrder = Omit<IOrder, "customer">;
+
+export interface StoreType {
+  city: string;
+  contact: string;
+  id: string;
+  name: string;
+  owner: {
+    contact: string;
+    name: string;
+    uid: string;
+  };
+}

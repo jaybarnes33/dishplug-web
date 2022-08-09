@@ -4,7 +4,7 @@ import React, {
   FormEvent,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 
@@ -25,7 +25,7 @@ function Search() {
   };
 
   const handleScroll = () => {
-    if (window.scrollY < 300) {
+    if (window.scrollY < 290) {
       searchRef.current?.classList.add("d-none");
     } else {
       searchRef.current?.classList.remove("d-none");

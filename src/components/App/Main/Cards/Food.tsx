@@ -6,8 +6,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { currencyFormat } from "@/helpers/utils";
 import { useCart } from "@/components/Context/Cart";
+import { useRouter } from "next/router";
 
 const Food = ({ food }: { food: FoodType }) => {
+  const { pathname } = useRouter();
   const { addToCart } = useCart();
   const handleAddToCart = () => {
     addToCart({
@@ -58,9 +60,11 @@ const Food = ({ food }: { food: FoodType }) => {
             <h5>{food.name}</h5>
           </Link>
           <span className="text-danger">{currencyFormat(food.price)}</span>
-          <Link href={`/stores/${food.storeId}`}>
-            <small> {food.store_name}</small>
-          </Link>
+          {!pathname.includes("stores") && (
+            <Link href={`/stores/${food.storeId}`}>
+              <small> {food.store_name}</small>
+            </Link>
+          )}
         </div>
       </Card.Body>
     </Card>
