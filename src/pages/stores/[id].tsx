@@ -16,27 +16,29 @@ const Shops = () => {
   const [store, setStore] = useState<StoreType>();
 
   useEffect(() => {
-    (async () => {
-      const storesRef = collection(firestore, "stores");
+    if (typeof id === "string") {
+      (async () => {
+        const storesRef = collection(firestore, "stores");
 
-      const [foods, store] = await Promise.all([
-        getDocs(collection(storesRef, id as string, "products")),
-        getDoc(doc(firestore, "stores", id as string))
-      ]);
+        const [foods, store] = await Promise.all([
+          getDocs(collection(storesRef, id, "products")),
+          getDoc(doc(firestore, "stores", id))
+        ]);
 
-      const foodsData = foods.docs.map(doc => ({
-        id: doc.id,
-        ...(doc.data() as Omit<FoodType, "id">)
-      }));
+        const foodsData = foods.docs.map(doc => ({
+          id: doc.id,
+          ...(doc.data() as Omit<FoodType, "id">)
+        }));
 
-      const storeData = {
-        id: store.id,
-        ...(store.data() as Omit<StoreType, "id">)
-      };
-      console.log(storeData);
-      setStore(storeData);
-      setFoods(foodsData);
-    })();
+        const storeData = {
+          id: store.id,
+          ...(store.data() as Omit<StoreType, "id">)
+        };
+
+        setStore(storeData);
+        setFoods(foodsData);
+      })();
+    }
   }, [id]);
 
   return (
