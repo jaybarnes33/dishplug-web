@@ -16,8 +16,8 @@ const Featured = ({ foods }: IProps) => {
       <div className="d-flex justify-content-end mt-2">
         <Link href="/foods">
           <a
-            style={{ fontSize: "1.2rem" }}
-            className="d-flex align-items-center"
+            style={{ fontSize: "1.5rem" }}
+            className="d-flex align-items-center text-danger my-3"
           >
             View all
             <FaArrowRight className="ms-2" />
