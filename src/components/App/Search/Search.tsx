@@ -43,7 +43,7 @@ function Search() {
         type="search"
       />
 
-      <Button variant="dark" type="submit" size="sm">
+      <Button variant="dark" type="submit" size="lg">
         Search
       </Button>
     </Form>
