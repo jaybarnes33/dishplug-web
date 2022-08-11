@@ -90,12 +90,6 @@ const Register = () => {
 
   const confirmOtp = useCallback(
     async (otp: string, verificationId: string) => {
-      if (!user) {
-        throw new Error(
-          "Something went wrong, Please refresh the page and try again"
-        );
-      }
-
       const phoneCredential = PhoneAuthProvider.credential(verificationId, otp);
       const { user: newUser } = await signInWithCredential(
         auth,
@@ -122,7 +116,7 @@ const Register = () => {
 
       replace("/");
     },
-    [user, values, replace]
+    [values, replace]
   );
 
   useEffect(() => {
