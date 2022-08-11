@@ -36,7 +36,10 @@ export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
-  const products = await db.collectionGroup("products").get();
+  const products = await db
+    .collectionGroup("products")
+    .orderBy("available", "desc")
+    .get();
 
   const foods = products.docs.map(doc => {
     const [, storeId] = doc.ref.path.split("/");
