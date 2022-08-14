@@ -23,6 +23,7 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
   },
   fromFirestore(snapshot) {
     const data = snapshot.data();
+    console.log(JSON.stringify(data));
 
     return {
       id: snapshot.id,
