@@ -17,7 +17,7 @@ const Food = ({ food }: { food: FoodType }) => {
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId,
+      store_id: food.store_id,
       store_name: food.store_name
     });
   };
@@ -61,7 +61,7 @@ const Food = ({ food }: { food: FoodType }) => {
           </Link>
           <span className="text-danger">{currencyFormat(food.price)}</span>
           {!pathname.includes("stores") && (
-            <Link href={`/stores/${food.storeId}`}>
+            <Link href={`/stores/${food.store_id}`}>
               <small> {food.store_name}</small>
             </Link>
           )}

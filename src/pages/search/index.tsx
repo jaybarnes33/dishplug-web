@@ -6,21 +6,19 @@ import Food from "@/components/App/Main/Cards/Food";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import admin from "@/lib/firebase/node";
 import { useKeyword } from "@/hooks/useKeyWord";
+import { foodConverter } from "..";
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
-  const products = await db.collectionGroup("products").get();
+  const products = await db
+    .collectionGroup("products")
+    .withConverter(foodConverter)
+    .get();
 
   const foods = products.docs.map(doc => {
-    const [, storeId] = doc.ref.path.split("/");
-
-    return {
-      id: doc.id,
-      storeId,
-      ...doc.data()
-    } as FoodType;
+    return doc.data();
   });
 
   return { props: { foods }, revalidate: 1 };

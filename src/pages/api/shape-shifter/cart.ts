@@ -18,7 +18,7 @@ export default async function handler(
         price: item.data().price,
         quantity: item.data().quantity,
         store: {
-          id: item.data().storeId || "",
+          id: item.data().store_id || "",
           name: item.data().store_name || ""
         }
       });
