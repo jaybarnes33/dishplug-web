@@ -5,6 +5,37 @@ import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
+import type { FirestoreDataConverter } from "firebase-admin/firestore";
+
+export const foodConverter: FirestoreDataConverter<FoodType> = {
+  toFirestore(item) {
+    return {
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      description: item.description,
+      store: {
+        id: item.store_id,
+        name: item.store_name,
+        contact: item.store_phone
+      }
+    };
+  },
+  fromFirestore(snapshot) {
+    const data = snapshot.data();
+
+    return {
+      id: snapshot.id,
+      name: data.name,
+      price: data.price,
+      image: data.image,
+      available: data.available,
+      store_id: data.store.id,
+      store_name: data.store.name,
+      store_phone: data.store.contact
+    };
+  }
+};
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
@@ -15,16 +46,11 @@ export const getStaticProps: GetStaticProps<{
     .collectionGroup("products")
     .where("available", "==", true)
     .limit(4)
+    .withConverter(foodConverter)
     .get();
 
   const foods = products.docs.map(doc => {
-    const [, storeId] = doc.ref.path.split("/");
-
-    return {
-      id: doc.id,
-      storeId,
-      ...doc.data()
-    } as FoodType;
+    return doc.data();
   });
 
   return { props: { foods }, revalidate: 1 };
