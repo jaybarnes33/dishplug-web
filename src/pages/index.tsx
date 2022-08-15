@@ -34,8 +34,8 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       image: data.image,
       available: data.available,
       // store_id: data.store.id,
-      store_name: data.store.name,
-      store_phone: data.store.contact
+      store_name: data.store_name
+      // store_phone: data.store.contact
     };
   }
 };
