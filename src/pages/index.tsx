@@ -15,12 +15,14 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       image: item.image,
       description: item.description,
       store: {
-        id: item.store_id,
+        // id: item.store_id,
         name: item.store_name,
         contact: item.store_phone
       }
     };
   },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   fromFirestore(snapshot) {
     const data = snapshot.data();
     console.log(JSON.stringify(data));
@@ -31,7 +33,7 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       price: data.price,
       image: data.image,
       available: data.available,
-      store_id: data.store.id,
+      // store_id: data.store.id,
       store_name: data.store.name,
       store_phone: data.store.contact
     };
