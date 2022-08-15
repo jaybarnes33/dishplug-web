@@ -7,6 +7,7 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
 import { Col, Container, Row } from "react-bootstrap";
+import { foodConverter } from "..";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -36,16 +37,14 @@ export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
-  const products = await db.collectionGroup("products").get();
+  const products = await db
+    .collectionGroup("products")
+    .orderBy("available", "desc")
+    .withConverter(foodConverter)
+    .get();
 
   const foods = products.docs.map(doc => {
-    const [, storeId] = doc.ref.path.split("/");
-
-    return {
-      id: doc.id,
-      storeId,
-      ...doc.data()
-    } as unknown as FoodType;
+    return doc.data();
   });
 
   return { props: { foods }, revalidate: 1 };

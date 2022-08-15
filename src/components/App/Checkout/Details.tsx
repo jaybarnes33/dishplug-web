@@ -48,7 +48,7 @@ const Details = ({ details }: IPageProps) => {
     response: Record<string, string | number>,
     items: TCart[] | null
   ) => {
-    const stores = [...new Set(items?.map(item => item.storeId))];
+    const stores = [...new Set(items?.map(item => item.store_id))];
 
     addDoc(collection(firestore, "orders"), {
       reference: response.reference,
@@ -70,7 +70,7 @@ const Details = ({ details }: IPageProps) => {
         name: item.name,
         soldFor: item.price,
         quantity: item.quantity,
-        storeId: item.storeId
+        store_id: item.store_id
       })),
       stores
     })
@@ -101,7 +101,7 @@ const Details = ({ details }: IPageProps) => {
   };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
-    const stores = [...new Set(items?.map(item => item.storeId))];
+    const stores = [...new Set(items?.map(item => item.store_id))];
 
     setLoading(true);
     addDoc(collection(firestore, "orders"), {
@@ -121,7 +121,7 @@ const Details = ({ details }: IPageProps) => {
         name: item.name,
         soldFor: item.price,
         quantity: item.quantity,
-        storeId: item.storeId
+        store_id: item.store_id
       })),
       paid: false,
       paymentOnDelivery: true,
@@ -139,7 +139,7 @@ const Details = ({ details }: IPageProps) => {
             topic: `${store}-new_order`,
             items:
               (items || [])
-                .filter(item => item.storeId === store)
+                .filter(item => item.store_id === store)
                 .map(item => item.name) || []
           })
         );

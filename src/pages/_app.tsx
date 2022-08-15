@@ -14,8 +14,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     localforage.config({
       name: "dishplug",
-      storeName: "anon_cart",
-      version: 1.0
+      storeName: "local-cart",
+      version: 2.5
     });
   }, []);
 

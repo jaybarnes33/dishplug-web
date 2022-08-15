@@ -8,13 +8,29 @@ export default async function handler(
   try {
     const db = admin.firestore();
 
-    const products = await db.collectionGroup("products").get();
+    const [stores, products] = await Promise.all([
+      db.collection("stores").get(),
+      db.collectionGroup("products").get()
+    ]);
 
     products.forEach(doc => {
-      const [, storeId] = doc.ref.path.split("/");
+      const [, store_id] = doc.ref.path.split("/");
+      const data = doc.data();
+      const store = stores.docs.find(({ id }) => id === store_id);
 
-      db.doc(doc.ref.path).update({
-        promo: 0
+      if (!store) throw new Error("store can't be undefined");
+
+      db.doc(doc.ref.path).set({
+        name: data.name,
+        price: data.price,
+        image: data.image,
+        available: data.available,
+        description: data.description,
+        store: {
+          id: store.id,
+          name: store.data().name,
+          contact: store.data().contact
+        }
       });
     });
 

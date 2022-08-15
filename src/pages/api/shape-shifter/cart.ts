@@ -16,9 +16,10 @@ export default async function handler(
         name: item.data().name,
         image: item.data().image,
         price: item.data().price,
+        // food_id: item.data().food_id,
         quantity: item.data().quantity,
         store: {
-          id: item.data().storeId || "",
+          id: item.data().store_id || "",
           name: item.data().store_name || ""
         }
       });

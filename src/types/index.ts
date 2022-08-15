@@ -7,9 +7,10 @@ export interface FoodType {
   image: string;
   id: string;
   rating?: number;
-  storeId: string;
   available: boolean;
+  store_id: string;
   store_name: string;
+  store_phone: string;
 }
 
 export interface VendorType {
@@ -33,6 +34,11 @@ interface IOrder {
     name: string;
     quantity: number;
     soldFor: number;
+    store: {
+      id: string;
+      name: string;
+      contact: string;
+    };
   }[];
   reference: string;
   status: "completed" | "pending" | "failed" | "refunded";

@@ -13,6 +13,7 @@ import Image from "next/image";
 
 import { Badge, Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useCart } from "@/components/Context/Cart";
+import { foodConverter } from "..";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -30,16 +31,13 @@ export const getStaticProps: GetStaticProps<{
   food: FoodType;
 }> = async ({ params }) => {
   const db = admin.firestore();
-  const products = await db.collectionGroup("products").get();
+  const products = await db
+    .collectionGroup("products")
+    .withConverter(foodConverter)
+    .get();
   const foodDoc = products.docs.find(doc => doc.id === params?.id);
 
-  const food = foodDoc
-    ? ({
-        id: foodDoc.id,
-        storeId: foodDoc.ref.path.split("/")[1],
-        ...foodDoc.data()
-      } as FoodType)
-    : null;
+  const food = foodDoc ? foodDoc.data() : null;
 
   if (!food) {
     throw new Error(`missing document for ${params?.id}`);
@@ -50,14 +48,14 @@ export const getStaticProps: GetStaticProps<{
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { addToCart } = useCart();
-  console.log(food);
+
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
       name: food.name,
       price: food.price,
       image: food.image,
-      storeId: food.storeId,
+      store_id: food.store_id,
       store_name: food.store_name
     });
   };
@@ -87,7 +85,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 objectFit="contain"
               />
               {["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
-                food.storeId
+                food.store_id
               ) && <Badge bg="dark"></Badge>}
             </Col>
             <Col md={6}>
