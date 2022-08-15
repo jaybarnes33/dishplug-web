@@ -21,11 +21,8 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       }
     };
   },
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   fromFirestore(snapshot) {
     const data = snapshot.data();
-    console.log(JSON.stringify(data));
 
     return {
       id: snapshot.id,
@@ -33,9 +30,9 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       price: data.price,
       image: data.image,
       available: data.available,
-      // store_id: data.store.id,
-      store_name: data.store_name
-      // store_phone: data.store.contact
+      store_id: data.store.id,
+      store_name: data.store.name,
+      store_phone: data.store.contact
     };
   }
 };
