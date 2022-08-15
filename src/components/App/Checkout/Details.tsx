@@ -145,7 +145,7 @@ const Details = ({ details }: IPageProps) => {
         );
         axios.post("/api/send-messages", {
           phone: addressInfo.phone,
-          name: addressInfo.name
+          message: `Hi ${addressInfo}, your order has been received, your food will be delivered in no time`
         });
       })
       .then(() => replace("/foods"));

@@ -8,11 +8,8 @@ export default async function handler(
   if (req.method !== "POST") return res.status(404);
 
   try {
-    const { phone, name } = req.body;
-    await sendSMS(
-      phone,
-      `Hi ${name}, your order has been received, your food will be delivered in no time`
-    );
+    const { phone, message } = req.body;
+    await sendSMS(phone, message);
 
     res.status(200).json({ message: "SMS sent successfully" });
   } catch (err) {
