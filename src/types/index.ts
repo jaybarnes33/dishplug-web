@@ -10,7 +10,7 @@ export interface FoodType {
   available: boolean;
   store_id: string;
   store_name: string;
-  store_phone?: string;
+  store_phone: string;
 }
 
 export interface VendorType {

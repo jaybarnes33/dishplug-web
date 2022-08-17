@@ -99,30 +99,37 @@ const Details = ({ details }: IPageProps) => {
             paid: true,
             location: addressInfo.location,
             topic: `${store.id}-new_order`,
-            items: items?.map(item => item.name) || []
+            items:
+              (items || [])
+                .filter(item => item.store_id === store.id)
+                .map(item => item.name) || []
           })
         );
         axios.post("/api/send-messages", {
-          phone: addressInfo.phone,
+          recipients: [addressInfo.phone],
           message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
         });
 
-        stores.map(store =>
-          axios.post("/api/send-messages", {
-            phone: store.phone,
-            message: `Hi ${store.name}, an order has been made to your shop, kindly check your dashboard`
-          })
-        );
         axios.post("/api/send-messages", {
-          phone: addressInfo.phone,
-          message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
+          recipients: stores.map(store => store.phone),
+          message: `An order has been made to your store, please check your dashboard`
         });
       })
       .then(() => replace("/foods"));
   };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
-    const stores = [...new Set(items?.map(item => item.store_id))];
+    const stores = [
+      ...new Set(
+        items?.map(item => {
+          return {
+            id: item.store_id,
+            phone: item.store_phone,
+            name: item.store_name
+          };
+        })
+      )
+    ];
 
     setLoading(true);
     addDoc(collection(firestore, "orders"), {
@@ -151,23 +158,27 @@ const Details = ({ details }: IPageProps) => {
       .then(() => setLoading(false))
       .then(clearCart)
       .then(res => {
-        console.log(res);
         stores.forEach(store =>
           sendNotification({
             name: addressInfo.name,
             phone: addressInfo.phone,
             paid: false,
             location: addressInfo.location,
-            topic: `${store}-new_order`,
+            topic: `${store.id}-new_order`,
             items:
               (items || [])
-                .filter(item => item.store_id === store)
+                .filter(item => item.store_id === store.id)
                 .map(item => item.name) || []
           })
         );
         axios.post("/api/send-messages", {
-          phone: addressInfo.phone,
+          recipients: [addressInfo.phone],
           message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
+        });
+
+        axios.post("/api/send-messages", {
+          recipients: stores.map(store => store.phone),
+          message: `An order has been made to your store, please check your dashboard`
         });
       })
       .then(() => replace("/foods"));

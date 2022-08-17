@@ -34,7 +34,11 @@ const cartConverter: FirestoreDataConverter<TCart> = {
       price: item.price,
       image: item.image,
       quantity: item.quantity,
-      store: { id: item.store_id, name: item.store_name }
+      store: {
+        id: item.store_id,
+        name: item.store_name,
+        phone: item.store_phone
+      }
     };
   },
   fromFirestore(snapshot) {
@@ -47,7 +51,8 @@ const cartConverter: FirestoreDataConverter<TCart> = {
       image: data.image,
       quantity: data.quantity,
       store_id: data.store.id,
-      store_name: data.store.name
+      store_name: data.store.name,
+      store_phone: data.store.phone
     };
   }
 };

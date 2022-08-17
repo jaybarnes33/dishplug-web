@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 const Food = ({ food }: { food: FoodType }) => {
   const { pathname } = useRouter();
   const { addToCart } = useCart();
+
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
@@ -18,7 +19,8 @@ const Food = ({ food }: { food: FoodType }) => {
       price: food.price,
       image: food.image,
       store_id: food.store_id,
-      store_name: food.store_name
+      store_name: food.store_name,
+      store_phone: food.store_phone
     });
   };
 

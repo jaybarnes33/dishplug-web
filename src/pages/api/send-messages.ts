@@ -6,10 +6,11 @@ export default async function handler(
   res: NextApiResponse<{ message: string }>
 ) {
   if (req.method !== "POST") return res.status(404);
+  console.log(req.method);
 
   try {
-    const { phone, message } = req.body;
-    await sendSMS(phone, message);
+    const { recipients, message } = req.body;
+    sendSMS(recipients, message);
 
     res.status(200).json({ message: "SMS sent successfully" });
   } catch (err) {
