@@ -3,7 +3,7 @@ import { TCart, useCart } from "@/components/Context/Cart";
 import { currencyFormat, sendNotification } from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
-import { sendSMS } from "@/utils";
+
 import axios from "axios";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Head from "next/head";
@@ -48,7 +48,17 @@ const Details = ({ details }: IPageProps) => {
     response: Record<string, string | number>,
     items: TCart[] | null
   ) => {
-    const stores = [...new Set(items?.map(item => item.store_id))];
+    const stores = [
+      ...new Set(
+        items?.map(item => {
+          return {
+            id: item.store_id,
+            phone: item.store_phone,
+            name: item.store_name
+          };
+        })
+      )
+    ];
 
     addDoc(collection(firestore, "orders"), {
       reference: response.reference,
@@ -74,7 +84,8 @@ const Details = ({ details }: IPageProps) => {
       })),
       stores
     })
-      .then(() => {
+      .then(res => {
+        console.log(res);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { paymentMethod, ...rest } = addressInfo;
         localStorage.setItem("order-details", JSON.stringify(rest));
@@ -87,21 +98,38 @@ const Details = ({ details }: IPageProps) => {
             phone: addressInfo.phone,
             paid: true,
             location: addressInfo.location,
-            topic: `${store}-new_order`,
-            items: items?.map(item => item.name) || []
+            topic: `${store.id}-new_order`,
+            items:
+              (items || [])
+                .filter(item => item.store_id === store.id)
+                .map(item => item.name) || []
           })
         );
+        axios.post("/api/send-messages", {
+          recipients: [addressInfo.phone],
+          message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
+        });
 
         axios.post("/api/send-messages", {
-          phone: addressInfo.phone,
-          name: addressInfo.name
+          recipients: stores.map(store => store.phone),
+          message: `An order has been made to your store, please check your dashboard`
         });
       })
       .then(() => replace("/foods"));
   };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
-    const stores = [...new Set(items?.map(item => item.store_id))];
+    const stores = [
+      ...new Set(
+        items?.map(item => {
+          return {
+            id: item.store_id,
+            phone: item.store_phone,
+            name: item.store_name
+          };
+        })
+      )
+    ];
 
     setLoading(true);
     addDoc(collection(firestore, "orders"), {
@@ -129,23 +157,28 @@ const Details = ({ details }: IPageProps) => {
     })
       .then(() => setLoading(false))
       .then(clearCart)
-      .then(() => {
+      .then(res => {
         stores.forEach(store =>
           sendNotification({
             name: addressInfo.name,
             phone: addressInfo.phone,
             paid: false,
             location: addressInfo.location,
-            topic: `${store}-new_order`,
+            topic: `${store.id}-new_order`,
             items:
               (items || [])
-                .filter(item => item.store_id === store)
+                .filter(item => item.store_id === store.id)
                 .map(item => item.name) || []
           })
         );
         axios.post("/api/send-messages", {
-          phone: addressInfo.phone,
-          name: addressInfo.name
+          recipients: [addressInfo.phone],
+          message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
+        });
+
+        axios.post("/api/send-messages", {
+          recipients: stores.map(store => store.phone),
+          message: `An order has been made to your store, please check your dashboard`
         });
       })
       .then(() => replace("/foods"));
