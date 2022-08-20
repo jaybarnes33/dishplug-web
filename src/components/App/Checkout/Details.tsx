@@ -82,7 +82,7 @@ const Details = ({ details }: IPageProps) => {
         quantity: item.quantity,
         store_id: item.store_id
       })),
-      stores
+      stores: stores.map(store => store.id)
     })
       .then(res => {
         console.log(res);
@@ -153,7 +153,7 @@ const Details = ({ details }: IPageProps) => {
       })),
       paid: false,
       paymentOnDelivery: true,
-      stores
+      stores: stores.map(store => store.id)
     })
       .then(() => setLoading(false))
       .then(clearCart)
