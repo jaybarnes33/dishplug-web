@@ -7,10 +7,12 @@ import Link from "next/link";
 import { currencyFormat } from "@/helpers/utils";
 import { useCart } from "@/components/Context/Cart";
 import { useRouter } from "next/router";
+import { useAvailability } from "@/components/Context/Availability";
 
 const Food = ({ food }: { food: FoodType }) => {
   const { pathname } = useRouter();
   const { addToCart } = useCart();
+  const { unavailableFoods } = useAvailability();
 
   const handleAddToCart = () => {
     addToCart({
@@ -42,7 +44,11 @@ const Food = ({ food }: { food: FoodType }) => {
           objectFit="contain"
         />
       </Link>
-      {food.available ? (
+      {unavailableFoods.includes(food.id) ? (
+        <Badge bg="dark" style={{ position: "absolute", right: 0, top: 0 }}>
+          Not available
+        </Badge>
+      ) : (
         <Button
           variant="light"
           onClick={handleAddToCart}
@@ -50,10 +56,6 @@ const Food = ({ food }: { food: FoodType }) => {
         >
           <FaShoppingCart color="red" size={20} />
         </Button>
-      ) : (
-        <Badge bg="dark" style={{ position: "absolute", right: 0, top: 0 }}>
-          Not available
-        </Badge>
       )}
 
       <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">

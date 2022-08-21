@@ -1,7 +1,7 @@
 import Food from "@/components/App/Main/Cards/Food";
 
 import admin from "@/lib/firebase/node";
-import { FoodType } from "@/types";
+import type { FoodType } from "@/types";
 
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
