@@ -1,4 +1,5 @@
 import AuthProvider from "@/components/Context/Auth";
+import AvailabilityProvider from "@/components/Context/Availability";
 import CartProvider from "@/components/Context/Cart";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Footer from "@/components/Layout/Footer";
@@ -21,18 +22,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SSRProvider>
-      <AuthProvider>
-        <CartProvider>
-          <Header />
-          <div style={{ minHeight: "90vh" }}>
-            <ErrorBoundary>
-              <Component {...pageProps} />
-            </ErrorBoundary>
-          </div>
-
-          <Footer />
-        </CartProvider>
-      </AuthProvider>
+      <div style={{ minHeight: "90vh" }}>
+        <ErrorBoundary>
+          <AuthProvider>
+            <AvailabilityProvider>
+              <CartProvider>
+                <Header />
+                <Component {...pageProps} />
+              </CartProvider>
+            </AvailabilityProvider>
+          </AuthProvider>
+        </ErrorBoundary>
+      </div>
+      <Footer />
     </SSRProvider>
   );
 }

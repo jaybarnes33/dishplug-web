@@ -1,7 +1,9 @@
+import { useAvailability } from "@/components/Context/Availability";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
 import { useRouter } from "next/router";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -21,15 +23,27 @@ const Cart = () => {
     decrement,
     removeFromCart
   } = useCart();
+  const { unavailableFoods } = useAvailability();
 
-  const handleInc = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const numberOfAvailableItemsInCart =
+    cart?.reduce(
+      (acc, curr) =>
+        unavailableFoods.includes(curr.id) ? acc : acc + curr.quantity,
+      0
+    ) || 0;
+
+  const handleInc = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const { id } = event.currentTarget.dataset;
     if (!id) throw new Error("icon button requires a data-id attribute");
     increment(id);
   };
   const router = useRouter();
 
-  const handleDec = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleDec = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const { id } = event.currentTarget.dataset;
     if (!id) throw new Error("icon button requires a data-id attribute");
     decrement(id);
@@ -47,9 +61,22 @@ const Cart = () => {
         <h1 className="text-center">Cart</h1>
         <Row>
           <Col md={8}>
+            {cart?.some(food => unavailableFoods.includes(food.id)) ? (
+              <Alert variant="warning">
+                Some foods in your cart are currently unavailable
+              </Alert>
+            ) : null}
             <ListGroup variant="flush">
               {cart?.map(item => (
-                <ListGroup.Item key={item.id}>
+                <ListGroup.Item
+                  title="currently unavailable"
+                  key={item.id}
+                  style={
+                    unavailableFoods.includes(item.id)
+                      ? { opacity: 0.3 }
+                      : undefined
+                  }
+                >
                   <Row className="d-flex align-items-center">
                     <Col xs={2}>
                       <Image src={item.image || ""} alt="" fluid rounded />
@@ -61,9 +88,28 @@ const Cart = () => {
                       md={2}
                       className="d-flex gap-2 align-items-center"
                     >
-                      <FaPlusCircle data-id={item.id} onClick={handleInc} />
+                      <button
+                        data-id={item.id}
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent"
+                        }}
+                        onClick={handleInc}
+                        disabled={unavailableFoods.includes(item.id)}
+                      >
+                        <FaPlusCircle />
+                      </button>
                       {item.quantity}
-                      <FaMinusCircle data-id={item.id} onClick={handleDec} />
+                      <button
+                        data-id={item.id}
+                        onClick={handleDec}
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent"
+                        }}
+                      >
+                        <FaMinusCircle />
+                      </button>
                     </Col>{" "}
                     <Col
                       xs={2}
@@ -89,7 +135,7 @@ const Cart = () => {
               <Card>
                 <ListGroup.Item>
                   <p className="subtotal py-3">
-                    Total ({itemsInCart}) items
+                    Total ({numberOfAvailableItemsInCart}) items
                     <br />
                     {currencyFormat(totalAmount)}
                   </p>
@@ -98,7 +144,7 @@ const Cart = () => {
                   <Button
                     size="lg"
                     className="btn-block btn-dark"
-                    disabled={itemsInCart === 0}
+                    disabled={numberOfAvailableItemsInCart === 0}
                     onClick={() => router.push("/checkout/address")}
                   >
                     Checkout

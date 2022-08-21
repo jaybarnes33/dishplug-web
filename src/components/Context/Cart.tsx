@@ -18,6 +18,7 @@ import {
   useState
 } from "react";
 import { useAuth } from "./Auth";
+import { useAvailability } from "./Availability";
 
 interface IProviderProps {
   children: React.ReactNode;
@@ -59,13 +60,14 @@ const cartConverter: FirestoreDataConverter<TCart> = {
 
 interface IContextProps {
   cart: TCart[] | null;
+  availableItems: TCart[];
   itemsInCart: number;
   totalAmount: number;
   addToCart: (item: Omit<TCart, "quantity">) => void;
   removeFromCart: (id: string) => void;
   increment: (id: string) => void;
   decrement: (id: string) => void;
-  clearCart: () => void;
+  clearCart: (checkedOutItems: TCart[]) => void;
 }
 
 const CartContext = createContext<IContextProps | null>(null);
@@ -75,6 +77,8 @@ const CartProvider = ({ children }: IProviderProps) => {
   const [itemsInCart, setItemsInCart] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [cart, setCart] = useState<TCart[] | null>(null);
+  const [availableItems, setAvailableItems] = useState<TCart[]>([]);
+  const { unavailableFoods } = useAvailability();
 
   // initial local state with firestore
   useEffect(() => {
@@ -137,7 +141,10 @@ const CartProvider = ({ children }: IProviderProps) => {
 
       cart.forEach(item => {
         count += item.quantity;
-        totalAmount += item.price * item.quantity;
+
+        if (!unavailableFoods.includes(item.id)) {
+          totalAmount += item.price * item.quantity;
+        }
 
         if (!item.quantity) {
           removeFromCart(item.id);
@@ -147,7 +154,16 @@ const CartProvider = ({ children }: IProviderProps) => {
       setTotalAmount(totalAmount);
       setItemsInCart(count);
     }
-  }, [cart, removeFromCart]);
+  }, [cart, unavailableFoods, removeFromCart]);
+
+  useEffect(() => {
+    if (cart) {
+      const availableItems = cart.filter(
+        item => !unavailableFoods.includes(item.id)
+      );
+      setAvailableItems(availableItems);
+    }
+  }, [cart, unavailableFoods]);
 
   // update firestore with local state
   useEffect(() => {
@@ -185,9 +201,17 @@ const CartProvider = ({ children }: IProviderProps) => {
     });
   };
 
-  const clearCart = () => {
+  const clearCart = (checkedOutItems: TCart[]) => {
+    if (!cart) {
+      throw new Error("Cart can't be null");
+    }
+
+    const remainingItems = cart?.filter(
+      item => !checkedOutItems.some(({ id }) => id === item.id)
+    );
+
     if (user) {
-      cart?.forEach(async item => {
+      checkedOutItems?.forEach(async item => {
         const buyersRef = collection(firestore, "buyers");
         const itemDoc = doc(buyersRef, user.uid, "cart", item.id).withConverter(
           cartConverter
@@ -198,10 +222,10 @@ const CartProvider = ({ children }: IProviderProps) => {
         batch.commit();
       });
     } else {
-      localforage.removeItem("cart");
+      localforage.setItem("cart", remainingItems);
     }
 
-    setCart([]);
+    setCart(remainingItems);
   };
 
   const increment = (id: string) => {
@@ -235,6 +259,7 @@ const CartProvider = ({ children }: IProviderProps) => {
         itemsInCart,
         addToCart,
         totalAmount,
+        availableItems,
         removeFromCart,
         increment,
         decrement,
