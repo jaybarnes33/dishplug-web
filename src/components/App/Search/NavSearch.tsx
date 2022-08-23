@@ -47,19 +47,18 @@ function Search() {
 
   return (
     <Form onSubmit={handleSubmit} ref={searchRef} className="d-none">
-      <InputGroup>
-        {/* <InputGroup.Text>
-          <FaSearch />
-        </InputGroup.Text>  */}
-        <Form.Control
-          value={keyword}
-          placeholder="Hey, what do you want to eat?"
-          onChange={handleChange}
-          style={{ width: "min(90vw, 500px)" }}
-          type="search"
-          size="lg"
-        />
-      </InputGroup>
+      <Form.Control
+        value={keyword}
+        placeholder="Hey, what do you want to eat?"
+        onChange={handleChange}
+        style={{
+          width: "min(88vw, 500px)",
+          marginLeft: "2vw",
+          height: "2rem"
+        }}
+        type="search"
+        size="lg"
+      />
     </Form>
   );
 }

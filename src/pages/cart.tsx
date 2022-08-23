@@ -56,8 +56,8 @@ const Cart = () => {
   };
 
   return (
-    <div className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
-      <Container fluid>
+    <div className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
+      <Container fluid className="mt-5">
         <h1 className="text-center">Cart</h1>
         <Row>
           <Col md={8}>

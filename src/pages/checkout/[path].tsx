@@ -8,7 +8,7 @@ import React, { useState } from "react";
 
 const components = {
   address: { component: Address, icon: <FaMapMarkerAlt /> },
-  placeorder: { component: Details, icon: <FaCheckCircle /> },
+  placeorder: { component: Details, icon: <FaCheckCircle /> }
 };
 
 const initialValues = {
@@ -16,7 +16,7 @@ const initialValues = {
   location: "",
   phone: "",
   email: "",
-  paymentMethod: "",
+  paymentMethod: ""
 };
 
 type TComponents = typeof components;
@@ -34,7 +34,7 @@ export interface IPageProps {
 
 const Checkout = () => {
   const {
-    query: { path },
+    query: { path }
   } = useRouter();
   const [userDetails, setUserDetails] = useState(initialValues);
 
@@ -45,8 +45,8 @@ const Checkout = () => {
   const Page = path ? components[path as keyof TComponents].component : null;
 
   return (
-    <div className="mt-4 pt-5" style={{ minHeight: "80vh" }}>
-      <Nav className="d-flex justify-content-center gap-3">
+    <div className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
+      <Nav className="d-flex justify-content-center gap-3 mt-4 pt-5">
         {Object.keys(components).map((item, index) => (
           <Nav.Link
             className="text-muted"
@@ -65,7 +65,7 @@ const Checkout = () => {
           </Nav.Link>
         ))}
       </Nav>
-      <div className="px-5">
+      <div className="px-2">
         {Page ? (
           <Page details={userDetails} updateDetails={updateDetails} />
         ) : null}
