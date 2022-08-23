@@ -6,7 +6,6 @@ import type {
 import type { FoodType } from "@/types";
 import Head from "next/head";
 import Image from "next/image";
-import Rating from "@/components/App/Rating";
 import admin from "@/lib/firebase/node";
 import { Badge, Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { foodConverter } from "..";

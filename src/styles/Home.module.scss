@@ -1,7 +1,6 @@
 .intro {
   background: url("/bg.webp");
-  background-color: var(--dp-primary) ee;
-  background-blend-mode: overlay;
+
   min-height: 100vh;
   color: var(--dp-dark);
   background-size: cover;
@@ -10,7 +9,8 @@
   .text {
     font-weight: 700;
     font-size: 3rem;
-    background-color: rgba($color: #ffa500, $alpha: 0.2);
+    background-color: rgba($color: #e8bd6d, $alpha: 0.5);
+
     padding: 0.5rem;
     @media screen and (max-width: 768px) {
       font-size: 2rem;
