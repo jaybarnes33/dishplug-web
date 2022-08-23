@@ -10,17 +10,17 @@ const Intro = () => {
     >
       <Container>
         <Row className="d-flex justify-content-center align-items-center flex-column-reverse flex-md-row">
-          <Col md={6}>
+          <Col md={8}>
             <p className={` ${styles.text} `}>
               <span>Hungry?</span> Order food and have it delivered in minutes.
             </p>
             <Search />
           </Col>
-          <Col md={6} className="d-flex justify-content-center">
+          {/* <Col md={6} className="d-flex justify-content-center">
             <video loop autoPlay={true} muted>
               <source src="/videos/foods.webm"></source>
             </video>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </div>

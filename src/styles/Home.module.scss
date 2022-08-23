@@ -1,9 +1,11 @@
 .intro {
-  background: var(--dp-primary);
-  min-height: 70vh;
+  background: url("/bg.webp");
+  background-color: var(--dp-primary) ee;
+  background-blend-mode: overlay;
+  min-height: 100vh;
   color: var(--dp-dark);
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
 
   .text {
     font-weight: 700;

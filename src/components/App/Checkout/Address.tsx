@@ -32,9 +32,9 @@ const Address = ({ updateDetails, details }: IPageProps) => {
       location: storedInfo?.location || "",
       phone: formatPhone(user?.phoneNumber || storedInfo?.phone || "", "local"),
       email: user?.email || storedInfo?.email || "",
-      paymentMethod: details.paymentMethod,
+      paymentMethod: details.paymentMethod
     },
-    onSubmit,
+    onSubmit
   });
 
   return (
@@ -106,7 +106,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
           </div>
         </Form.Group>
 
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center my-3">
           <Button type="submit" variant="warning">
             Continue
           </Button>

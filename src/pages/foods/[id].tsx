@@ -80,12 +80,13 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       >
         <Container>
           <Row className="d-flex align-items-center">
-            <Col md={6} className="position-relative" style={{ height: 500 }}>
+            <Col md={6} className="position-relative" style={{ height: 400 }}>
               <Image
                 src={food.image || ""}
                 layout="fill"
                 alt=""
-                objectFit="contain"
+                objectFit="cover"
+                objectPosition="center"
               />
               {["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
                 food.store_id
@@ -95,7 +96,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h1>{food.name}</h1>
-                  <Rating value={food.rating || 0} />
+                  {/* <Rating value={food.rating || 0} /> */}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <h2 className="text-danger">{currencyFormat(food.price)}</h2>

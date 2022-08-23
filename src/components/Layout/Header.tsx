@@ -18,6 +18,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
+import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
@@ -40,10 +41,14 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 0) {
-        nav.current?.classList.add("bg-change");
+      if (window.location.pathname === "/") {
+        if (window.scrollY > 0) {
+          nav.current?.classList.add("bg-change");
+        } else {
+          nav.current?.classList.remove("bg-change");
+        }
       } else {
-        nav.current?.classList.remove("bg-change");
+        nav.current?.classList.add("bg-change");
       }
     });
   });
@@ -51,17 +56,16 @@ const Header = () => {
   const noSearch = ["/login", "/register"];
   return (
     <Navbar fixed="top" ref={nav}>
-      <Container className="d-flex flex-wrap flex-md-nowrap justify-content-between">
+      <Container className="d-flex flex-wrap  flex-md-nowrap justify-content-between">
         <Navbar.Brand className="order-1">
           <Link href="/" passHref>
             {/* <span>
               <FaUtensils /> Dishplug
             </span> */}
             <Image
-              src={"/logoblack1.png"}
-              width={150}
+              src={"/logoblack.png"}
+              width={170}
               height={50}
-              style={{ transform: "rotate(145deg)" }}
               objectFit="contain"
               alt="Dishplug"
             />
@@ -69,7 +73,7 @@ const Header = () => {
         </Navbar.Brand>
 
         <>
-          <Nav className="mx-auto order-3 order-md-2">
+          <Nav className="order-3 order-md-2">
             {!noSearch.includes(pathname) && <Search />}
           </Nav>
 

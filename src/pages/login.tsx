@@ -7,14 +7,14 @@ import { AuthError } from "@/helpers/constructors";
 import {
   browserLocalPersistence,
   setPersistence,
-  signInWithCustomToken,
+  signInWithCustomToken
 } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 const initialValues = {
   identity: "",
-  password: "",
+  password: ""
 };
 
 const validationSchema = Yup.object().shape({
@@ -36,7 +36,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(8)
     .required("Password field can't be empty")
-    .label("Password"),
+    .label("Password")
 });
 
 const Login = () => {
@@ -54,13 +54,13 @@ const Login = () => {
       const res = await fetch("/api/users/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           email,
           phone,
-          password: values.password,
-        }),
+          password: values.password
+        })
       });
 
       const data = await res.json();
@@ -86,7 +86,7 @@ const Login = () => {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit,
+      onSubmit
     });
 
   return (
@@ -104,6 +104,10 @@ const Login = () => {
           <Form.Control.Feedback
             type={touched.identity && errors.identity ? "invalid" : "valid"}
           >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
+            distinctio voluptatem itaque ipsam id velit quam corrupti
+            consectetur nam voluptate quidem ducimus minus, eveniet molestias
+            numquam cum illum deleniti. Aperiam.
             {errors.identity}
           </Form.Control.Feedback>
         </Form.Group>
