@@ -10,7 +10,8 @@
   .text {
     font-weight: 700;
     font-size: 3rem;
-
+    background-color: rgba($color: #ffa500, $alpha: 0.2);
+    padding: 0.5rem;
     @media screen and (max-width: 768px) {
       font-size: 2rem;
 

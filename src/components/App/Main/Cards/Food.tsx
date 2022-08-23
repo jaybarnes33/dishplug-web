@@ -30,7 +30,7 @@ const Food = ({ food }: { food: FoodType }) => {
     <Card
       style={{
         border: "none",
-        maxWidth: 200,
+
         cursor: "pointer"
       }}
       className="position-relative my-3"
@@ -39,9 +39,10 @@ const Food = ({ food }: { food: FoodType }) => {
         <CardImg
           as={Image}
           src={food.image || "/"}
-          height={250}
+          height={200}
           width={250}
-          objectFit="contain"
+          objectFit="cover"
+          objectPosition="center"
         />
       </Link>
       {unavailableFoods.includes(food.id) ? (
