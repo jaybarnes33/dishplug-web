@@ -137,7 +137,11 @@ const Header = () => {
               <Button variant=" ">
                 <FaShoppingCart className="me-1" size={24} />
                 <sup>
-                  <Badge bg="danger">{itemsInCart}</Badge>
+                  <Badge
+                    style={{ backgroundColor: "var(--dp-accent2)!important" }}
+                  >
+                    {itemsInCart}
+                  </Badge>
                 </sup>
               </Button>
             </Nav.Item>
