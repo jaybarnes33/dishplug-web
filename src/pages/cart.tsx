@@ -18,7 +18,7 @@ const Cart = () => {
   const {
     cart,
     totalAmount,
-    itemsInCart,
+
     increment,
     decrement,
     removeFromCart
