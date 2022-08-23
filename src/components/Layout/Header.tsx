@@ -138,6 +138,7 @@ const Header = () => {
                 <FaShoppingCart className="me-1" size={24} />
                 <sup>
                   <Badge
+                    bg="warning"
                     style={{ backgroundColor: "var(--dp-accent2)!important" }}
                   >
                     {itemsInCart}
