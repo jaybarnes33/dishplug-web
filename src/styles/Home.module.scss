@@ -1,15 +1,15 @@
 .intro {
   background: url("/bg.webp");
 
-  min-height: 100vh;
-  color: var(--dp-dark);
-  background-size: cover;
-  background-position: bottom;
+  min-height: 100vh !important;
 
+  color: var(--dp-dark);
+  // background-size: fill;
+
+  background-position: 10% 15%, top;
   .text {
     font-weight: 700;
     font-size: 3rem;
-    background-color: rgba($color: #e8bd6d, $alpha: 0.5);
 
     padding: 0.5rem;
     @media screen and (max-width: 768px) {
