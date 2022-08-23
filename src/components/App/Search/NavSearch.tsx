@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Form, InputGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 function Search() {
   const router = useRouter();

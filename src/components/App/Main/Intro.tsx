@@ -9,8 +9,8 @@ const Intro = () => {
       className={`${styles.intro} d-flex justify-content-center align-items-center`}
     >
       <Container>
-        <Row className="d-flex justify-content-center align-items-center flex-column-reverse flex-md-row">
-          <Col md={8}>
+        <Row className="d-flex  align-items-center flex-column-reverse flex-md-row">
+          <Col md={6}>
             <p className={` ${styles.text} `}>
               <span>Hungry?</span> Order food and have it delivered in minutes.
             </p>

@@ -10,7 +10,7 @@ import {
   Spinner
 } from "react-bootstrap";
 
-import { FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
@@ -18,7 +18,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
-import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 
 const Header = () => {
   const nav = useRef<HTMLElement>(null);
@@ -138,7 +137,11 @@ const Header = () => {
               <Button variant=" ">
                 <FaShoppingCart className="me-1" size={24} />
                 <sup>
-                  <Badge bg="danger">{itemsInCart}</Badge>
+                  <Badge
+                    style={{ backgroundColor: "var(--dp-accent2)!important" }}
+                  >
+                    {itemsInCart}
+                  </Badge>
                 </sup>
               </Button>
             </Nav.Item>
