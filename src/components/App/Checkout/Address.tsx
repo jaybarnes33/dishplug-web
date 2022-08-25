@@ -98,6 +98,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             <Form.Check
               {...getFieldProps("paymentMethod")}
               type="radio"
+              disabled
               inline
               id="online-payment"
               label="Pay now"
