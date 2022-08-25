@@ -30,19 +30,17 @@ const Food = ({ food }: { food: FoodType }) => {
     <Card
       style={{
         border: "none",
-
         cursor: "pointer"
       }}
-      className="position-relative my-3"
+      className="position-relative my-3 mx-1"
     >
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
           src={food.image || "/"}
           height={200}
-          width={250}
+          width={150}
           objectFit="cover"
-          objectPosition="center"
         />
       </Link>
       {unavailableFoods.includes(food.id) ? (
@@ -53,7 +51,12 @@ const Food = ({ food }: { food: FoodType }) => {
         <Button
           variant="light"
           onClick={handleAddToCart}
-          style={{ position: "absolute", right: 0, top: 0 }}
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            borderRadius: "0 0 0 0"
+          }}
         >
           <FaShoppingCart color="red" size={20} />
         </Button>

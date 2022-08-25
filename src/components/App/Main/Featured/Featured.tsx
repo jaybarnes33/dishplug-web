@@ -16,15 +16,15 @@ const Featured = ({ foods }: IProps) => {
       <div className="d-flex justify-content-end mt-2">
         <Link href="/foods">
           <a
-            style={{ fontSize: "1.5rem" }}
-            className="d-flex align-items-center text-danger my-3"
+            style={{ fontSize: "1.5rem", color: "red" }}
+            className="d-flex align-items-center my-3"
           >
             View all
             <FaArrowRight className="ms-2" />
           </a>
         </Link>
       </div>
-      <Row className="d-flex align-items-center pt-1 ">
+      <Row className="d-flex align-items-center pt-1">
         {foods.map((food, index) => (
           <Col xs={6} md={4} lg={3} key={index}>
             <Food food={food} />
