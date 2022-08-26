@@ -49,6 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           type="image/png"
           sizes="512x512"
         />
+        <meta name="theme-color" content="#fff" />
       </Head>
       <div style={{ minHeight: "90vh" }}>
         <ErrorBoundary>
