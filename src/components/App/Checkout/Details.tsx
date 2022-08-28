@@ -37,12 +37,12 @@ const Details = ({ details }: IPageProps) => {
     }
   }, []);
 
-  // const initializePayment = usePaystackPayment({
-  //   email: addressInfo.email,
-  //   amount: Math.ceil(totalAmount * 100),
-  //   currency: "GHS",
-  //   publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
-  // });
+  const initializePayment = usePaystackPayment({
+    email: addressInfo.email,
+    amount: Math.ceil(totalAmount * 100),
+    currency: "GHS",
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
+  });
 
   // you can call this function anything
   const onSuccess = (
@@ -276,15 +276,14 @@ const Details = ({ details }: IPageProps) => {
                   type="button"
                   size="lg"
                   variant="dark"
-                  disabled
-                  // disabled={cartItems.length === 0}
-                  // onClick={() =>
-                  //   initializePayment(
-                  //     (res: Record<string, string>) =>
-                  //       onSuccess(res, availableItems),
-                  //     onClose
-                  //   )
-                  // }
+                  disabled={availableItems.length === 0}
+                  onClick={() =>
+                    initializePayment(
+                      (res: Record<string, string>) =>
+                        onSuccess(res, availableItems),
+                      onClose
+                    )
+                  }
                 >
                   Place Order {loading && <Spinner animation="border" />}
                 </Button>
