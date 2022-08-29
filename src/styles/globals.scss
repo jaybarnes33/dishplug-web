@@ -49,6 +49,10 @@ a {
   background-color: var(--dp-white);
 }
 
+.search::-webkit-input-placeholder {
+  color: var(--dp-accent2);
+}
+
 .navbar {
   transition: background-color ease-in-out 30ms;
   z-index: 99;

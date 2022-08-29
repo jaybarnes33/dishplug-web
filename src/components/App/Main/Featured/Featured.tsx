@@ -28,7 +28,7 @@ const Featured = ({ foods }: IProps) => {
 
       <Row className="d-flex justify-content-between align-items-center pt-1">
         {foods.map((food, index) => (
-          <Col xs={12} sm={6} md={4} lg={3} key={index}>
+          <Col xs={6} sm={6} md={4} lg={3} key={index}>
             <Food food={food} />
           </Col>
         ))}

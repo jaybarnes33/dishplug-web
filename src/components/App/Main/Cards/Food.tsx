@@ -31,9 +31,10 @@ const Food = ({ food }: { food: FoodType }) => {
       style={{
         border: "none",
         cursor: "pointer",
+        height: 220,
         boxShadow: "0 0 5px 0 rgb(0 0 0 / 30%)"
       }}
-      className="position-relative my-3 d-flex justify-content-center"
+      className="position-relative my-3"
     >
       <Link href={`/foods/${food.id}`}>
         <CardImg
@@ -42,7 +43,7 @@ const Food = ({ food }: { food: FoodType }) => {
           height={120}
           width={200}
           objectFit="cover"
-          objectPosition="top"
+          objectPosition="center"
         />
       </Link>
       {unavailableFoods.includes(food.id) ? (

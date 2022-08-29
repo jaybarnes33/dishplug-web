@@ -4,6 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Search from "../Search/Search";
 import Pattern from "../../../../public/Pattern2.png";
 import Image from "next/image";
+import Promos from "../Promos/Promos";
 
 const Intro = () => {
   return (
@@ -15,6 +16,7 @@ const Intro = () => {
               <span>Hey, what do you want to eat?</span>
             </p>
             <Search />
+            <Promos />
           </Col>
           <div className="position-fixed top-0 end-0">
             <Image src={Pattern} alt=" " objectPosition={"right"} />

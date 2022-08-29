@@ -17,7 +17,7 @@ function Search() {
   };
 
   const handleScroll = () => {
-    if (window.scrollY >= 290) {
+    if (window.scrollY >= 100) {
       searchRef.current?.classList.add("d-none");
     } else {
       searchRef.current?.classList.remove("d-none");
@@ -38,9 +38,15 @@ function Search() {
         value={keyword}
         placeholder="Search for food, drinks and more"
         onChange={handleChange}
-        style={{ width: "100%" }}
+        style={{
+          width: "100%",
+          border: "none",
+          backgroundColor: "rgba(249, 168, 77, 0.2)",
+          color: "var(--dp-accent2)"
+        }}
         size="lg"
         type="search"
+        className="search"
       />
 
       <Button variant="dark" type="submit" size="sm">
