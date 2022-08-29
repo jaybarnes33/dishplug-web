@@ -31,8 +31,7 @@ const Food = ({ food }: { food: FoodType }) => {
       style={{
         border: "none",
         cursor: "pointer",
-        height: 220,
-        boxShadow: "0 0 5px 0 rgb(0 0 0 / 30%)"
+        height: 220
       }}
       className="position-relative my-3"
     >
@@ -61,8 +60,7 @@ const Food = ({ food }: { food: FoodType }) => {
             position: "absolute",
             right: -5,
             top: -15,
-            borderRadius: 50,
-            boxShadow: "0 0 5px 0 rgb(0 0 0 / 30%)"
+            borderRadius: 50
           }}
         >
           <FaShoppingCart color="red" size={20} />

@@ -1,7 +1,7 @@
 import colors from "@/styles/colors";
 import Image from "next/image";
 import React from "react";
-import { Button, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Pattern from "../../../../public/Pattern3.png";
 interface PromoProps {
   name: string;
@@ -21,9 +21,9 @@ const Promo = ({ name, desc, image, bg }: PromoProps) => {
           objectFit="cover"
         />
         <div className="py-5">
-          <h5>{name}</h5>
+          <h5 className="text-light fw-bold">{name}</h5>
           <br />
-          <Button variant={bg !== "dark" ? "dark" : "light"} size="sm">
+          <Button className="text-warning fw-bold" variant={"light"} size="sm">
             Coming Soon
           </Button>
         </div>

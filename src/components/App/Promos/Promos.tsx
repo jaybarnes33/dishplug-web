@@ -13,17 +13,20 @@ const Promos = () => {
       name: "Super Friends",
       desc: "Get up to 25% discount when you buy together with your friends",
       image: "/2.png",
-      bg: "accent"
+      bg: "dark"
     },
     {
       name: "Holiday Special",
       desc: "Get up to 15% discount on select meals on holidays",
       image: "/1.png",
-      bg: "light"
+      bg: "accent"
     }
   ];
   return (
-    <div className="d-flex gap-2 my-3" style={{ overflowX: "scroll" }}>
+    <div
+      className="d-flex gap-2 my-3"
+      style={{ overflowX: "scroll", height: 180 }}
+    >
       {promos.map((promo, key) => (
         <Promo
           name={promo.name}
