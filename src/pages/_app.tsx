@@ -63,7 +63,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           </AuthProvider>
         </ErrorBoundary>
       </div>
-      <Footer />
     </SSRProvider>
   );
 }

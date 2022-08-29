@@ -30,17 +30,19 @@ const Food = ({ food }: { food: FoodType }) => {
     <Card
       style={{
         border: "none",
-        cursor: "pointer"
+        cursor: "pointer",
+        boxShadow: "0 0 5px 0 rgb(0 0 0 / 30%)"
       }}
-      className="position-relative my-3"
+      className="position-relative my-3 d-flex justify-content-center"
     >
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
           src={food.image || "/"}
-          height={150}
+          height={120}
           width={200}
           objectFit="cover"
+          objectPosition="top"
         />
       </Link>
       {unavailableFoods.includes(food.id) ? (
@@ -56,7 +58,7 @@ const Food = ({ food }: { food: FoodType }) => {
             width: 40,
             height: 40,
             position: "absolute",
-            right: -15,
+            right: -5,
             top: -15,
             borderRadius: 50,
             boxShadow: "0 0 5px 0 rgb(0 0 0 / 30%)"
@@ -66,7 +68,7 @@ const Food = ({ food }: { food: FoodType }) => {
         </Button>
       )}
 
-      <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
+      <Card.Body style={{ padding: 10 }} className="mb-2">
         <div className="d-flex flex-column mb-2">
           <Link href={`/foods/${food.id}`}>
             <h5>{food.name}</h5>

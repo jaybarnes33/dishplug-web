@@ -12,21 +12,23 @@ interface IProps {
 const Featured = ({ foods }: IProps) => {
   return (
     <Container>
-      <h2 className="pt-5 pb-1  text-center">Featured Food</h2>
-      <div className="d-flex justify-content-end mt-2">
+      <div
+        className="pt-5 pb-1
+      d-flex justify-content-between align-items-center"
+      >
+        <h2 className="  text-center">Featured Food</h2>
+
         <Link href="/foods">
-          <a
-            style={{ fontSize: "1.2rem", color: "var(--dp-accent2)" }}
-            className="d-flex align-items-center my-3"
-          >
+          <a style={{ fontSize: "1.2rem", color: "var(--dp-accent2)" }}>
             View all
             <FaArrowRight className="ms-2" />
           </a>
         </Link>
       </div>
+
       <Row className="d-flex justify-content-between align-items-center pt-1">
         {foods.map((food, index) => (
-          <Col xs={6} md={4} lg={3} key={index}>
+          <Col xs={12} sm={6} md={4} lg={3} key={index}>
             <Food food={food} />
           </Col>
         ))}

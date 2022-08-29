@@ -5,22 +5,15 @@ import Search from "../Search/Search";
 
 const Intro = () => {
   return (
-    <div
-      className={`${styles.intro} d-flex justify-content-center align-items-center`}
-    >
+    <div className={`${styles.intro} `}>
       <Container>
         <Row className="d-flex  align-items-center flex-column-reverse flex-md-row">
           <Col md={6}>
             <p className={` ${styles.text} `}>
-              <span>Hungry?</span> Order food and have it delivered in minutes.
+              <span>Hey, what do you want to eat?</span>
             </p>
             <Search />
           </Col>
-          {/* <Col md={6} className="d-flex justify-content-center">
-            <video loop autoPlay={true} muted>
-              <source src="/videos/foods.webm"></source>
-            </video>
-          </Col> */}
         </Row>
       </Container>
     </div>
