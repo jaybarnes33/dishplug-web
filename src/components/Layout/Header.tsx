@@ -6,6 +6,7 @@ import {
   Container,
   Nav,
   Navbar,
+  NavbarBrand,
   NavDropdown,
   Spinner
 } from "react-bootstrap";
@@ -30,7 +31,7 @@ import {
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
-import { signOut } from "firebase/auth";
+import { linkWithPhoneNumber, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
@@ -119,88 +120,100 @@ const Header = () => {
   const noSearch = ["/login", "/register"];
   return (
     <>
-      {/*
-      <Navbar fixed="top" ref={nav}>
-        <Container className="d-flex flex-wrap  flex-md-nowrap justify-content-between">
-          <>
-            <Nav className="order-3 order-md-2">
-              {!noSearch.includes(pathname) && <Search />}
-            </Nav>
+      {
+        <Navbar fixed="top" ref={nav}>
+          <Container className="d-flex flex-wrap  flex-md-nowrap">
+            <NavbarBrand
+              as={Image}
+              src="/logoblack.png"
+              width={140}
+              height={70}
+              objectFit="contain"
+            />
+            <>
+              <Nav className="order-3 order-md-2">
+                {!noSearch.includes(pathname) && <Search />}
+              </Nav>
 
-            <Nav className="ms-auto gap-3 order-2 order-md-3">
-              {isAuthenticated ? (
-                <>
-                  <NavDropdown
-                    title={
-                      <>
-                        {loggingOut && (
-                          <Spinner
-                            animation="border"
-                            size="sm"
-                            style={{ marginRight: "0.25rem" }}
-                          />
-                        )}
-                        <FaUser color="black" />
-                      </>
-                    }
-                  >
-                    <NavDropdown.Item>
-                      <span onClick={logout}>Logout</span>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link href="/orders">Orders</Link>
-                    </NavDropdown.Item>
-                    {/* <NavDropdown.Item>
-                    <Link href="/profile">Profile</Link>
-                  </NavDropdown.Item> 
-                  </NavDropdown>
-                </>
-              ) : (
-                <>
-                  <Nav className="d-none d-md-flex gap-2">
-                    <Nav.Item as={Link} href="/login">
-                      <Button variant="light">
+              <Nav className="ms-auto gap-3 order-2 order-md-3">
+                {isAuthenticated ? (
+                  <>
+                    <NavDropdown
+                      drop="start"
+                      title={
                         <>
-                          <FaUser className="me-1" />
-                          Sign in
+                          {loggingOut && (
+                            <Spinner
+                              animation="border"
+                              size="sm"
+                              style={{ marginRight: "0.25rem" }}
+                            />
+                          )}
+                          <FaUser color="black" />
                         </>
-                      </Button>
-                    </Nav.Item>
-                    <Nav.Item as={Link} href="/register">
-                      <Button variant="dark">Sign up</Button>
-                    </Nav.Item>
-                  </Nav>
-
-                  <NavDropdown
-                    title={<FaUser color="black" />}
-                    className="d-block d-md-none"
-                  >
-                    <NavDropdown.Item>
-                      <Link href="/login">Sign in</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link href="/register">Sign up</Link>
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              )}
-              <Nav.Item as={Link} href="/cart">
-                <Button variant=" " className="d-none d-md-block">
-                  <FaShoppingCart size={24} />
-                  <sup>
-                    <Badge
-                      bg="warning"
-                      style={{ backgroundColor: "var(--dp-accent2)!important" }}
+                      }
                     >
-                      {itemsInCart}
-                    </Badge>
-                  </sup>
-                </Button>
-              </Nav.Item>
-            </Nav>
-          </>
-        </Container>
-      </Navbar> */}
+                      <NavDropdown.Item>
+                        <span onClick={logout}>Logout</span>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <Link href="/orders">Orders</Link>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <Link href="/profile">Profile</Link>
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                ) : (
+                  <>
+                    <Nav className="d-none d-md-flex gap-2">
+                      <Nav.Item as={Link} href="/login">
+                        <Button variant="light">
+                          <>
+                            <FaUser className="me-1" />
+                            Sign in
+                          </>
+                        </Button>
+                      </Nav.Item>
+                      <Nav.Item as={Link} href="/register">
+                        <Button variant="dark">Sign up</Button>
+                      </Nav.Item>
+                    </Nav>
+
+                    <NavDropdown
+                      title={<FaUser color="black" />}
+                      className="d-block d-md-none me-5"
+                      drop="down"
+                    >
+                      <NavDropdown.Item>
+                        <Link href="/login">Sign in</Link>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <Link href="/register">Sign up</Link>
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                )}
+                <Nav.Item as={Link} href="/cart">
+                  <Button variant=" " className="d-none d-md-block">
+                    <FaShoppingCart size={24} />
+                    <sup>
+                      <Badge
+                        bg="warning"
+                        style={{
+                          backgroundColor: "var(--dp-accent2)!important"
+                        }}
+                      >
+                        {itemsInCart}
+                      </Badge>
+                    </sup>
+                  </Button>
+                </Nav.Item>
+              </Nav>
+            </>
+          </Container>
+        </Navbar>
+      }
       {router.asPath !== "/chat" && (
         <Navbar
           className="mobi-nav bg-white rounded"
@@ -225,7 +238,24 @@ const Header = () => {
                           : "text-muted"
                       } d-flex flex-column align-items-center gap-1 mobi-nav bg-white btn`}
                     >
-                      <span>{activeTab(link)}</span>
+                      <span className="d-flex flex-column position-relative">
+                        {activeTab(link)}{" "}
+                        {link.name === "Cart" && (
+                          <sup>
+                            <Badge
+                              bg="warning"
+                              style={{
+                                position: "absolute",
+                                top: -15,
+                                right: -10,
+                                backgroundColor: "var(--dp-accent2)!important"
+                              }}
+                            >
+                              {itemsInCart}
+                            </Badge>
+                          </sup>
+                        )}
+                      </span>
                       <small className="fixed-bottom-navBar-text">
                         {link.name}
                       </small>
