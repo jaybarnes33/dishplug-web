@@ -36,7 +36,7 @@ function Search() {
     <Form className="d-flex gap-2" onSubmit={handleSubmit} ref={searchRef}>
       <Form.Control
         value={keyword}
-        placeholder="Hey, what do you want to eat?"
+        placeholder="Search for food, drinks and more"
         onChange={handleChange}
         style={{ width: "100%" }}
         size="lg"

@@ -16,7 +16,7 @@ const Featured = ({ foods }: IProps) => {
       <div className="d-flex justify-content-end mt-2">
         <Link href="/foods">
           <a
-            style={{ fontSize: "1.5rem", color: "red" }}
+            style={{ fontSize: "1.2rem", color: "var(--dp-accent2)" }}
             className="d-flex align-items-center my-3"
           >
             View all
@@ -24,7 +24,7 @@ const Featured = ({ foods }: IProps) => {
           </a>
         </Link>
       </div>
-      <Row className="d-flex align-items-center pt-1">
+      <Row className="d-flex justify-content-between align-items-center pt-1">
         {foods.map((food, index) => (
           <Col xs={6} md={4} lg={3} key={index}>
             <Food food={food} />

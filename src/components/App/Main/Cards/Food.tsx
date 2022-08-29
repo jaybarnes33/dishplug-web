@@ -32,14 +32,14 @@ const Food = ({ food }: { food: FoodType }) => {
         border: "none",
         cursor: "pointer"
       }}
-      className="position-relative my-3 mx-1"
+      className="position-relative my-3"
     >
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
           src={food.image || "/"}
-          height={200}
-          width={150}
+          height={150}
+          width={200}
           objectFit="cover"
         />
       </Link>
@@ -49,13 +49,17 @@ const Food = ({ food }: { food: FoodType }) => {
         </Badge>
       ) : (
         <Button
+          className="d-flex justify-content-center align-items-center"
           variant="light"
           onClick={handleAddToCart}
           style={{
+            width: 40,
+            height: 40,
             position: "absolute",
-            right: 0,
-            top: 0,
-            borderRadius: "0 0 0 0"
+            right: -15,
+            top: -15,
+            borderRadius: 50,
+            boxShadow: "0 0 5px 0 rgb(0 0 0 / 30%)"
           }}
         >
           <FaShoppingCart color="red" size={20} />
