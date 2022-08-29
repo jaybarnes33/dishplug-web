@@ -23,7 +23,7 @@ const Promo = ({ name, desc, image, bg }: PromoProps) => {
         <div className="py-5">
           <h5 className="text-light fw-bold">{name}</h5>
           <br />
-          <Button className="text-warning fw-bold" variant={"light"} size="sm">
+          <Button className="fw-bold" variant={"light"} size="sm">
             Coming Soon
           </Button>
         </div>
