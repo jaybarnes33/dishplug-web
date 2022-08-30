@@ -7,7 +7,7 @@ import Head from "next/head";
 const FormWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
   return (
-    <Container>
+    <>
       <Head>
         <title>{pathname === "/login" ? "Login" : "Register"}</title>
       </Head>
@@ -20,7 +20,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
               </p>
             </div>
           </Col>
-          <Col sm={12} md={6} className={`px-5 ${styles.form}`}>
+          <Col sm={12} md={6} className={`px-5 ${styles.form} mt-5 pt-5`}>
             <div className="mb-4">
               <h1>{pathname === "/login" ? "Welcome Back" : "Get Started"}</h1>
               <p>
@@ -74,7 +74,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
           </Col>
         </Row>
       </>
-    </Container>
+    </>
   );
 };
 

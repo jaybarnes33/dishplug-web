@@ -25,7 +25,7 @@ function Search() {
   };
 
   const handleScroll = () => {
-    if (window.scrollY < 100) {
+    if (window.scrollY < 60) {
       searchRef.current?.classList.add("d-none");
     } else {
       searchRef.current?.classList.remove("d-none");
@@ -54,8 +54,11 @@ function Search() {
         style={{
           width: "min(88vw, 500px)",
           marginLeft: "2vw",
-          height: "2rem"
+          height: "2rem",
+          backgroundColor: "rgba(249, 168, 77, 0.2)",
+          color: "var(--dp-accent2)"
         }}
+        className="search"
         type="search"
         size="lg"
       />

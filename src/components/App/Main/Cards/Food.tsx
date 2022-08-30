@@ -36,14 +36,18 @@ const Food = ({ food }: { food: FoodType }) => {
       className="position-relative my-3"
     >
       <Link href={`/foods/${food.id}`}>
-        <CardImg
-          as={Image}
-          src={food.image || "/"}
-          height={120}
-          width={200}
-          objectFit="cover"
-          objectPosition="center"
-        />
+        <div
+          style={{ width: "100%", height: "120px", zIndex: 0 }}
+          className="position-absolute"
+        >
+          <CardImg
+            as={Image}
+            src={food.image || "/"}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
+        </div>
       </Link>
       {unavailableFoods.includes(food.id) ? (
         <Badge bg="dark" style={{ position: "absolute", right: 0, top: 0 }}>
@@ -68,7 +72,7 @@ const Food = ({ food }: { food: FoodType }) => {
         </Button>
       )}
 
-      <Card.Body style={{ padding: 10 }} className="mb-2">
+      <Card.Body style={{ padding: 10, marginTop: 120 }} className="mb-2">
         <div className="d-flex flex-column mb-2">
           <Link href={`/foods/${food.id}`}>
             <h5>{food.name}</h5>
