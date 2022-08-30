@@ -17,7 +17,7 @@ function Search() {
   };
 
   const handleScroll = () => {
-    if (window.scrollY >= 100) {
+    if (window.scrollY >= 60) {
       searchRef.current?.classList.add("d-none");
     } else {
       searchRef.current?.classList.remove("d-none");
