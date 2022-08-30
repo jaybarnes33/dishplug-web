@@ -231,15 +231,18 @@ const Header = () => {
                     href={`/${link.icon !== "home" ? link.icon : ""}`}
                     passHref
                   >
-                    <div
-                      className={`${
-                        router.asPath.substring(1) === link.icon
-                          ? "text-warning"
-                          : "text-muted"
-                      } d-flex flex-column align-items-center gap-1 mobi-nav bg-white btn`}
-                    >
-                      <span className="d-flex flex-column position-relative">
-                        {activeTab(link)}{" "}
+                    <div className="d-flex flex-column align-items-center gap-1 mobi-nav bg-white btn text-muted">
+                      <span
+                        className="d-flex flex-column position-relative"
+                        style={{
+                          color:
+                            (router.pathname === "/" && link.icon === "home") ||
+                            router.pathname.includes(link.icon)
+                              ? "var(--dp-accent)"
+                              : "inherit"
+                        }}
+                      >
+                        {activeTab(link)}
                         {link.name === "Cart" && (
                           <sup>
                             <Badge
