@@ -16,13 +16,10 @@ const Featured = ({ foods }: IProps) => {
         className="pt-3 pb-1
       d-flex justify-content-between align-items-center"
       >
-        <h2 className="fw-bold text-center">Featured Food</h2>
+        <h2 className="text-center">Featured Food</h2>
 
         <Link href="/foods">
-          <a
-            style={{ fontSize: "1.2rem", color: "var(--dp-accent2)" }}
-            className="fw-bold"
-          >
+          <a style={{ fontSize: "1.2rem", color: "var(--dp-accent2)" }}>
             View all
             <FaArrowRight className="ms-2" />
           </a>

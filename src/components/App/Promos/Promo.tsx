@@ -12,7 +12,7 @@ interface PromoProps {
 const Promo = ({ name, desc, image, bg }: PromoProps) => {
   return (
     <>
-      <div className="d-flex gap-2 position-relative">
+      <div className="d-flex gap-2 position-relative p-2">
         <Image
           src={image}
           alt={name}
@@ -20,10 +20,10 @@ const Promo = ({ name, desc, image, bg }: PromoProps) => {
           height={140}
           objectFit="cover"
         />
-        <div className="py-5">
+        <div className="py-3">
           <h5 className="text-light fw-bold">{name}</h5>
-          <br />
-          <Button className="fw-bold" variant={"light"} size="sm">
+
+          <Button className="fw-bold text-warning" variant={"light"} size="sm">
             Coming Soon
           </Button>
         </div>

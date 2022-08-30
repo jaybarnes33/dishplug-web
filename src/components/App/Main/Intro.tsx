@@ -11,10 +11,9 @@ const Intro = () => {
     <div className={`${styles.intro} `}>
       <Container>
         <Row className="d-flex  align-items-center flex-column-reverse flex-md-row pt-5">
-          <Col md={6}>
-            <p className={` ${styles.text} `}>
-              <span>Hey, what do you want to eat?</span>
-            </p>
+          <Col sm={12}>
+            <h1 className="pt-3 pe-5 me-5">Hey, what do you want to eat?</h1>
+
             <Search />
             <Promos />
           </Col>

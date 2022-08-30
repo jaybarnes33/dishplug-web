@@ -51,10 +51,11 @@ const Food = ({ food }: { food: FoodType }) => {
         </Badge>
       ) : (
         <Button
-          className="d-flex justify-content-center align-items-center"
           variant="light"
+          className="d-flex justify-content-center align-items-center"
           onClick={handleAddToCart}
           style={{
+            backgroundColor: "white!important",
             width: 40,
             height: 40,
             position: "absolute",

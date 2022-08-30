@@ -25,7 +25,7 @@ const Promos = () => {
   return (
     <div
       className="d-flex gap-2 my-3"
-      style={{ overflowX: "scroll", height: 180 }}
+      style={{ overflowX: "scroll", height: 160 }}
     >
       {promos.map((promo, key) => (
         <Promo
