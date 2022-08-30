@@ -12,26 +12,17 @@ import {
 } from "react-bootstrap";
 
 import {
-  FaHeart,
   FaHome,
   FaListAlt,
   FaShoppingCart,
   FaUser,
   FaUserAlt
 } from "react-icons/fa";
-import {
-  AiFillFile,
-  AiFillHeart,
-  AiFillHome,
-  AiOutlineFile,
-  AiOutlineHeart,
-  AiOutlineHome,
-  AiOutlineUser
-} from "react-icons/ai";
+
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
-import { linkWithPhoneNumber, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
