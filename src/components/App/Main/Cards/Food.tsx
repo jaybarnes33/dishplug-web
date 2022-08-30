@@ -31,7 +31,7 @@ const Food = ({ food }: { food: FoodType }) => {
       style={{
         border: "none",
         cursor: "pointer",
-        height: 220
+        height: 230
       }}
       className="position-relative my-3"
     >
