@@ -120,7 +120,16 @@ const Header = () => {
   const noSearch = ["/login", "/register"];
   return (
     <>
-      {
+      {noSearch.includes(router.pathname) && (
+        <Button
+          className="position-absolute mt-5 ms-4"
+          variant="dark"
+          onClick={() => router.back()}
+        >
+          Go Back
+        </Button>
+      )}
+      {!noSearch.includes(router.pathname) && (
         <Navbar fixed="top" ref={nav}>
           <Container className="d-flex flex-wrap  flex-md-nowrap">
             <NavbarBrand
@@ -213,8 +222,8 @@ const Header = () => {
             </>
           </Container>
         </Navbar>
-      }
-      {router.asPath !== "/chat" && (
+      )}
+      {!noSearch.includes(router.pathname) && (
         <Navbar
           className="mobi-nav bg-white rounded"
           // style={{ boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.04)" }}
