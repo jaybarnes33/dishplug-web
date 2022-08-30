@@ -2,25 +2,24 @@ import React from "react";
 import styles from "@/styles/Home.module.scss";
 import { Col, Container, Row } from "react-bootstrap";
 import Search from "../Search/Search";
+import Pattern from "../../../../public/Pattern2.png";
+import Image from "next/image";
+import Promos from "../Promos/Promos";
 
 const Intro = () => {
   return (
-    <div
-      className={`${styles.intro} d-flex justify-content-center align-items-center`}
-    >
+    <div className={`${styles.intro} `}>
       <Container>
-        <Row className="d-flex  align-items-center flex-column-reverse flex-md-row">
-          <Col md={6}>
-            <p className={` ${styles.text} `}>
-              <span>Hungry?</span> Order food and have it delivered in minutes.
-            </p>
+        <Row className="d-flex  align-items-center flex-column-reverse flex-md-row pt-5">
+          <Col sm={12}>
+            <h1 className="pt-3 pe-5 me-5">Hey, what do you want to eat?</h1>
+
             <Search />
+            <Promos />
           </Col>
-          {/* <Col md={6} className="d-flex justify-content-center">
-            <video loop autoPlay={true} muted>
-              <source src="/videos/foods.webm"></source>
-            </video>
-          </Col> */}
+          <div className="position-fixed top-0 end-0">
+            <Image src={Pattern} alt=" " objectPosition={"right"} />
+          </div>
         </Row>
       </Container>
     </div>

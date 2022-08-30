@@ -43,7 +43,7 @@ const Search = ({
   }, [keyword, items]);
   return (
     <>
-      <section className="mt-4" style={{ minHeight: "90vh" }}>
+      <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
         <Container className="py-5">
           {foods.length ? (
             <Row>

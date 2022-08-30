@@ -11,48 +11,60 @@ const Orders = () => {
 
   useEffect(() => {
     (async () => {
-      const ordersRef = collection(firestore, "orders");
-      const q = query(ordersRef, where("customer.id", "==", user?.uid));
+      if (user) {
+        const ordersRef = collection(firestore, "orders");
+        const q = query(ordersRef, where("customer.id", "==", user?.uid));
 
-      onSnapshot(q, snapshot => {
-        const data = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...(doc.data() as Omit<TUserOrder, "id">)
-        }));
-        setOrders(data);
-      });
+        onSnapshot(q, snapshot => {
+          const data = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...(doc.data() as Omit<TUserOrder, "id">)
+          }));
+          setOrders(data);
+        });
+      }
     })();
-  }, [user?.uid]);
+  }, [user, user?.uid]);
 
   return (
     <div className="mt-5 pt-5">
-      <Container className="mt-4">
-        <h2>Hi, {user?.displayName}</h2>
-        <p>Find your orders below</p>
+      <Container className="mt-5">
+        {user ? (
+          <>
+            <h2>Hi, {user?.displayName}</h2>
+            <p>Find your orders below</p>
 
-        {!orders.length ? (
-          <Alert variant="danger">You haven&apos;t made any orders yet</Alert>
+            {!orders.length ? (
+              <Alert variant="danger">
+                You haven&apos;t made any orders yet
+              </Alert>
+            ) : (
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>To</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map(order => (
+                    <tr key={order.id}>
+                      <td>{order.date.toDate().toDateString()}</td>
+                      <td>{order.status}</td>
+                      <td>{order.deliveryLocation}</td>
+                      <td>{order.amount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+          </>
         ) : (
-          <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Status</th>
-                <th>To</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map(order => (
-                <tr key={order.id}>
-                  <td>{order.date.toDate().toDateString()}</td>
-                  <td>{order.status}</td>
-                  <td>{order.deliveryLocation}</td>
-                  <td>{order.amount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <Alert variant="danger">
+            Please login or sign up to save and retrieve your orders
+          </Alert>
         )}
       </Container>
     </div>

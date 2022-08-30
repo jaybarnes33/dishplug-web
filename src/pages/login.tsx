@@ -104,10 +104,6 @@ const Login = () => {
           <Form.Control.Feedback
             type={touched.identity && errors.identity ? "invalid" : "valid"}
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
-            distinctio voluptatem itaque ipsam id velit quam corrupti
-            consectetur nam voluptate quidem ducimus minus, eveniet molestias
-            numquam cum illum deleniti. Aperiam.
             {errors.identity}
           </Form.Control.Feedback>
         </Form.Group>

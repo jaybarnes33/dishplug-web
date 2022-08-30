@@ -11,7 +11,7 @@ import { foodConverter } from "..";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <section className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
+    <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
       <Head>
         <title>Foods</title>
         <meta

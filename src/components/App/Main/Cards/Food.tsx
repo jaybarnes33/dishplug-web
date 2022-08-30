@@ -30,17 +30,19 @@ const Food = ({ food }: { food: FoodType }) => {
     <Card
       style={{
         border: "none",
-        cursor: "pointer"
+        cursor: "pointer",
+        height: 220
       }}
-      className="position-relative my-3 mx-1"
+      className="position-relative my-3"
     >
       <Link href={`/foods/${food.id}`}>
         <CardImg
           as={Image}
           src={food.image || "/"}
-          height={200}
-          width={150}
+          height={120}
+          width={200}
           objectFit="cover"
+          objectPosition="center"
         />
       </Link>
       {unavailableFoods.includes(food.id) ? (
@@ -50,19 +52,23 @@ const Food = ({ food }: { food: FoodType }) => {
       ) : (
         <Button
           variant="light"
+          className="d-flex justify-content-center align-items-center"
           onClick={handleAddToCart}
           style={{
+            backgroundColor: "white!important",
+            width: 40,
+            height: 40,
             position: "absolute",
-            right: 0,
-            top: 0,
-            borderRadius: "0 0 0 0"
+            right: -5,
+            top: -15,
+            borderRadius: 50
           }}
         >
           <FaShoppingCart color="red" size={20} />
         </Button>
       )}
 
-      <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
+      <Card.Body style={{ padding: 10 }} className="mb-2">
         <div className="d-flex flex-column mb-2">
           <Link href={`/foods/${food.id}`}>
             <h5>{food.name}</h5>
