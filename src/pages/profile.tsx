@@ -20,11 +20,11 @@ const Profile = () => {
               <Form.Control value={user?.displayName || " "}></Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="email">{user.email}</Form.Label>
-              <Form.Control value={user?.displayName || " "}></Form.Control>
+              <Form.Label htmlFor="email">Email</Form.Label>
+              <Form.Control value={user?.email || " "}></Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="phone">{user.phoneNumber}</Form.Label>
+              <Form.Label htmlFor="phone">Phone</Form.Label>
               <Form.Control value={user?.phoneNumber || " "}></Form.Control>
             </Form.Group>
           </Form>
