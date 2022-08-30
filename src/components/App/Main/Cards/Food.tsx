@@ -75,9 +75,10 @@ const Food = ({ food }: { food: FoodType }) => {
       <Card.Body style={{ padding: 10, marginTop: 120 }} className="mb-2">
         <div className="d-flex flex-column mb-2">
           <Link href={`/foods/${food.id}`}>
-            <h5>{food.name}</h5>
+            <h6>{food.name}</h6>
           </Link>
-          <span className="text-danger">{currencyFormat(food.price)}</span>
+
+          <small className="text-danger">{currencyFormat(food.price)}</small>
           {!pathname.includes("stores") && (
             <Link href={`/stores/${food.store_id}`}>
               <small> {food.store_name}</small>
