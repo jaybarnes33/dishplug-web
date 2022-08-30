@@ -234,7 +234,7 @@ const Header = () => {
                     <div
                       className={`${
                         router.asPath.substring(1) === link.icon
-                          ? "text-primary"
+                          ? "text-warning"
                           : "text-muted"
                       } d-flex flex-column align-items-center gap-1 mobi-nav bg-white btn`}
                     >
@@ -243,12 +243,11 @@ const Header = () => {
                         {link.name === "Cart" && (
                           <sup>
                             <Badge
-                              bg="warning"
+                              bg="danger"
                               style={{
                                 position: "absolute",
                                 top: -15,
-                                right: -10,
-                                backgroundColor: "var(--dp-accent2)!important"
+                                right: -10
                               }}
                             >
                               {itemsInCart}
