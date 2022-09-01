@@ -21,7 +21,7 @@ import {
   Row,
   Spinner
 } from "react-bootstrap";
-import { usePaystackPayment } from "react-paystack";
+// import { usePaystackPayment } from "react-paystack";
 
 const Details = ({ details }: IPageProps) => {
   const { user } = useAuth();
@@ -37,87 +37,87 @@ const Details = ({ details }: IPageProps) => {
     }
   }, []);
 
-  const initializePayment = usePaystackPayment({
-    email: addressInfo.email,
-    amount: Math.ceil(totalAmount * 100),
-    currency: "GHS",
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
-  });
+  // const initializePayment = usePaystackPayment({
+  //   email: addressInfo.email,
+  //   amount: Math.ceil(totalAmount * 100),
+  //   currency: "GHS",
+  //   publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
+  // });
 
   // you can call this function anything
-  const onSuccess = (
-    response: Record<string, string | number>,
-    items: TCart[] | null
-  ) => {
-    const stores = [
-      ...new Set(
-        items?.map(item => {
-          return {
-            id: item.store_id,
-            phone: item.store_phone,
-            name: item.store_name
-          };
-        })
-      )
-    ];
+  // const onSuccess = (
+  //   response: Record<string, string | number>,
+  //   items: TCart[] | null
+  // ) => {
+  //   const stores = [
+  //     ...new Set(
+  //       items?.map(item => {
+  //         return {
+  //           id: item.store_id,
+  //           phone: item.store_phone,
+  //           name: item.store_name
+  //         };
+  //       })
+  //     )
+  //   ];
 
-    addDoc(collection(firestore, "orders"), {
-      reference: response.reference,
-      transaction: response.transaction,
-      status: "pending",
-      amount: totalAmount,
-      customer: {
-        id: user?.uid || "anon",
-        name: addressInfo.name,
-        phone: addressInfo.phone,
-        email: addressInfo.email
-      },
-      paid: true,
-      deliveryLocation: addressInfo.location,
-      date: Timestamp.fromDate(new Date()),
-      type: "delivery",
-      items: items?.map(item => ({
-        id: item.id,
-        name: item.name,
-        soldFor: item.price,
-        quantity: item.quantity,
-        store_id: item.store_id
-      })),
-      stores: stores.map(store => store.id)
-    })
-      .then(res => {
-        console.log(res);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { paymentMethod, ...rest } = addressInfo;
-        localStorage.setItem("order-details", JSON.stringify(rest));
-      })
-      .then(() => clearCart(availableItems))
-      .then(() => {
-        stores.forEach(store =>
-          sendNotification({
-            name: addressInfo.name,
-            phone: addressInfo.phone,
-            paid: true,
-            location: addressInfo.location,
-            topic: `${store.id}-new_order`,
-            items:
-              (items || [])
-                .filter(item => item.store_id === store.id)
-                .map(item => item.name) || []
-          })
-        );
-        axios.post("/api/send-messages", {
-          recipients: [addressInfo.phone],
-          message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
-        });
+  //   addDoc(collection(firestore, "orders"), {
+  //     reference: response.reference,
+  //     transaction: response.transaction,
+  //     status: "pending",
+  //     amount: totalAmount,
+  //     customer: {
+  //       id: user?.uid || "anon",
+  //       name: addressInfo.name,
+  //       phone: addressInfo.phone,
+  //       email: addressInfo.email
+  //     },
+  //     paid: true,
+  //     deliveryLocation: addressInfo.location,
+  //     date: Timestamp.fromDate(new Date()),
+  //     type: "delivery",
+  //     items: items?.map(item => ({
+  //       id: item.id,
+  //       name: item.name,
+  //       soldFor: item.price,
+  //       quantity: item.quantity,
+  //       store_id: item.store_id
+  //     })),
+  //     stores: stores.map(store => store.id)
+  //   })
+  //     .then(res => {
+  //       console.log(res);
+  //       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //       const { paymentMethod, ...rest } = addressInfo;
+  //       localStorage.setItem("order-details", JSON.stringify(rest));
+  //     })
+  //     .then(() => clearCart(availableItems))
+  //     .then(() => {
+  //       stores.forEach(store =>
+  //         sendNotification({
+  //           name: addressInfo.name,
+  //           phone: addressInfo.phone,
+  //           paid: true,
+  //           location: addressInfo.location,
+  //           topic: `${store.id}-new_order`,
+  //           items:
+  //             (items || [])
+  //               .filter(item => item.store_id === store.id)
+  //               .map(item => item.name) || []
+  //         })
+  //       );
+  //       axios.post("/api/send-messages", {
+  //         recipients: [addressInfo.phone],
+  //         message: `Hi ${addressInfo.name}, your order has been received, your food will be delivered in no time`
+  //       });
 
-        axios.post("/api/send-messages", {
-          recipients: stores.map(store => store.phone),
-          message: `An order has been made to your store, please check your dashboard`
-        });
-      })
-      .then(() => replace("/foods"));
-  };
+  //       axios.post("/api/send-messages", {
+  //         recipients: stores.map(store => store.phone),
+  //         message: `An order has been made to your store, please check your dashboard`
+  //       });
+  //     })
+  //     .then(() => replace("/foods"));
+  // };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
     const stores = [
@@ -186,10 +186,10 @@ const Details = ({ details }: IPageProps) => {
   };
 
   // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
-  };
+  // const onClose = () => {
+  //   // implementation for  whatever you want to do when the Paystack dialog closed.
+  //   console.log("closed");
+  // };
 
   return (
     <Container>
@@ -277,13 +277,13 @@ const Details = ({ details }: IPageProps) => {
                   size="lg"
                   variant="dark"
                   disabled={availableItems.length === 0}
-                  onClick={() =>
-                    initializePayment(
-                      (res: Record<string, string>) =>
-                        onSuccess(res, availableItems),
-                      onClose
-                    )
-                  }
+                  // onClick={() =>
+                  //   initializePayment(
+                  //     (res: Record<string, string>) =>
+                  //       onSuccess(res, availableItems),
+                  //     onClose
+                  //   )
+                  // }
                 >
                   Place Order {loading && <Spinner animation="border" />}
                 </Button>

@@ -102,6 +102,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
               id="online-payment"
               label="Pay now"
               value="online"
+              disabled
             />
           </div>
         </Form.Group>
