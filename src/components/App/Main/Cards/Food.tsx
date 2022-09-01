@@ -31,7 +31,7 @@ const Food = ({ food }: { food: FoodType }) => {
       style={{
         border: "none",
         cursor: "pointer",
-        height: 235
+        height: 225
       }}
       className="position-relative my-3"
     >
@@ -72,7 +72,7 @@ const Food = ({ food }: { food: FoodType }) => {
         </Button>
       )}
 
-      <Card.Body style={{ padding: 10, marginTop: 120 }} className="mb-2">
+      <Card.Body style={{ padding: 0, marginTop: 125 }} className="mb-2 px-2">
         <div className="d-flex flex-column mb-2">
           <Link href={`/foods/${food.id}`}>
             <h6>{food.name}</h6>
