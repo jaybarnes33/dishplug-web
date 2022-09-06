@@ -7,12 +7,14 @@ import type { FoodType } from "@/types";
 import Head from "next/head";
 import Image from "next/image";
 import admin from "@/lib/firebase/node";
-import { Badge, Button, Col, ListGroup, Row } from "react-bootstrap";
+import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { foodConverter } from "..";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
 import { useAvailability } from "@/components/Context/Availability";
 import Rating from "@/components/App/Rating";
+import { FaHeart, FaMapMarker, FaMapMarkerAlt } from "react-icons/fa";
+import colors from "@/styles/colors";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -79,47 +81,53 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
         <>
-          <Row className="d-flex align-items-center">
-            <Col
-              md={6}
-              className="position-fixed top-0 rounded"
-              style={{ height: 500 }}
-            >
-              <Image
-                src={food.image || ""}
-                layout="fill"
-                alt=""
-                objectFit="cover"
-                objectPosition="center"
-              />
-              {["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
-                food.store_id
-              ) && <Badge bg="dark"></Badge>}
-            </Col>
-            <Col
-              md={6}
+          <div
+            className="position-fixed top-0 rounded"
+            style={{ height: 500, width: "100%" }}
+          >
+            <Image
+              src={food.image || ""}
+              layout="fill"
+              alt=""
+              objectFit="cover"
+              objectPosition="center"
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <div
               style={{
                 marginTop: 410,
                 backgroundColor: "white",
                 width: "100vw"
               }}
             >
-              <ListGroup
-                variant="flush"
-                style={{ borderRadius: 30, width: "100%" }}
+              <Card
+                style={{ borderRadius: 30, backgroundColor: "white!important" }}
               >
-                <ListGroup.Item>
-                  <h1>{food.name}</h1>
-                  <Rating value={food.rating || 0} />
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <h2 className="text-danger">{currencyFormat(food.price)}</h2>
-                </ListGroup.Item>
-                <ListGroup.Item>{food.rating || 0} reviews</ListGroup.Item>
-                <ListGroup.Item>{food.description}</ListGroup.Item>
-              </ListGroup>
-              <ListGroup variant="flush">
-                <ListGroup.Item className="d-grid gap-4">
+                {/* <Card.Header className="d-flex justify-content-between">
+                  <Badge>Popular</Badge>
+                  <div className="d-flex gap-3 mx-2">
+                    <FaMapMarkerAlt color={colors.accent} />
+                    <FaHeart color="red" />
+                  </div>
+                </Card.Header> */}
+                <Card.Body>
+                  <p className="border-bottom p-1">
+                    <h1>{food.name}</h1>
+                    <Rating value={food.rating || 0} />
+                  </p>
+                  <p className="border-bottom p-1">
+                    <h2 className="text-danger">
+                      {currencyFormat(food.price)}
+                    </h2>
+                  </p>
+                  <p className="border-bottom p-1">
+                    {food.rating || 0} reviews
+                  </p>
+                  <p>{food.description}</p>
+                </Card.Body>
+
+                <div className="d-grid place-items-center mx-2">
                   <Button
                     variant="dark"
                     size="lg"
@@ -137,10 +145,13 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   >
                     {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
                   </Button>
-                </ListGroup.Item>
+                </div>
+              </Card>
+              <ListGroup variant="flush">
+                <ListGroup.Item className="d-grid gap-4"></ListGroup.Item>
               </ListGroup>
-            </Col>
-          </Row>
+            </div>
+          </div>
         </>
       </div>
     </>
