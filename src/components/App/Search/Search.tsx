@@ -33,7 +33,12 @@ function Search() {
   }, []);
 
   return (
-    <Form className="d-flex gap-2" onSubmit={handleSubmit} ref={searchRef}>
+    <Form
+      className="d-flex gap-2"
+      onSubmit={handleSubmit}
+      ref={searchRef}
+      style={{ position: "relative", zIndex: 1 }}
+    >
       <Form.Control
         value={keyword}
         placeholder="Search for food, drinks and more"
