@@ -7,7 +7,7 @@ import type { FoodType } from "@/types";
 import Head from "next/head";
 import Image from "next/image";
 import admin from "@/lib/firebase/node";
-import { Badge, Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Badge, Button, Col, ListGroup, Row } from "react-bootstrap";
 import { foodConverter } from "..";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
