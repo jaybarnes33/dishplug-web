@@ -112,13 +112,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   <h2 className="text-danger">{currencyFormat(food.price)}</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>{food.rating || 0} reviews</ListGroup.Item>
-                <ListGroup.Item>
-                  {food.description} Lorem ipsum dolor, sit amet consectetur
-                  adipisicing elit. Delectus, illum! Possimus laudantium, alias
-                  nobis maiores veniam eaque dolor dolorum! Tenetur, officia
-                  ullam commodi vel labore delectus minus nihil doloremque
-                  eligendi!
-                </ListGroup.Item>
+                <ListGroup.Item>{food.description}</ListGroup.Item>
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
