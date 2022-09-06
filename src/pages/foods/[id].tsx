@@ -103,7 +103,11 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 backgroundColor: "white"
               }}
             >
-              <ListGroup variant="flush" style={{ borderRadius: 30 }}>
+              <ListGroup
+                variant="flush"
+                style={{ borderRadius: 30 }}
+                className="w-100"
+              >
                 <ListGroup.Item>
                   <h1>{food.name}</h1>
                   <Rating value={food.rating || 0} />
