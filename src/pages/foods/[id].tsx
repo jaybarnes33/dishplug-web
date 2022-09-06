@@ -12,6 +12,7 @@ import { foodConverter } from "..";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
 import { useAvailability } from "@/components/Context/Availability";
+import Rating from "@/components/App/Rating";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -75,11 +76,15 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
       <div
         className="mt-4 pt-5 d-flex align-items-center"
-        style={{ minHeight: "90vh" }}
+        style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
-        <Container>
+        <>
           <Row className="d-flex align-items-center">
-            <Col md={6} className="position-relative" style={{ height: 400 }}>
+            <Col
+              md={6}
+              className="position-fixed top-0 rounded"
+              style={{ height: 500 }}
+            >
               <Image
                 src={food.image || ""}
                 layout="fill"
@@ -91,17 +96,29 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 food.store_id
               ) && <Badge bg="dark"></Badge>}
             </Col>
-            <Col md={6}>
-              <ListGroup variant="flush">
+            <Col
+              md={6}
+              style={{
+                marginTop: 410,
+                backgroundColor: "white"
+              }}
+            >
+              <ListGroup variant="flush" style={{ borderRadius: 30 }}>
                 <ListGroup.Item>
                   <h1>{food.name}</h1>
-                  {/* <Rating value={food.rating || 0} /> */}
+                  <Rating value={food.rating || 0} />
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <h2 className="text-danger">{currencyFormat(food.price)}</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>{food.rating || 0} reviews</ListGroup.Item>
-                <ListGroup.Item>{food.description}</ListGroup.Item>
+                <ListGroup.Item>
+                  {food.description} Lorem ipsum dolor, sit amet consectetur
+                  adipisicing elit. Delectus, illum! Possimus laudantium, alias
+                  nobis maiores veniam eaque dolor dolorum! Tenetur, officia
+                  ullam commodi vel labore delectus minus nihil doloremque
+                  eligendi!
+                </ListGroup.Item>
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-grid gap-4">
@@ -126,7 +143,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </ListGroup>
             </Col>
           </Row>
-        </Container>
+        </>
       </div>
     </>
   );

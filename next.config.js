@@ -4,8 +4,8 @@ const withPWA = require("next-pwa")({
   skipWaiting: true
 });
 
-module.exports = withPWA({
+module.exports = {
   reactStrictMode: true,
   swcMinify: true,
   images: { domains: ["firebasestorage.googleapis.com"] }
-});
+};
