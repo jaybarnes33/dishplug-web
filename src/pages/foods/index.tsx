@@ -19,7 +19,7 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
           content="Food delivery in Ghana, Food in Tarkwa, UMaT Food, Tarkwa Fried Rice, Hostel Crust Pizza"
         />
       </Head>
-      <h2 className="text-center">Foods</h2>
+      <h2 className="text-center mt-5">Foods</h2>
       <Container>
         <Row>
           {foods.map((food, index) => (
