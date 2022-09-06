@@ -12,7 +12,7 @@ const Intro = () => {
       <Container>
         <Row className="d-flex  align-items-center flex-column-reverse flex-md-row pt-5">
           <Col sm={12}>
-            <h1 className="pt-3 mt-5 mb-3 pe-5 me-5">
+            <h1 className="pt-3 mt-2 mb-3 pe-5 me-5">
               Hey, what do you want to eat?
             </h1>
 
