@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 
 import {
+  FaChevronLeft,
   FaHome,
   FaListAlt,
   FaShoppingCart,
@@ -26,6 +27,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
+import colors from "@/styles/colors";
 
 const Header = () => {
   const router = useRouter();
@@ -108,16 +110,17 @@ const Header = () => {
     });
   });
 
-  const noSearch = ["/login", "/register"];
+  const noSearch = ["/login", "/register", "/cart"];
   return (
     <>
       {noSearch.includes(router.pathname) && (
         <Button
-          className="position-absolute mt-5 ms-4"
-          variant="dark"
+          className="position-fixed mt-3 ms-3"
+          variant="light"
+          style={{ zIndex: 5 }}
           onClick={() => router.back()}
         >
-          Go Back
+          <FaChevronLeft color={colors.accent} />
         </Button>
       )}
       {!noSearch.includes(router.pathname) && (

@@ -24,8 +24,8 @@ const Promos = () => {
   ];
   return (
     <div
-      className="d-flex gap-2 my-3"
-      style={{ overflowX: "scroll", height: 160 }}
+      className="d-flex gap-2 my-3 justify-content-between"
+      style={{ height: 160, overflowX: "scroll" }}
     >
       {promos.map((promo, key) => (
         <Promo
