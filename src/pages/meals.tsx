@@ -7,7 +7,7 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
 import { Col, Container, Row } from "react-bootstrap";
-import { foodConverter } from "..";
+import { foodConverter } from ".";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (

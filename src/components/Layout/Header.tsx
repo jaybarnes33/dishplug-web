@@ -34,7 +34,7 @@ const Header = () => {
   const nav = useRef<HTMLElement>(null);
   const { itemsInCart } = useCart();
   const { isAuthenticated } = useAuth();
-  const { pathname, replace } = useRouter();
+  const { replace } = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
 
   const logout = async () => {
@@ -110,10 +110,12 @@ const Header = () => {
     });
   });
 
-  const noSearch = ["/login", "/register", "/cart"];
+  const noSearch = ["login", "register", "cart", "foods"].some(path =>
+    router.pathname.includes(path)
+  );
   return (
     <>
-      {noSearch.includes(router.pathname) && (
+      {noSearch && (
         <Button
           className="position-fixed mt-3 ms-3"
           variant="light"
@@ -123,7 +125,7 @@ const Header = () => {
           <FaChevronLeft color={colors.accent} />
         </Button>
       )}
-      {!noSearch.includes(router.pathname) && (
+      {!noSearch && (
         <Navbar fixed="top" ref={nav}>
           <Container className="d-flex flex-wrap  flex-md-nowrap">
             <NavbarBrand
@@ -135,7 +137,7 @@ const Header = () => {
             />
             <>
               <Nav className="order-3 order-md-2">
-                {!noSearch.includes(pathname) && <Search />}
+                {!noSearch && <Search />}
               </Nav>
 
               <Nav className="ms-auto gap-3 order-2 order-md-3">
@@ -217,7 +219,7 @@ const Header = () => {
           </Container>
         </Navbar>
       )}
-      {!noSearch.includes(router.pathname) && (
+      {!noSearch && (
         <Navbar
           className="mobi-nav bg-white rounded"
           // style={{ boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.04)" }}

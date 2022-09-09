@@ -18,7 +18,7 @@ const Featured = ({ foods }: IProps) => {
       >
         <h2 className="text-center">Featured Food</h2>
 
-        <Link href="/foods">
+        <Link href="/meals">
           <a style={{ fontSize: "1.2rem", color: "var(--dp-accent2)" }}>
             View all
             <FaArrowRight className="ms-2" />
