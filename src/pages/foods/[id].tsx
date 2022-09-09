@@ -83,7 +83,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <>
           <div
             className="position-fixed top-0 rounded"
-            style={{ height: 500, width: "100%" }}
+            style={{ height: "50vh", width: "100%" }}
           >
             <Image
               src={food.image || ""}
@@ -93,64 +93,59 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               objectPosition="center"
             />
           </div>
-          <div className="d-flex align-items-center">
-            <div
+
+          <div
+            style={{
+              marginTop: "35vh",
+              width: "100vw"
+            }}
+          >
+            <Card
               style={{
-                marginTop: 410,
-                backgroundColor: "white",
-                width: "100vw"
+                backgroundColor: "white!important",
+                border: "none",
+                borderRadius: 30
               }}
             >
-              <Card
-                style={{ borderRadius: 30, backgroundColor: "white!important" }}
-              >
-                {/* <Card.Header className="d-flex justify-content-between">
-                  <Badge>Popular</Badge>
-                  <div className="d-flex gap-3 mx-2">
-                    <FaMapMarkerAlt color={colors.accent} />
-                    <FaHeart color="red" />
-                  </div>
-                </Card.Header> */}
-                <Card.Body>
-                  <p className="border-bottom p-1">
-                    <h1>{food.name}</h1>
-                    <Rating value={food.rating || 0} />
-                  </p>
-                  <p className="border-bottom p-1">
-                    <h2 className="text-danger">
-                      {currencyFormat(food.price)}
-                    </h2>
-                  </p>
-                  <p className="border-bottom p-1">
-                    {food.rating || 0} reviews
-                  </p>
-                  <p>{food.description}</p>
-                </Card.Body>
+              <Card.Body>
+                <p>
+                  <h1>{food.name}</h1>
+                  <Rating value={food.rating || 0} />
+                </p>
+                <p>
+                  <h2 style={{ color: colors.accent2 }}>
+                    {currencyFormat(food.price)}
+                  </h2>
+                </p>
+                <p>{food.rating || 0} reviews</p>
+                <p>{food.description}</p>
+              </Card.Body>
 
-                <div className="d-grid place-items-center mx-2">
-                  <Button
-                    variant="dark"
-                    size="lg"
-                    style={
-                      isUnavailable
-                        ? {
-                            color: "#212121",
-                            border: "2px solid dark",
-                            backgroundColor: "transparent"
-                          }
-                        : undefined
-                    }
-                    onClick={handleAddToCart}
-                    disabled={isUnavailable}
-                  >
-                    {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
-                  </Button>
-                </div>
-              </Card>
-              <ListGroup variant="flush">
-                <ListGroup.Item className="d-grid gap-4"></ListGroup.Item>
-              </ListGroup>
-            </div>
+              <div
+                className="d-grid place-items-center px-3 position-fixed w-100 left-0"
+                style={{ bottom: "3rem" }}
+              >
+                <Button
+                  size="lg"
+                  style={
+                    isUnavailable
+                      ? {
+                          color: "#212121",
+                          border: "2px solid dark",
+                          backgroundColor: "transparent"
+                        }
+                      : {
+                          backgroundColor: colors.accent,
+                          border: "none"
+                        }
+                  }
+                  onClick={handleAddToCart}
+                  disabled={isUnavailable}
+                >
+                  {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
+                </Button>
+              </div>
+            </Card>
           </div>
         </>
       </div>
