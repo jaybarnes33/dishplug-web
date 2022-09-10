@@ -110,8 +110,8 @@ const Header = () => {
     });
   });
 
-  const noSearch = ["login", "register", "cart", "foods"].some(path =>
-    router.pathname.includes(path)
+  const noSearch = ["login", "register", "cart", "foods", "checkout"].some(
+    path => router.pathname.includes(path)
   );
   return (
     <>

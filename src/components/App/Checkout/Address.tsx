@@ -1,11 +1,15 @@
 import { useAuth } from "@/components/Context/Auth";
 import { formatPhone } from "@/helpers/utils";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
+import colors from "@/styles/colors";
 import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { FaMapMarkerAlt, FaMoneyBillAlt } from "react-icons/fa";
+
+import CartFooter from "../Cart/CartFooter";
 
 const Address = ({ updateDetails, details }: IPageProps) => {
   const { user } = useAuth();
@@ -14,12 +18,29 @@ const Address = ({ updateDetails, details }: IPageProps) => {
     typeof details,
     "paymentMethod"
   > | null>(null);
-
+  const [city, setCity] = useState<string>("");
+  const [location, setLocation] = useState<{ lat: number; lng: number }>();
   useEffect(() => {
-    const storedInfo = localStorage.getItem("order-details");
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+      },
+      e => console.log(e),
+      { enableHighAccuracy: true, maximumAge: 0 }
+    );
+
+    const storedInfo = localStorage.getItem("address-info");
     if (storedInfo) setStoredInfo(JSON.parse(storedInfo));
   }, []);
 
+  useEffect(() => {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: location }, (res, status) => {
+      if (status === "OK") {
+        setCity(res[0]?.formatted_address);
+      }
+    });
+  }, [location]);
   const onSubmit = (values: TValues) => {
     updateDetails(values);
     localStorage.setItem("address-info", JSON.stringify(values));
@@ -29,7 +50,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
   const { getFieldProps, handleSubmit } = useFormik({
     initialValues: {
       name: user?.displayName || storedInfo?.name || "",
-      location: storedInfo?.location || "",
+      location: storedInfo?.location || city,
       phone: formatPhone(user?.phoneNumber || storedInfo?.phone || "", "local"),
       email: user?.email || storedInfo?.email || "",
       paymentMethod: details.paymentMethod
@@ -37,80 +58,87 @@ const Address = ({ updateDetails, details }: IPageProps) => {
     onSubmit
   });
 
+  const handleEdit = () => {
+    console.log("hello");
+  };
+
   return (
-    <Container className="d-flex justify-content-center">
+    <Container>
       <Head>
         <title>Address</title>
       </Head>
-      <Form style={{ minWidth: "70%" }} onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            {...getFieldProps("name")}
-            id="name"
-            required
-            placeholder="Yaa Mansah"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            {...getFieldProps("location")}
-            id="location"
-            placeholder="Ex. KT Hall or Hilda Hostel"
-            required
-          />
-          <small>
-            Enter the name of your hostel, hall or landmark near you
-          </small>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Phone</Form.Label>
-          <Form.Control
-            {...getFieldProps("phone")}
-            id="phone"
-            placeholder="Ex. 0240000000"
-            required
-          />
-          <small>your delivery guy will call on this line</small>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            {...getFieldProps("email")}
-            id="email"
-            placeholder="Ex. doe@mail.com"
-            required
-          />
-          <small>Please enter a valid email</small>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Payment Mode</Form.Label>
-          <div>
-            <Form.Check
-              {...getFieldProps("paymentMethod")}
-              type="radio"
-              id="payment-on-delivery"
-              value="delivery"
-              inline
-              label="Payment on delivery"
-            />
-            <Form.Check
-              {...getFieldProps("paymentMethod")}
-              type="radio"
-              inline
-              id="online-payment"
-              label="Pay now"
-              value="online"
-            />
+      <Form onSubmit={handleSubmit}>
+        <div
+          className="py-3 mb-3"
+          style={{
+            backgroundColor: "white",
+            borderRadius: 22,
+            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
+          }}
+        >
+          <div className="d-flex justify-content-between mb-2 px-4">
+            <small className="text-muted ps-2">Deliver to</small>
+            <small
+              style={{ color: colors.accent2, cursor: "pointer" }}
+              onClick={handleEdit}
+            >
+              Edit
+            </small>
           </div>
-        </Form.Group>
-
-        <div className="d-flex justify-content-center my-3">
-          <Button type="submit" variant="warning">
-            Continue
-          </Button>
+          <div className="d-flex justify-content-between px-4 align-items-center">
+            <Button
+              className="d-flex justify-content-center align-items-center"
+              style={{
+                backgroundColor: colors.accent,
+                border: "none",
+                width: 40,
+                height: 40,
+                borderRadius: 40
+              }}
+            >
+              <FaMapMarkerAlt color={colors.accent2} size={25} />
+            </Button>
+            <span>{city}</span>
+          </div>
         </div>
+        <div
+          className="my-3 py-3 "
+          style={{
+            backgroundColor: "white",
+            borderRadius: 22,
+            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
+          }}
+        >
+          <div className="d-flex justify-content-between mb-2 ">
+            <small className="text-muted px-4">Payment Method</small>
+          </div>
+          <div className="d-flex justify-content-between gap-4 px-4 align-items-center">
+            <FaMoneyBillAlt
+              color={colors.accent2}
+              size={50}
+              style={{ transform: "rotate(-45deg)" }}
+            />
+            <div>
+              <Form.Check
+                {...getFieldProps("paymentMethod")}
+                type="radio"
+                id="payment-on-delivery"
+                value="delivery"
+                inline
+                label="Payment on delivery"
+              />
+              <Form.Check
+                {...getFieldProps("paymentMethod")}
+                type="radio"
+                inline
+                id="online-payment"
+                label="Pay now"
+                value="online"
+              />
+            </div>
+          </div>
+        </div>
+        <CartFooter />
       </Form>
     </Container>
   );
