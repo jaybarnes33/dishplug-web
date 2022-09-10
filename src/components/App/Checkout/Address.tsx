@@ -7,8 +7,13 @@ import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
-import { FaMapMarkerAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { Button, Container, Form, Modal } from "react-bootstrap";
+import {
+  FaAddressCard,
+  FaEnvelopeOpen,
+  FaMapMarkerAlt,
+  FaMoneyBillAlt
+} from "react-icons/fa";
 
 import CartFooter from "../Cart/CartFooter";
 
@@ -58,7 +63,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
     replace("/checkout/placeorder");
   };
 
-  const { getFieldProps, handleSubmit } = useFormik({
+  const { values, getFieldProps, handleSubmit } = useFormik({
     initialValues: {
       name: user?.displayName || storedInfo?.name || "",
       location: storedInfo?.location || city,
@@ -88,7 +93,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
           }}
         >
           <div className="d-flex justify-content-between mb-2 px-4">
-            <small className="text-muted ps-2">Deliver to</small>
+            <small className="text-muted">Address</small>
             <small
               style={{ color: colors.accent2, cursor: "pointer" }}
               onClick={handleEdit}
@@ -97,18 +102,8 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             </small>
           </div>
           <div className="d-flex justify-content-between px-4 align-items-center">
-            <Button
-              className="d-flex justify-content-center align-items-center"
-              style={{
-                backgroundColor: colors.accent,
-                border: "none",
-                width: 40,
-                height: 40,
-                borderRadius: 40
-              }}
-            >
-              <FaMapMarkerAlt color={colors.accent2} size={25} />
-            </Button>
+            <FaMapMarkerAlt color={colors.accent2} size={40} />
+
             <span className="ps-2">{city}</span>
           </div>
         </div>
@@ -126,7 +121,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
           <div className="d-flex justify-content-between gap-4 px-4 align-items-center">
             <FaMoneyBillAlt
               color={colors.accent2}
-              size={50}
+              size={40}
               style={{ transform: "rotate(-45deg)" }}
             />
             <div>
@@ -149,6 +144,29 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             </div>
           </div>
         </div>
+        {values.paymentMethod === "online" && (
+          <div
+            className="my-3 py-3 "
+            style={{
+              backgroundColor: "white",
+              borderRadius: 22,
+              boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
+            }}
+          >
+            <div className="d-flex justify-content-between mb-2 ">
+              <small className="text-muted px-4">Email</small>
+            </div>
+
+            <div className="d-flex px-4">
+              <Form.Control
+                {...getFieldProps("email")}
+                type="email"
+                placeholder="doe@gmail.com"
+              />
+            </div>
+          </div>
+        )}
+
         <CartFooter />
       </Form>
     </Container>
