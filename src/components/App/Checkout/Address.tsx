@@ -37,6 +37,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ location: location }, (res, status) => {
       if (status === "OK") {
+        console.log(res[0].address_components);
         setCity(res[0]?.formatted_address);
       }
     });
