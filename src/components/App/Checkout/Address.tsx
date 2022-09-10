@@ -22,14 +22,14 @@ const Address = ({ updateDetails, details }: IPageProps) => {
   const [city, setCity] = useState<string>("");
   const [location, setLocation] = useState<{ lat: number; lng: number }>();
   useEffect(() => {
-    navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       pos => {
         console.log(pos.coords);
         setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
         // setLocation({ lat: 5.599428166666667, lng: -0.23336099999999999 });
       },
       e => console.log(e),
-      { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+      { enableHighAccuracy: true, maximumAge: 0 }
     );
 
     const storedInfo = localStorage.getItem("address-info");
@@ -38,14 +38,19 @@ const Address = ({ updateDetails, details }: IPageProps) => {
 
   useEffect(() => {
     const geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({ location: location }, (res, status) => {
-      if (status === "OK") {
-        console.log("res", res);
-        console.log(res[1].address_components);
-        setCity(res[0]?.formatted_address);
-      }
-    });
+    (async () => {
+      const {
+        data: { location: loc }
+      } = await axios.post(
+        `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_MAPS_KEY}`
+      );
+      geocoder.geocode({ location: loc }, (res, status) => {
+        if (status === "OK") {
+          console.log(res[0].address_components);
+          setCity(res[0]?.formatted_address);
+        }
+      });
+    })();
   }, [location]);
   const onSubmit = (values: TValues) => {
     updateDetails(values);
