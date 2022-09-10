@@ -2,6 +2,7 @@ import { useAuth } from "@/components/Context/Auth";
 import { formatPhone } from "@/helpers/utils";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
 import colors from "@/styles/colors";
+import axios from "axios";
 import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -21,12 +22,14 @@ const Address = ({ updateDetails, details }: IPageProps) => {
   const [city, setCity] = useState<string>("");
   const [location, setLocation] = useState<{ lat: number; lng: number }>();
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
       pos => {
+        console.log(pos.coords);
         setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        // setLocation({ lat: 5.599428166666667, lng: -0.23336099999999999 });
       },
       e => console.log(e),
-      { enableHighAccuracy: true, maximumAge: 0 }
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
     );
 
     const storedInfo = localStorage.getItem("address-info");
@@ -35,9 +38,11 @@ const Address = ({ updateDetails, details }: IPageProps) => {
 
   useEffect(() => {
     const geocoder = new google.maps.Geocoder();
+
     geocoder.geocode({ location: location }, (res, status) => {
       if (status === "OK") {
-        console.log(res[0].address_components);
+        console.log("res", res);
+        console.log(res[1].address_components);
         setCity(res[0]?.formatted_address);
       }
     });
@@ -99,7 +104,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             >
               <FaMapMarkerAlt color={colors.accent2} size={25} />
             </Button>
-            <span>{city}</span>
+            <span className="ps-2">{city}</span>
           </div>
         </div>
         <div
