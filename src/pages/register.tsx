@@ -130,7 +130,7 @@ const Register = () => {
       {error && <p className="text-danger">{error}</p>}
       <Form noValidate onSubmit={handleSubmit}>
         <Row>
-          <Col md={6}>
+          <Col xs={6}>
             <Form.Group>
               <Form.Label>First Name</Form.Label>
               <Form.Control
@@ -148,7 +148,7 @@ const Register = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col xs={6}>
             <Form.Group>
               <Form.Label>Last Name</Form.Label>
               <Form.Control
@@ -183,7 +183,7 @@ const Register = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col xs={6}>
             <Form.Group>
               <Form.Label>Phone</Form.Label>
               <Form.Control
@@ -201,7 +201,7 @@ const Register = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col xs={6}>
             <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control

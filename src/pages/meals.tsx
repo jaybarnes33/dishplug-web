@@ -1,17 +1,17 @@
 import Food from "@/components/App/Main/Cards/Food";
 
 import admin from "@/lib/firebase/node";
-import { FoodType } from "@/types";
+import type { FoodType } from "@/types";
 
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
 import { Col, Container, Row } from "react-bootstrap";
-import { foodConverter } from "..";
+import { foodConverter } from ".";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <section className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
+    <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
       <Head>
         <title>Foods</title>
         <meta
@@ -19,7 +19,7 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
           content="Food delivery in Ghana, Food in Tarkwa, UMaT Food, Tarkwa Fried Rice, Hostel Crust Pizza"
         />
       </Head>
-      <h2 className="text-center">Foods</h2>
+      <h2 className="text-center mt-5">Foods</h2>
       <Container>
         <Row>
           {foods.map((food, index) => (

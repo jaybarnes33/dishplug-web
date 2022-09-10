@@ -1,17 +1,24 @@
-@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "@fontsource/sen";
 :root {
   --dp-primary: #ffa500;
   --dp-danger: red;
   --dp-dark: #1a1a1a;
   --dp-white: #ffffff;
+  --dp-accent: #f9a84d;
+  --dp-accent2: #da6317;
   --dp-secondary: #eee;
-  --dp-light: #f4f4ee;
+  --dp-light: #f4f4f4;
 }
 html,
 body {
   padding: 0;
 
-  font-family: "Albert Sans", sans-serif;
+  font-family: "Sen", sans-serif;
+}
+
+body {
+  margin-bottom: 5rem;
+  background-color: var(--dp-light);
 }
 
 h1 {
@@ -41,6 +48,10 @@ a {
 
 .bg-change {
   background-color: var(--dp-white);
+}
+
+.search::-webkit-input-placeholder {
+  color: var(--dp-accent2);
 }
 
 .navbar {

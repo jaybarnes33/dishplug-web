@@ -27,8 +27,9 @@ const Details = ({ details }: IPageProps) => {
   const { user } = useAuth();
   const { replace } = useRouter();
   const [addressInfo, setAddressInfo] = useState(details);
-  const { cart, totalAmount, clearCart } = useCart();
+  const { totalAmount, availableItems, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const storedDetails = localStorage.getItem("address-info");
     if (storedDetails) {
@@ -90,7 +91,7 @@ const Details = ({ details }: IPageProps) => {
         const { paymentMethod, ...rest } = addressInfo;
         localStorage.setItem("order-details", JSON.stringify(rest));
       })
-      .then(clearCart)
+      .then(() => clearCart(availableItems))
       .then(() => {
         stores.forEach(store =>
           sendNotification({
@@ -156,8 +157,8 @@ const Details = ({ details }: IPageProps) => {
       stores: stores.map(store => store.id)
     })
       .then(() => setLoading(false))
-      .then(clearCart)
-      .then(res => {
+      .then(() => clearCart(availableItems))
+      .then(() => {
         stores.forEach(store =>
           sendNotification({
             name: addressInfo.name,
@@ -191,7 +192,7 @@ const Details = ({ details }: IPageProps) => {
   };
 
   return (
-    <Container fluid>
+    <Container>
       <Head>
         <title>Checkout</title>
       </Head>
@@ -206,11 +207,11 @@ const Details = ({ details }: IPageProps) => {
 
             <ListGroup.Item>
               <h2>Order(s)</h2>
-              {cart?.length === 0 ? (
+              {availableItems?.length === 0 ? (
                 <Alert variant="danger">Your Cart is empty</Alert>
               ) : (
                 <ListGroup>
-                  {cart?.map((item, index) => (
+                  {availableItems?.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
@@ -275,10 +276,11 @@ const Details = ({ details }: IPageProps) => {
                   type="button"
                   size="lg"
                   variant="dark"
-                  // disabled={cartItems.length === 0}
+                  disabled={availableItems.length === 0}
                   onClick={() =>
                     initializePayment(
-                      (res: Record<string, string>) => onSuccess(res, cart),
+                      (res: Record<string, string>) =>
+                        onSuccess(res, availableItems),
                       onClose
                     )
                   }
@@ -292,7 +294,7 @@ const Details = ({ details }: IPageProps) => {
                   size="lg"
                   variant="dark"
                   // disabled={cartItems.length === 0}
-                  onClick={() => checkoutWithoutPayment(cart)}
+                  onClick={() => checkoutWithoutPayment(availableItems)}
                 >
                   Place Order
                 </Button>

@@ -1,7 +1,11 @@
+import CartItem from "@/components/App/Cart/CartItem";
+import { useAvailability } from "@/components/Context/Availability";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
+import colors from "@/styles/colors";
 import { useRouter } from "next/router";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -16,20 +20,32 @@ const Cart = () => {
   const {
     cart,
     totalAmount,
-    itemsInCart,
+
     increment,
     decrement,
     removeFromCart
   } = useCart();
+  const { unavailableFoods } = useAvailability();
 
-  const handleInc = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const numberOfAvailableItemsInCart =
+    cart?.reduce(
+      (acc, curr) =>
+        unavailableFoods.includes(curr.id) ? acc : acc + curr.quantity,
+      0
+    ) || 0;
+
+  const handleInc = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const { id } = event.currentTarget.dataset;
     if (!id) throw new Error("icon button requires a data-id attribute");
     increment(id);
   };
   const router = useRouter();
 
-  const handleDec = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleDec = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const { id } = event.currentTarget.dataset;
     if (!id) throw new Error("icon button requires a data-id attribute");
     decrement(id);
@@ -42,73 +58,76 @@ const Cart = () => {
   };
 
   return (
-    <div className="mt-4 pt-5" style={{ minHeight: "90vh" }}>
-      <Container fluid>
-        <h1 className="text-center">Cart</h1>
-        <Row>
-          <Col md={8}>
-            <ListGroup variant="flush">
+    <div style={{ minHeight: "90vh" }}>
+      <div className="position-fixed w-100">
+        <Container className="mt-2 pt-5 ">
+          <h1>Cart</h1>
+          <div>
+            {cart?.some(food => unavailableFoods.includes(food.id)) ? (
+              <Alert variant="warning">
+                Some foods in your cart are currently unavailable
+              </Alert>
+            ) : null}
+            <div
+              style={{
+                height: "45vh",
+                overflowY: "scroll"
+              }}
+            >
               {cart?.map(item => (
-                <ListGroup.Item key={item.id}>
-                  <Row className="d-flex align-items-center">
-                    <Col xs={2}>
-                      <Image src={item.image || ""} alt="" fluid rounded />
-                    </Col>
-                    <Col xs={3}>{item.name}</Col>
-                    <Col xs={2}>GH{item.price}</Col>
-                    <Col
-                      xs={3}
-                      md={2}
-                      className="d-flex gap-2 align-items-center"
-                    >
-                      <FaPlusCircle data-id={item.id} onClick={handleInc} />
-                      {item.quantity}
-                      <FaMinusCircle data-id={item.id} onClick={handleDec} />
-                    </Col>{" "}
-                    <Col
-                      xs={2}
-                      md={2}
-                      className="d-flex justify-content-center"
-                    >
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        data-id={item.id}
-                        onClick={handleRemove}
-                      >
-                        <FaRegTrashAlt />
-                      </Button>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
+                <CartItem item={item} key={item.id} />
               ))}
-            </ListGroup>
-          </Col>
-          <Col md={4}>
-            <ListGroup>
-              <Card>
-                <ListGroup.Item>
-                  <p className="subtotal py-3">
-                    Total ({itemsInCart}) items
-                    <br />
-                    {currencyFormat(totalAmount)}
-                  </p>
-                </ListGroup.Item>
-                <ListGroup.Item className="d-grid">
-                  <Button
-                    size="lg"
-                    className="btn-block btn-dark"
-                    disabled={itemsInCart === 0}
-                    onClick={() => router.push("/checkout/address")}
-                  >
-                    Checkout
-                  </Button>
-                </ListGroup.Item>
-              </Card>
-            </ListGroup>
-          </Col>
-        </Row>
-      </Container>
+            </div>
+          </div>
+        </Container>
+
+        <div
+          className="position-fixed w-100"
+          style={{
+            left: 0,
+            bottom: "1rem"
+          }}
+        >
+          <Container>
+            <Card
+              className="text-light px-2 position-relative"
+              style={{
+                backgroundColor: colors.primary,
+                left: 0,
+                bottom: 0,
+                height: 200,
+                border: "none"
+              }}
+            >
+              <Image
+                src="/pattern-white.png"
+                style={{ position: "absolute", zIndex: 0 }}
+                alt=""
+              />
+              <p className="subtotal py-3 d-flex justify-content-between">
+                <span> No. of Items</span>
+                <span>({numberOfAvailableItemsInCart}) items</span>
+              </p>
+              <p className="subtotal py-3 d-flex justify-content-between">
+                <span>Sub-Total</span>
+
+                {currencyFormat(totalAmount)}
+              </p>
+
+              <Button
+                size="lg"
+                variant="light"
+                className="btn-block position-relative"
+                style={{ color: colors.primary, zIndex: 1 }}
+                disabled={numberOfAvailableItemsInCart === 0}
+                onClick={() => router.push("/checkout/address")}
+              >
+                Checkout
+              </Button>
+            </Card>
+          </Container>
+        </div>
+      </div>
     </div>
   );
 };

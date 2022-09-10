@@ -17,7 +17,7 @@ function Search() {
   };
 
   const handleScroll = () => {
-    if (window.scrollY >= 290) {
+    if (window.scrollY >= 60) {
       searchRef.current?.classList.add("d-none");
     } else {
       searchRef.current?.classList.remove("d-none");
@@ -33,17 +33,28 @@ function Search() {
   }, []);
 
   return (
-    <Form className="d-flex gap-2" onSubmit={handleSubmit} ref={searchRef}>
+    <Form
+      className="d-flex gap-2"
+      onSubmit={handleSubmit}
+      ref={searchRef}
+      style={{ position: "relative", zIndex: 1 }}
+    >
       <Form.Control
         value={keyword}
-        placeholder="Hey, what do you want to eat?"
+        placeholder="Search for food, drinks and more"
         onChange={handleChange}
-        style={{ width: "100%" }}
+        style={{
+          width: "100%",
+          border: "none",
+          backgroundColor: "rgba(249, 168, 77, 0.2)",
+          color: "var(--dp-accent2)"
+        }}
         size="lg"
         type="search"
+        className="search"
       />
 
-      <Button variant="dark" type="submit" size="lg">
+      <Button variant="dark" type="submit" size="sm">
         Search
       </Button>
     </Form>

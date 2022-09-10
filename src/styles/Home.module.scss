@@ -1,14 +1,13 @@
 .intro {
-  background: var(--dp-primary);
-  min-height: 70vh;
   color: var(--dp-dark);
   background-size: cover;
-  background-position: center;
-
+  background-repeat: no-repeat;
+  background-position: 10% 15%, top;
   .text {
     font-weight: 700;
-    font-size: 3rem;
+    font-size: 2rem;
 
+    padding: 0 0.5rem;
     @media screen and (max-width: 768px) {
       font-size: 2rem;
 
@@ -16,17 +15,11 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
-    min-height: 70vh;
-  }
   video {
     width: 300px;
 
     @media screen and (max-width: 425px) {
       width: 250px;
     }
-  }
-  @media screen and (max-width: 425px) {
-    min-height: 100vh;
   }
 }

@@ -64,11 +64,9 @@
 }
 
 .form {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  border: 2px solid #eee;
 
+  background-color: #ffffff;
   input[type="text"],
   input[type="password"],
   input[type="email"],
@@ -106,25 +104,13 @@
 }
 
 .formWrapper {
-  min-height: 100vh;
-  display: flex;
+  margin: 0 1rem;
+  display: grid;
   place-items: center;
-
+  min-height: 100vh;
   @media screen and (max-width: 767px) {
-    min-height: 120vh;
-    background-color: #1a1a1aae;
-    color: white;
-    background-blend-mode: overlay;
-    background-image: url("/friedrice.jpg");
+    background-image: url("/Pattern.png");
     background-size: cover;
     background-position: center;
-  }
-
-  @media screen and (max-width: 768px) and (orientation: landscape) {
-    min-height: 120vh;
-  }
-
-  @media screen and (max-width: 690px) and (orientation: landscape) {
-    min-height: 170vh;
   }
 }

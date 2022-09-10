@@ -7,10 +7,12 @@ import Link from "next/link";
 import { currencyFormat } from "@/helpers/utils";
 import { useCart } from "@/components/Context/Cart";
 import { useRouter } from "next/router";
+import { useAvailability } from "@/components/Context/Availability";
 
 const Food = ({ food }: { food: FoodType }) => {
   const { pathname } = useRouter();
   const { addToCart } = useCart();
+  const { unavailableFoods } = useAvailability();
 
   const handleAddToCart = () => {
     addToCart({
@@ -28,40 +30,55 @@ const Food = ({ food }: { food: FoodType }) => {
     <Card
       style={{
         border: "none",
-        maxWidth: 200,
-        cursor: "pointer"
+        cursor: "pointer",
+        height: 225
       }}
       className="position-relative my-3"
     >
       <Link href={`/foods/${food.id}`}>
-        <CardImg
-          as={Image}
-          src={food.image || "/"}
-          height={250}
-          width={250}
-          objectFit="contain"
-        />
-      </Link>
-      {food.available ? (
-        <Button
-          variant="light"
-          onClick={handleAddToCart}
-          style={{ position: "absolute", right: 0, top: 0 }}
+        <div
+          style={{ width: "100%", height: "120px", zIndex: 0 }}
+          className="position-absolute"
         >
-          <FaShoppingCart color="red" size={20} />
-        </Button>
-      ) : (
+          <CardImg
+            as={Image}
+            src={food.image || "/"}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
+        </div>
+      </Link>
+      {unavailableFoods.includes(food.id) ? (
         <Badge bg="dark" style={{ position: "absolute", right: 0, top: 0 }}>
           Not available
         </Badge>
+      ) : (
+        <Button
+          variant="light"
+          className="d-flex justify-content-center align-items-center"
+          onClick={handleAddToCart}
+          style={{
+            backgroundColor: "white!important",
+            width: 40,
+            height: 40,
+            position: "absolute",
+            right: -5,
+            top: -15,
+            borderRadius: 50
+          }}
+        >
+          <FaShoppingCart color="red" size={20} />
+        </Button>
       )}
 
-      <Card.Body style={{ padding: 0, paddingTop: 10 }} className="mb-2">
+      <Card.Body style={{ padding: 0, marginTop: 125 }} className="mb-2 px-2">
         <div className="d-flex flex-column mb-2">
           <Link href={`/foods/${food.id}`}>
-            <h5>{food.name}</h5>
+            <h6>{food.name}</h6>
           </Link>
-          <span className="text-danger">{currencyFormat(food.price)}</span>
+
+          <small className="text-danger">{currencyFormat(food.price)}</small>
           {!pathname.includes("stores") && (
             <Link href={`/stores/${food.store_id}`}>
               <small> {food.store_name}</small>
