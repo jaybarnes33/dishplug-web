@@ -56,7 +56,7 @@ const Header = () => {
     { icon: "orders", name: "Orders" }
   ];
 
-  const activeTab = (link: { icon: string; name: string }) => {
+  const getIcon = (link: { icon: string; name: string }) => {
     if (link.icon === "home") {
       if (link.icon === "home" && router.asPath.substring(1) === "home") {
         return <FaHome />;
@@ -241,18 +241,20 @@ const Header = () => {
                     href={`/${link.icon !== "home" ? link.icon : ""}`}
                     passHref
                   >
-                    <div className="d-flex flex-column align-items-center gap-1 mobi-nav bg-white btn text-muted">
+                    <div className="d-flex flex-column align-items-center gap-1 mobi-nav  text-muted">
                       <span
                         className="d-flex flex-column position-relative"
-                        style={{
-                          color:
-                            (router.pathname === "/" && link.icon === "home") ||
-                            router.pathname.includes(link.icon)
-                              ? "var(--dp-accent)"
-                              : "inherit"
-                        }}
+                        style={
+                          (router.pathname === "/" && link.icon === "home") ||
+                          router.pathname.includes(link.icon)
+                            ? {
+                                color: "var(--dp-accent)",
+                                transform: "scale(1.5)"
+                              }
+                            : { color: "inherit" }
+                        }
                       >
-                        {activeTab(link)}
+                        {getIcon(link)}
                         {link.name === "Cart" && (
                           <sup>
                             <Badge
@@ -268,9 +270,7 @@ const Header = () => {
                           </sup>
                         )}
                       </span>
-                      <small className="fixed-bottom-navBar-text">
-                        {link.name}
-                      </small>
+                      <small>{link.name}</small>
                     </div>
                   </Link>
                 </div>
