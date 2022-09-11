@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Pattern from "../../public/pattern-success.png";
 import { Button, Image as Circle } from "react-bootstrap";
-import colors from "@/styles/colors";
+
 import Link from "next/link";
 const Success = () => {
   return (

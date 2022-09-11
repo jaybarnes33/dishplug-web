@@ -5,11 +5,11 @@ import { Button } from "react-bootstrap";
 import Pattern from "../../../../public/pattern-white.png";
 interface PromoProps {
   name: string;
-  desc: string;
+
   image: string;
   bg: string;
 }
-const Promo = ({ name, desc, image, bg }: PromoProps) => {
+const Promo = ({ name, image, bg }: PromoProps) => {
   return (
     <>
       <div className="main d-flex gap-2 position-relative p-2 justify-content-between">
