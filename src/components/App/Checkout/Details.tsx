@@ -49,6 +49,7 @@ const Details = ({ details }: IPageProps) => {
     response?: Record<string, string | number>
   ) => {
     try {
+      setLoading(true);
       const stores = [
         ...new Set(
           items?.map(item => {
@@ -242,7 +243,8 @@ const Details = ({ details }: IPageProps) => {
                   )
                 }
               >
-                Place Order {loading && <Spinner animation="border" />}
+                Place Order{" "}
+                {loading && <Spinner animation="border" size="sm" />}
               </Button>
             )}
             {addressInfo.paymentMethod === "delivery" && (
@@ -253,7 +255,8 @@ const Details = ({ details }: IPageProps) => {
                 style={{ backgroundColor: "#F9A84D", border: "none" }}
                 onClick={() => checkoutWithoutPayment(availableItems)}
               >
-                Place Order {loading && <Spinner animation="border" />}
+                Place Order{" "}
+                {loading && <Spinner animation="border" size="sm" />}
               </Button>
             )}
           </ListGroup.Item>
