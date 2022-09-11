@@ -28,13 +28,7 @@ const Promos = () => {
       style={{ height: 160, overflowX: "scroll" }}
     >
       {promos.map((promo, key) => (
-        <Promo
-          name={promo.name}
-          desc={promo.desc}
-          image={promo.image}
-          key={key}
-          bg={promo.bg}
-        />
+        <Promo name={promo.name} image={promo.image} key={key} bg={promo.bg} />
       ))}
     </div>
   );

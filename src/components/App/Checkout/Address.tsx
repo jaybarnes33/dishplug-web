@@ -103,7 +103,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             <Col xs={6} className="p-1">
               <Form.Group>
                 <Form.FloatingLabel label="Phone">
-                  <Form.Control {...getFieldProps("phone")} />
+                  <Form.Control {...getFieldProps("phone")} type="tel" />
                 </Form.FloatingLabel>
               </Form.Group>
             </Col>
