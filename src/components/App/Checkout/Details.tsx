@@ -5,7 +5,7 @@ import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
 
 import axios from "axios";
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
-  Card,
   Col,
   Container,
   Image,
@@ -254,7 +253,7 @@ const Details = ({ details }: IPageProps) => {
                 style={{ backgroundColor: "#F9A84D", border: "none" }}
                 onClick={() => checkoutWithoutPayment(availableItems)}
               >
-                Place Order
+                Place Order {loading && <Spinner animation="border" />}
               </Button>
             )}
           </ListGroup.Item>
