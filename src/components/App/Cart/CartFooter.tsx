@@ -53,16 +53,18 @@ const CartFooter = () => {
             {currencyFormat(totalAmount)}
           </p>
 
-          <Button
-            size="lg"
-            variant="light"
-            className="btn-block position-relative p-3"
-            style={{ color: colors.primary, zIndex: 1, borderRadius: 15 }}
-            disabled={numberOfAvailableItemsInCart === 0}
-            onClick={() => router.push("/checkout/address")}
-          >
-            Checkout
-          </Button>
+          {!router.pathname.includes("checkout") && (
+            <Button
+              size="lg"
+              variant="light"
+              className="btn-block position-relative p-3"
+              style={{ color: colors.primary, zIndex: 1, borderRadius: 15 }}
+              disabled={numberOfAvailableItemsInCart === 0}
+              onClick={() => router.push("/checkout/address")}
+            >
+              Checkout
+            </Button>
+          )}
         </Card>
       </Container>
     </div>

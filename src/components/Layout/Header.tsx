@@ -110,12 +110,17 @@ const Header = () => {
     });
   });
 
-  const noSearch = ["login", "register", "cart", "foods", "checkout"].some(
-    path => router.pathname.includes(path)
-  );
+  const noSearch = [
+    "login",
+    "register",
+    "cart",
+    "foods",
+    "checkout",
+    "success"
+  ].some(path => router.pathname.includes(path));
   return (
     <>
-      {noSearch && (
+      {noSearch && !router.pathname.includes("success") && (
         <Button
           className="position-fixed mt-3 ms-3"
           variant="light"

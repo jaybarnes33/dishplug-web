@@ -7,15 +7,8 @@ import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button, Container, Form, Modal } from "react-bootstrap";
-import {
-  FaAddressCard,
-  FaEnvelopeOpen,
-  FaMapMarkerAlt,
-  FaMoneyBillAlt
-} from "react-icons/fa";
-
-import CartFooter from "../Cart/CartFooter";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { FaMoneyBillAlt } from "react-icons/fa";
 
 const Address = ({ updateDetails, details }: IPageProps) => {
   const { user } = useAuth();
@@ -74,10 +67,6 @@ const Address = ({ updateDetails, details }: IPageProps) => {
     onSubmit
   });
 
-  const handleEdit = () => {
-    console.log("hello");
-  };
-
   return (
     <Container>
       <Head>
@@ -94,18 +83,39 @@ const Address = ({ updateDetails, details }: IPageProps) => {
         >
           <div className="d-flex justify-content-between mb-2 px-4">
             <small className="text-muted">Address</small>
-            <small
+            {/* <small
               style={{ color: colors.accent2, cursor: "pointer" }}
               onClick={handleEdit}
             >
               Edit
-            </small>
+            </small> */}
           </div>
-          <div className="d-flex justify-content-between px-4 align-items-center">
-            <FaMapMarkerAlt color={colors.accent2} size={40} />
+          <Row className="mx-2">
+            {/* <FaMapMarkerAlt color={colors.accent2} size={40} /> */}
 
-            <span className="ps-2">{city}</span>
-          </div>
+            <Col xs={6} className="p-1">
+              <Form.Group>
+                <Form.FloatingLabel label="Name">
+                  <Form.Control {...getFieldProps("name")} />
+                </Form.FloatingLabel>
+              </Form.Group>
+            </Col>
+            <Col xs={6} className="p-1">
+              <Form.Group>
+                <Form.FloatingLabel label="Phone">
+                  <Form.Control {...getFieldProps("phone")} />
+                </Form.FloatingLabel>
+              </Form.Group>
+            </Col>
+
+            <Col md={6} className="p-1">
+              <Form.Group>
+                <Form.FloatingLabel label="location">
+                  <Form.Control {...getFieldProps("location")} />
+                </Form.FloatingLabel>
+              </Form.Group>
+            </Col>
+          </Row>
         </div>
         <div
           className="my-3 py-3 "
@@ -167,7 +177,14 @@ const Address = ({ updateDetails, details }: IPageProps) => {
           </div>
         )}
 
-        <CartFooter />
+        <Button
+          className="d-flex mx-auto"
+          type="submit"
+          style={{ backgroundColor: "#F9A84D", border: "none" }}
+          size="lg"
+        >
+          Submit
+        </Button>
       </Form>
     </Container>
   );
