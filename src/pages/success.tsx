@@ -42,7 +42,7 @@ const Success = () => {
         style={{ height: "100vh" }}
       >
         <Circle
-          src="/seller.jpg"
+          src="/seller.webp"
           width={230}
           height={230}
           alt=""
