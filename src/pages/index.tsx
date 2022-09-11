@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps<{
 
   const products = await db
     .collectionGroup("products")
-    .where("available", "==", true)
+    .where("store.id", "==", "YFCveCnKxblPWRtyytdq")
     .limit(4)
     .withConverter(foodConverter)
     .get();
