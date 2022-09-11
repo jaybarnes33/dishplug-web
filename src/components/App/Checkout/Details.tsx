@@ -91,7 +91,16 @@ const Details = ({ details }: IPageProps) => {
         payload.transaction = response.transaction;
       }
 
-      await addDoc(collection(firestore, "orders"), payload);
+      await Promise.all([
+        addDoc(collection(firestore, "orders"), payload),
+        fetch("/api/aggregate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ stores: stores.map(({ id }) => id) })
+        })
+      ]);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { paymentMethod: _, ...rest } = addressInfo;
