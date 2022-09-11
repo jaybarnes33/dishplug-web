@@ -13,6 +13,7 @@
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@reduxjs/toolkit": "^1.8.3",
     "@sentry/nextjs": "^7.8.0",
+    "@types/googlemaps": "^3.43.3",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "firebase": "^9.9.1",

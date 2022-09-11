@@ -123,7 +123,7 @@ const Details = ({ details }: IPageProps) => {
         message: `An order has been made to your store, please check your dashboard`
       });
 
-      replace("/meals");
+      replace("/success");
     } catch (error) {
       console.log(error);
     } finally {
@@ -157,7 +157,8 @@ const Details = ({ details }: IPageProps) => {
             <ListGroup.Item>
               <h2>Customer Details</h2>
               <strong className={"fw-bold"}>Address: </strong>
-              {addressInfo.location}, <br /> {addressInfo.phone},
+              {addressInfo.location}, <br /> {addressInfo.phone}{" "}
+              {addressInfo.email},
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -194,68 +195,60 @@ const Details = ({ details }: IPageProps) => {
           </ListGroup>
         </Col>
         <Col md={4}>
-          <Card>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <h2>Order Summary</h2>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>{currencyFormat(totalAmount)}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Delivery</Col>
-                  <Col>GH₵5</Col>
-                </Row>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                <Row>
-                  <Col className={"fw-bold"}>Total</Col>
-                  <Col className={"fw-bold"}>{currencyFormat(totalAmount)}</Col>
-                </Row>
-              </ListGroup.Item>
-            </ListGroup>
-            <ListGroup.Item className="d-grid p-2">
-              {/* {error && (
-                <ListGroup.Item>
-                  <Message variant="danger">{error}</Message>
-                </ListGroup.Item>
-              )} */}
-
-              {addressInfo.paymentMethod === "online" && (
-                <Button
-                  type="button"
-                  size="lg"
-                  variant="dark"
-                  disabled={availableItems.length === 0}
-                  onClick={() =>
-                    initializePayment(
-                      (res: Record<string, string>) =>
-                        onSuccess(res, availableItems),
-                      onClose
-                    )
-                  }
-                >
-                  Place Order {loading && <Spinner animation="border" />}
-                </Button>
-              )}
-              {addressInfo.paymentMethod === "delivery" && (
-                <Button
-                  type="button"
-                  size="lg"
-                  variant="dark"
-                  // disabled={cartItems.length === 0}
-                  onClick={() => checkoutWithoutPayment(availableItems)}
-                >
-                  Place Order
-                </Button>
-              )}
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <h2>Order Summary</h2>
             </ListGroup.Item>
-          </Card>
+            <ListGroup.Item>
+              <Row>
+                <Col>Items</Col>
+                <Col>{currencyFormat(totalAmount)}</Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Col>Delivery</Col>
+                <Col>GH₵5</Col>
+              </Row>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <Row>
+                <Col className={"fw-bold"}>Total</Col>
+                <Col className={"fw-bold"}>{currencyFormat(totalAmount)}</Col>
+              </Row>
+            </ListGroup.Item>
+          </ListGroup>
+          <ListGroup.Item className="d-grid p-2">
+            {addressInfo.paymentMethod === "online" && (
+              <Button
+                type="button"
+                size="lg"
+                style={{ backgroundColor: "#F9A84D", border: "none" }}
+                disabled={availableItems.length === 0}
+                onClick={() =>
+                  initializePayment(
+                    (res: Record<string, string>) =>
+                      onSuccess(res, availableItems),
+                    onClose
+                  )
+                }
+              >
+                Place Order {loading && <Spinner animation="border" />}
+              </Button>
+            )}
+            {addressInfo.paymentMethod === "delivery" && (
+              <Button
+                type="button"
+                size="lg"
+                disabled={availableItems.length === 0}
+                style={{ backgroundColor: "#F9A84D", border: "none" }}
+                onClick={() => checkoutWithoutPayment(availableItems)}
+              >
+                Place Order
+              </Button>
+            )}
+          </ListGroup.Item>
         </Col>
       </Row>
     </Container>
