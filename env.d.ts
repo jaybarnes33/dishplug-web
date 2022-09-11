@@ -14,5 +14,6 @@ declare namespace NodeJS {
     FIREBASE_PRIVATE_KEY: string;
     MESSAGE_BIRD_ID: string;
     MESSAGE_BIRD_KEY: string;
+    NEXT_PUBLIC_MAPS_KEY: string;
   }
 }

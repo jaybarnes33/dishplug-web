@@ -33,6 +33,10 @@ class MyDocument extends Document {
             sizes="512x512"
           />
           <meta name="theme-color" content="#fff" />
+          <script
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAPS_KEY}`}
+            defer
+          ></script>
         </Head>
         <body>
           <Main />
