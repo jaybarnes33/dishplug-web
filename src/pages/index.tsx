@@ -44,12 +44,13 @@ export const getStaticProps: GetStaticProps<{
 
   const products = await db
     .collectionGroup("products")
+    .limit(8)
     .where("available", "==", true)
-    .limit(4)
+
     .withConverter(foodConverter)
     .get();
 
-  const foods = products.docs.map(doc => {
+  const foods = products.docs.reverse().map(doc => {
     return doc.data();
   });
 
