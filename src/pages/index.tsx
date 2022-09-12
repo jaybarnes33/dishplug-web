@@ -29,6 +29,7 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       name: data.name,
       price: data.price,
       image: data.image,
+      description: data.description,
       available: data.available,
       store_id: data.store.id,
       store_name: data.store.name,

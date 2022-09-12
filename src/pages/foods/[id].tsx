@@ -138,8 +138,8 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                     {currencyFormat(food.price)}
                   </h2>
                 </p>
-                <p>{food.rating || 0} reviews</p>
                 <p>{food.description}</p>
+                <p>{food.rating || 0} reviews</p>
               </Card.Body>
 
               <div
