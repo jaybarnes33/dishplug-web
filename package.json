@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dotmind/react-use-pwa": "^1.0.4",
     "@fontsource/sen": "^4.5.9",
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@reduxjs/toolkit": "^1.8.3",

@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="apple-touch-icon" href="/icon.png"></link>
+          <link rel="apple-touch-icon" href="/icon-512x512.png"></link>
           <meta name="theme-color" content="#fff" />
           <link rel="manifest" href="/manifest.webmanifest" />
           <link
@@ -14,6 +14,7 @@ class MyDocument extends Document {
             type="image/png"
             sizes="192x192"
           />
+          <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
           <link
             href="/icon-256x256.png"
             rel="icon"
