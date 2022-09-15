@@ -153,12 +153,12 @@ const Details = ({ details }: IPageProps) => {
     }
   };
 
-  const onSuccess = (
-    response: Record<string, string | number>,
-    items: TCart[] | null
-  ) => {
-    saveCheckout(items, "online", response);
-  };
+  // const onSuccess = (
+  //   response: Record<string, string | number>,
+  //   items: TCart[] | null
+  // ) => {
+  //   saveCheckout(items, "online", response);
+  // };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
     saveCheckout(items, "delivery");
@@ -247,14 +247,14 @@ const Details = ({ details }: IPageProps) => {
                 type="button"
                 size="lg"
                 style={{ backgroundColor: "#F9A84D", border: "none" }}
-                disabled //={availableItems.length === 0}
-                // onClick={() =>
-                //   initializePayment(
-                //     (res: Record<string, string>) =>
-                //       onSuccess(res, availableItems),
-                //     onClose
-                //   )
-                // }
+                disabled /* ={availableItems.length === 0}
+                onClick={() =>
+                  initializePayment(
+                    (res: Record<string, string>) =>
+                      onSuccess(res, availableItems),
+                    onClose
+                  )
+                } */
               >
                 Place Order{" "}
                 {loading && <Spinner animation="border" size="sm" />}
