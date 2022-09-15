@@ -1,6 +1,10 @@
 import { useAuth } from "@/components/Context/Auth";
 import { TCart, useCart } from "@/components/Context/Cart";
-import { currencyFormat, sendNotification } from "@/helpers/utils";
+import {
+  currencyFormat,
+  sendNotificationToAdmins,
+  sendNotificationToVendors
+} from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
 
@@ -109,7 +113,7 @@ const Details = ({ details }: IPageProps) => {
       clearCart(availableItems);
 
       stores.forEach(store =>
-        sendNotification({
+        sendNotificationToVendors({
           name: addressInfo.name,
           phone: addressInfo.phone,
           paid: false,
@@ -121,6 +125,15 @@ const Details = ({ details }: IPageProps) => {
               .map(item => item.name) || []
         })
       );
+
+      sendNotificationToAdmins({
+        name: addressInfo.name,
+        phone: addressInfo.phone,
+        paid: false,
+        location: addressInfo.location,
+        stores: stores.map(store => ({ id: store.id, name: store.name })),
+        items: (items || []).map(item => item.name) || []
+      });
 
       axios.post("/api/send-messages", {
         recipients: [addressInfo.phone],
