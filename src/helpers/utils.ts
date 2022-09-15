@@ -44,14 +44,11 @@ export const sendNotificationToVendors = (payload: IPayload) => {
 export const sendNotificationToAdmins = (
   payload: Omit<IPayload, "topic"> & { stores: { id: string; name: string }[] }
 ) => {
-  fetch(
-    `${process.env.NEXT_PUBLIC_ADMIN_ORIGIN}/api/messages/send-notification`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    }
-  );
+  fetch(`${process.env.NEXT_PUBLIC_ADMIN_ORIGIN}/api/send-notification`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
 };
