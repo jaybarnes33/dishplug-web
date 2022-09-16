@@ -12,36 +12,31 @@ import {
 } from "react-bootstrap";
 
 import {
-  FaHeart,
-  FaHome,
-  FaListAlt,
-  FaShoppingCart,
-  FaUser,
-  FaUserAlt
-} from "react-icons/fa";
-import {
-  AiFillFile,
-  AiFillHeart,
-  AiFillHome,
-  AiOutlineFile,
-  AiOutlineHeart,
-  AiOutlineHome,
-  AiOutlineUser
-} from "react-icons/ai";
+  BsHouse,
+  BsHouseFill,
+  BsPerson,
+  BsPersonFill,
+  BsCart,
+  BsCartFill,
+  BsList,
+  BsChevronLeft
+} from "react-icons/bs";
+
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
-import { linkWithPhoneNumber, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
+import colors from "@/styles/colors";
 
 const Header = () => {
   const router = useRouter();
   const nav = useRef<HTMLElement>(null);
   const { itemsInCart } = useCart();
   const { isAuthenticated } = useAuth();
-  const { pathname, replace } = useRouter();
+  const { replace } = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
 
   const logout = async () => {
@@ -63,42 +58,42 @@ const Header = () => {
     { icon: "orders", name: "Orders" }
   ];
 
-  const activeTab = (link: { icon: string; name: string }) => {
+  const getIcon = (link: { icon: string; name: string }) => {
     if (link.icon === "home") {
       if (link.icon === "home" && router.asPath.substring(1) === "home") {
-        return <FaHome />;
+        return <BsHouseFill />;
       } else if (
         link.icon === "home" &&
         router.asPath.substring(1) !== "home"
       ) {
-        return <FaHome />;
+        return <BsHouse />;
       }
     } else if (link.icon === "profile") {
       if (link.icon === "profile" && router.asPath.substring(1) === "profile") {
-        return <FaUser />;
+        return <BsPersonFill />;
       } else if (
         link.icon === "profile" &&
         router.asPath.substring(1) !== "profile"
       ) {
-        return <FaUserAlt />;
+        return <BsPerson />;
       }
     } else if (link.icon === "cart") {
       if (link.icon === "cart" && router.asPath.substring(1) === "cart") {
-        return <FaShoppingCart />;
+        return <BsCartFill />;
       } else if (
         link.icon === "cart" &&
         router.asPath.substring(1) !== "cart"
       ) {
-        return <FaShoppingCart />;
+        return <BsCart />;
       }
     } else if (link.icon === "orders") {
       if (link.icon === "orders" && router.asPath.substring(1) === "orders") {
-        return <FaListAlt />;
+        return <BsList />;
       } else if (
         link.icon === "orders" &&
         router.asPath.substring(1) !== "orders"
       ) {
-        return <FaListAlt />;
+        return <BsList />;
       }
     }
   };
@@ -117,19 +112,27 @@ const Header = () => {
     });
   });
 
-  const noSearch = ["/login", "/register"];
+  const noSearch = [
+    "login",
+    "register",
+    "cart",
+    "foods",
+    "checkout",
+    "success"
+  ].some(path => router.pathname.includes(path));
   return (
     <>
-      {noSearch.includes(router.pathname) && (
+      {noSearch && !router.pathname.includes("success") && (
         <Button
-          className="position-absolute mt-5 ms-4"
-          variant="dark"
+          className="position-fixed mt-3 ms-3"
+          variant="light"
+          style={{ zIndex: 5 }}
           onClick={() => router.back()}
         >
-          Go Back
+          <BsChevronLeft color={colors.accent} />
         </Button>
       )}
-      {!noSearch.includes(router.pathname) && (
+      {!noSearch && (
         <Navbar fixed="top" ref={nav}>
           <Container className="d-flex flex-wrap  flex-md-nowrap">
             <NavbarBrand
@@ -141,7 +144,7 @@ const Header = () => {
             />
             <>
               <Nav className="order-3 order-md-2">
-                {!noSearch.includes(pathname) && <Search />}
+                {!noSearch && <Search />}
               </Nav>
 
               <Nav className="ms-auto gap-3 order-2 order-md-3">
@@ -158,7 +161,7 @@ const Header = () => {
                               style={{ marginRight: "0.25rem" }}
                             />
                           )}
-                          <FaUser color="black" />
+                          <BsPerson color="black" />
                         </>
                       }
                     >
@@ -179,7 +182,7 @@ const Header = () => {
                       <Nav.Item as={Link} href="/login">
                         <Button variant="light">
                           <>
-                            <FaUser className="me-1" />
+                            <BsPerson className="me-1" />
                             Sign in
                           </>
                         </Button>
@@ -190,7 +193,7 @@ const Header = () => {
                     </Nav>
 
                     <NavDropdown
-                      title={<FaUser color="black" />}
+                      title={<BsPerson color="black" />}
                       className="d-block d-md-none me-5"
                       drop="down"
                     >
@@ -205,7 +208,7 @@ const Header = () => {
                 )}
                 <Nav.Item as={Link} href="/cart">
                   <Button variant=" " className="d-none d-md-block">
-                    <FaShoppingCart size={24} />
+                    <BsCart size={24} />
                     <sup>
                       <Badge
                         bg="warning"
@@ -223,7 +226,7 @@ const Header = () => {
           </Container>
         </Navbar>
       )}
-      {!noSearch.includes(router.pathname) && (
+      {!noSearch && (
         <Navbar
           className="mobi-nav bg-white rounded"
           // style={{ boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.04)" }}
@@ -240,24 +243,28 @@ const Header = () => {
                     href={`/${link.icon !== "home" ? link.icon : ""}`}
                     passHref
                   >
-                    <div
-                      className={`${
-                        router.asPath.substring(1) === link.icon
-                          ? "text-primary"
-                          : "text-muted"
-                      } d-flex flex-column align-items-center gap-1 mobi-nav bg-white btn`}
-                    >
-                      <span className="d-flex flex-column position-relative">
-                        {activeTab(link)}{" "}
+                    <div className="d-flex flex-column align-items-center gap-1 mobi-nav  text-muted">
+                      <span
+                        className="d-flex flex-column position-relative"
+                        style={
+                          (router.pathname === "/" && link.icon === "home") ||
+                          router.pathname.includes(link.icon)
+                            ? {
+                                color: "var(--dp-accent)",
+                                transform: "scale(1.5)"
+                              }
+                            : { color: "inherit" }
+                        }
+                      >
+                        {getIcon(link)}
                         {link.name === "Cart" && (
                           <sup>
                             <Badge
-                              bg="warning"
+                              bg="danger"
                               style={{
                                 position: "absolute",
                                 top: -15,
-                                right: -10,
-                                backgroundColor: "var(--dp-accent2)!important"
+                                right: -10
                               }}
                             >
                               {itemsInCart}
@@ -265,9 +272,7 @@ const Header = () => {
                           </sup>
                         )}
                       </span>
-                      <small className="fixed-bottom-navBar-text">
-                        {link.name}
-                      </small>
+                      <small>{link.name}</small>
                     </div>
                   </Link>
                 </div>
