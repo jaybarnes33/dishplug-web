@@ -9,6 +9,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string;
     NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY: string;
     NEXT_PUBLIC_VENDORS_ORIGIN: string;
+    NEXT_PUBLIC_ADMIN_ORIGIN: string;
     SMS_API_KEY: string;
     FIREBASE_CLIENT_EMAIL: string;
     FIREBASE_PRIVATE_KEY: string;
