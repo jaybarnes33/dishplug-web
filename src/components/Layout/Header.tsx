@@ -12,13 +12,15 @@ import {
 } from "react-bootstrap";
 
 import {
-  FaChevronLeft,
-  FaHome,
-  FaListAlt,
-  FaShoppingCart,
-  FaUser,
-  FaUserAlt
-} from "react-icons/fa";
+  BsHouse,
+  BsHouseFill,
+  BsPerson,
+  BsPersonFill,
+  BsCart,
+  BsCartFill,
+  BsList,
+  BsChevronLeft
+} from "react-icons/bs";
 
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
@@ -59,39 +61,39 @@ const Header = () => {
   const getIcon = (link: { icon: string; name: string }) => {
     if (link.icon === "home") {
       if (link.icon === "home" && router.asPath.substring(1) === "home") {
-        return <FaHome />;
+        return <BsHouseFill />;
       } else if (
         link.icon === "home" &&
         router.asPath.substring(1) !== "home"
       ) {
-        return <FaHome />;
+        return <BsHouse />;
       }
     } else if (link.icon === "profile") {
       if (link.icon === "profile" && router.asPath.substring(1) === "profile") {
-        return <FaUser />;
+        return <BsPersonFill />;
       } else if (
         link.icon === "profile" &&
         router.asPath.substring(1) !== "profile"
       ) {
-        return <FaUserAlt />;
+        return <BsPerson />;
       }
     } else if (link.icon === "cart") {
       if (link.icon === "cart" && router.asPath.substring(1) === "cart") {
-        return <FaShoppingCart />;
+        return <BsCartFill />;
       } else if (
         link.icon === "cart" &&
         router.asPath.substring(1) !== "cart"
       ) {
-        return <FaShoppingCart />;
+        return <BsCart />;
       }
     } else if (link.icon === "orders") {
       if (link.icon === "orders" && router.asPath.substring(1) === "orders") {
-        return <FaListAlt />;
+        return <BsList />;
       } else if (
         link.icon === "orders" &&
         router.asPath.substring(1) !== "orders"
       ) {
-        return <FaListAlt />;
+        return <BsList />;
       }
     }
   };
@@ -127,7 +129,7 @@ const Header = () => {
           style={{ zIndex: 5 }}
           onClick={() => router.back()}
         >
-          <FaChevronLeft color={colors.accent} />
+          <BsChevronLeft color={colors.accent} />
         </Button>
       )}
       {!noSearch && (
@@ -159,7 +161,7 @@ const Header = () => {
                               style={{ marginRight: "0.25rem" }}
                             />
                           )}
-                          <FaUser color="black" />
+                          <BsPerson color="black" />
                         </>
                       }
                     >
@@ -180,7 +182,7 @@ const Header = () => {
                       <Nav.Item as={Link} href="/login">
                         <Button variant="light">
                           <>
-                            <FaUser className="me-1" />
+                            <BsPerson className="me-1" />
                             Sign in
                           </>
                         </Button>
@@ -191,7 +193,7 @@ const Header = () => {
                     </Nav>
 
                     <NavDropdown
-                      title={<FaUser color="black" />}
+                      title={<BsPerson color="black" />}
                       className="d-block d-md-none me-5"
                       drop="down"
                     >
@@ -206,7 +208,7 @@ const Header = () => {
                 )}
                 <Nav.Item as={Link} href="/cart">
                   <Button variant=" " className="d-none d-md-block">
-                    <FaShoppingCart size={24} />
+                    <BsCart size={24} />
                     <sup>
                       <Badge
                         bg="warning"

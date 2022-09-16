@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# Service Workers
+sw.js
+sw.js.map
+
 # testing
 /coverage
 

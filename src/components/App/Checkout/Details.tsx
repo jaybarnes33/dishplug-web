@@ -38,7 +38,7 @@ const Details = ({ details }: IPageProps) => {
 
   const initializePayment = usePaystackPayment({
     email: addressInfo.email,
-    amount: Math.ceil(totalAmount * 100),
+    amount: Math.ceil((totalAmount + 5) * 100),
     currency: "GHS",
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
   });
@@ -224,7 +224,9 @@ const Details = ({ details }: IPageProps) => {
             <ListGroup.Item>
               <Row>
                 <Col className={"fw-bold"}>Total</Col>
-                <Col className={"fw-bold"}>{currencyFormat(totalAmount)}</Col>
+                <Col className={"fw-bold"}>
+                  {currencyFormat(totalAmount + 5)}
+                </Col>
               </Row>
             </ListGroup.Item>
           </ListGroup>
