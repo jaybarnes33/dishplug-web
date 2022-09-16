@@ -60,7 +60,7 @@ const Header = () => {
 
   const getIcon = (link: { icon: string; name: string }) => {
     if (link.icon === "home") {
-      if (link.icon === "home" && router.asPath.substring(1) === "home") {
+      if (link.icon === "home" && router.pathname === "/") {
         return <BsHouseFill />;
       } else if (
         link.icon === "home" &&
