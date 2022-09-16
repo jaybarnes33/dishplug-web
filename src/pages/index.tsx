@@ -29,6 +29,7 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       name: data.name,
       price: data.price,
       image: data.image,
+      description: data.description,
       available: data.available,
       store_id: data.store.id,
       store_name: data.store.name,
@@ -45,11 +46,13 @@ export const getStaticProps: GetStaticProps<{
   const products = await db
     .collectionGroup("products")
     .where("available", "==", true)
+    .where("featured", "==", true)
     .limit(4)
+
     .withConverter(foodConverter)
     .get();
 
-  const foods = products.docs.map(doc => {
+  const foods = products.docs.reverse().map(doc => {
     return doc.data();
   });
 

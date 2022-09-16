@@ -7,11 +7,17 @@ import type { FoodType } from "@/types";
 import Head from "next/head";
 import Image from "next/image";
 import admin from "@/lib/firebase/node";
-import { Badge, Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Badge, Button, Card, Image as RoundImg, Toast } from "react-bootstrap";
 import { foodConverter } from "..";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
 import { useAvailability } from "@/components/Context/Availability";
+import Rating from "@/components/App/Rating";
+
+import colors from "@/styles/colors";
+import Link from "next/link";
+import { useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -45,7 +51,8 @@ export const getStaticProps: GetStaticProps<{
 };
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { addToCart } = useCart();
+  const [toast, setToast] = useState<boolean>(false);
+  const { addToCart, itemsInCart } = useCart();
   const { unavailableFoods } = useAvailability();
 
   const isUnavailable = unavailableFoods.includes(food.id);
@@ -60,6 +67,8 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       store_name: food.store_name,
       store_phone: food.store_phone
     });
+
+    setToast(true);
   };
 
   return (
@@ -75,58 +84,116 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
       <div
         className="mt-4 pt-5 d-flex align-items-center"
-        style={{ minHeight: "90vh" }}
+        style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
-        <Container>
-          <Row className="d-flex align-items-center">
-            <Col md={6} className="position-relative" style={{ height: 400 }}>
-              <Image
-                src={food.image || ""}
-                layout="fill"
-                alt=""
-                objectFit="cover"
-                objectPosition="center"
-              />
-              {["75zBdBfJlCZP3i5Qdk8R", "ghrgy8qgGAJEpvS8CtNV"].includes(
-                food.store_id
-              ) && <Badge bg="dark"></Badge>}
-            </Col>
-            <Col md={6}>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
+        <div
+          className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
+          style={{
+            zIndex: 9,
+            backgroundColor: colors.white,
+            width: 40,
+            height: 40,
+            borderRadius: 40
+          }}
+        >
+          <FaShoppingCart color={colors.accent2} />
+          <sup className="position-absolute end-0 mt-2 ms-2">
+            <Badge bg="danger">{itemsInCart}</Badge>
+          </sup>
+        </div>
+        <>
+          <div
+            className="position-fixed top-0 rounded"
+            style={{ height: "50vh", width: "100%" }}
+          >
+            <Image
+              src={food.image || ""}
+              layout="fill"
+              alt=""
+              objectFit="cover"
+              objectPosition="center"
+            />
+          </div>
+
+          <div
+            style={{
+              marginTop: "35vh",
+              width: "100vw"
+            }}
+          >
+            <Card
+              style={{
+                backgroundColor: "white!important",
+                border: "none",
+                borderRadius: 30
+              }}
+            >
+              <Card.Body>
+                <p>
                   <h1>{food.name}</h1>
-                  {/* <Rating value={food.rating || 0} /> */}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <h2 className="text-danger">{currencyFormat(food.price)}</h2>
-                </ListGroup.Item>
-                <ListGroup.Item>{food.rating || 0} reviews</ListGroup.Item>
-                <ListGroup.Item>{food.description}</ListGroup.Item>
-              </ListGroup>
-              <ListGroup variant="flush">
-                <ListGroup.Item className="d-grid gap-4">
-                  <Button
-                    variant="dark"
-                    size="lg"
-                    style={
-                      isUnavailable
-                        ? {
-                            color: "#212121",
-                            border: "2px solid dark",
-                            backgroundColor: "transparent"
-                          }
-                        : undefined
-                    }
-                    onClick={handleAddToCart}
-                    disabled={isUnavailable}
-                  >
-                    {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
-                  </Button>
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-          </Row>
-        </Container>
+                  <Rating value={food.rating || 0} />
+                </p>
+                <p>
+                  <h2 style={{ color: colors.accent2 }}>
+                    {currencyFormat(food.price)}
+                  </h2>
+                </p>
+                <p>{food.description}</p>
+                <p>{food.rating || 0} reviews</p>
+              </Card.Body>
+
+              <div
+                className="d-grid place-items-center px-3 position-fixed w-100 left-0"
+                style={{ bottom: "3rem" }}
+              >
+                <Button
+                  size="lg"
+                  style={
+                    isUnavailable
+                      ? {
+                          color: "#212121",
+                          border: "2px solid dark",
+                          backgroundColor: "transparent"
+                        }
+                      : {
+                          backgroundColor: colors.accent,
+                          border: "none"
+                        }
+                  }
+                  onClick={handleAddToCart}
+                  disabled={isUnavailable}
+                >
+                  {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
+                </Button>
+                <Toast
+                  animation
+                  className="position-absolute me-2"
+                  style={{ top: "-5rem", right: 0 }}
+                  onClose={() => setToast(false)}
+                  show={toast}
+                  delay={5000}
+                  autohide
+                >
+                  <Toast.Header>
+                    <RoundImg
+                      rounded
+                      alt={food.name}
+                      src={food.image}
+                      width={20}
+                      height={20}
+                    />
+                    <span className="px-2">
+                      {food.name} has been added to your cart
+                    </span>
+                  </Toast.Header>
+                  <Toast.Body className="text-primary">
+                    <Link href="/checkout/address">Proceed to checkout?</Link>
+                  </Toast.Body>
+                </Toast>
+              </div>
+            </Card>
+          </div>
+        </>
       </div>
     </>
   );

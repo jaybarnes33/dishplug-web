@@ -24,17 +24,11 @@ const Promos = () => {
   ];
   return (
     <div
-      className="d-flex gap-2 my-3"
-      style={{ overflowX: "scroll", height: 160 }}
+      className="d-flex gap-2 my-3 justify-content-between"
+      style={{ height: 160, overflowX: "scroll" }}
     >
       {promos.map((promo, key) => (
-        <Promo
-          name={promo.name}
-          desc={promo.desc}
-          image={promo.image}
-          key={key}
-          bg={promo.bg}
-        />
+        <Promo name={promo.name} image={promo.image} key={key} bg={promo.bg} />
       ))}
     </div>
   );

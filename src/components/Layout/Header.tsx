@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 
 import {
+
   BsHouse,
   BsHouseFill,
   BsPerson,
@@ -21,6 +22,7 @@ import {
   BsList,
   BsChevronLeft
 } from "react-icons/bs";
+
 
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
@@ -129,7 +131,9 @@ const Header = () => {
           style={{ zIndex: 5 }}
           onClick={() => router.back()}
         >
+
           <BsChevronLeft color={colors.accent} />
+
         </Button>
       )}
       {!noSearch && (

@@ -28,7 +28,7 @@ export interface IPayload {
   items: string[];
 }
 
-export const sendNotification = (payload: IPayload) => {
+export const sendNotificationToVendors = (payload: IPayload) => {
   fetch(
     `${process.env.NEXT_PUBLIC_VENDORS_ORIGIN}/api/messages/send-notification`,
     {
@@ -39,4 +39,16 @@ export const sendNotification = (payload: IPayload) => {
       body: JSON.stringify(payload)
     }
   );
+};
+
+export const sendNotificationToAdmins = (
+  payload: Omit<IPayload, "topic"> & { stores: { id: string; name: string }[] }
+) => {
+  fetch(`${process.env.NEXT_PUBLIC_ADMIN_ORIGIN}/api/send-notification`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
 };
