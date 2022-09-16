@@ -1,3 +1,4 @@
+@import "@fontsource/sen";
 :root {
   --dp-primary: #ffa500;
   --dp-danger: red;
@@ -6,7 +7,7 @@
   --dp-accent: #f9a84d;
   --dp-accent2: #da6317;
   --dp-secondary: #eee;
-  --dp-light: #f4f4ee;
+  --dp-light: #f4f4f4;
 }
 html,
 body {
@@ -27,6 +28,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: 500;
 }
+
 a {
   color: inherit;
   text-decoration: none;
