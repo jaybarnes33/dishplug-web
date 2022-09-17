@@ -5,7 +5,7 @@ import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
-import type { FirestoreDataConverter } from "firebase-admin/firestore";
+import { FieldValue, FirestoreDataConverter } from "firebase-admin/firestore";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
@@ -42,6 +42,10 @@ export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
+
+  db.collection("get_static_props-count").add({
+    homepage: FieldValue.increment(1)
+  });
 
   const products = await db
     .collectionGroup("products")
