@@ -5,7 +5,11 @@ import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
-import { FieldValue, FirestoreDataConverter } from "firebase-admin/firestore";
+import {
+  FieldValue,
+  FirestoreDataConverter,
+  Timestamp
+} from "firebase-admin/firestore";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
@@ -44,7 +48,8 @@ export const getStaticProps: GetStaticProps<{
   const db = admin.firestore();
 
   db.doc("get_static_props/homepage").set({
-    count: FieldValue.increment(1)
+    count: FieldValue.increment(1),
+    date: Timestamp.now()
   });
 
   const products = await db

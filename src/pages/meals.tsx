@@ -2,6 +2,7 @@ import Food from "@/components/App/Main/Cards/Food";
 
 import admin from "@/lib/firebase/node";
 import type { FoodType } from "@/types";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
@@ -37,6 +38,13 @@ export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
+
+  db.doc("get_static_props/meals").set({
+    count: FieldValue.increment(1),
+    date: Timestamp.now(),
+  });
+
+
   const products = await db
     .collectionGroup("products")
     .orderBy("available", "desc")
