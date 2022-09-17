@@ -18,6 +18,7 @@ import colors from "@/styles/colors";
 import Link from "next/link";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -35,6 +36,12 @@ export const getStaticProps: GetStaticProps<{
   food: FoodType;
 }> = async ({ params }) => {
   const db = admin.firestore();
+
+  db.doc("get_static_props/food").set({
+    count: FieldValue.increment(1),
+    date: Timestamp.now()
+  });
+
   const products = await db
     .collectionGroup("products")
     .withConverter(foodConverter)

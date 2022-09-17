@@ -15,9 +15,9 @@ import { SSRProvider } from "react-bootstrap";
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     localforage.config({
-      name: "dishplug",
+      name: "dishplugv2",
       storeName: "local-cart",
-      version: 2.5
+      description: "store cart for anonymous users"
     });
   }, []);
 
