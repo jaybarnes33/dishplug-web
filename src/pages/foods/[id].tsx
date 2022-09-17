@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<{
     throw new Error(`missing document for ${params?.id}`);
   }
 
-  return { props: { food }, revalidate: 1 };
+  return { props: { food }, revalidate: 60 };
 };
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
