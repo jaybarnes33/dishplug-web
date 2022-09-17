@@ -43,8 +43,8 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({}) => {
   const db = admin.firestore();
 
-  db.collection("get_static_props-count").add({
-    homepage: FieldValue.increment(1)
+  db.doc("get_static_props/homepage").set({
+    count: FieldValue.increment(1)
   });
 
   const products = await db
