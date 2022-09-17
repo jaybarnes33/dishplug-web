@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
-  return { props: { foods }, revalidate: 1 };
+  return { props: { foods }, revalidate: 60 };
 };
 
 export default function Home({

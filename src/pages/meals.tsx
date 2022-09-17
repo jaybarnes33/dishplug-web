@@ -41,9 +41,8 @@ export const getStaticProps: GetStaticProps<{
 
   db.doc("get_static_props/meals").set({
     count: FieldValue.increment(1),
-    date: Timestamp.now(),
+    date: Timestamp.now()
   });
-
 
   const products = await db
     .collectionGroup("products")
@@ -55,7 +54,7 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
-  return { props: { foods }, revalidate: 1 };
+  return { props: { foods }, revalidate: 60 };
 };
 
 export default Foods;
