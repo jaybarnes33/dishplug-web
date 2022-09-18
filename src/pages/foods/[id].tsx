@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({ params }) => {
   const db = admin.firestore();
 
-  db.doc("get_static_props/food").set({
+  db.doc("get_static_props/food").update({
     count: FieldValue.increment(1),
     date: Timestamp.now()
   });

@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({}) => {
   const db = admin.firestore();
 
-  db.doc("get_static_props/search").set({
+  db.doc("get_static_props/search").update({
     count: FieldValue.increment(1),
     date: Timestamp.now()
   });
