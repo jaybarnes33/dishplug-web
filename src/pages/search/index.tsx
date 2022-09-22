@@ -7,11 +7,18 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import admin from "@/lib/firebase/node";
 import { useKeyword } from "@/hooks/useKeyWord";
 import { foodConverter } from "..";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
+
+  db.doc("get_static_props/search").update({
+    count: FieldValue.increment(1),
+    date: Timestamp.now()
+  });
+
   const products = await db
     .collectionGroup("products")
     .withConverter(foodConverter)
@@ -21,7 +28,7 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
-  return { props: { foods }, revalidate: 1 };
+  return { props: { foods }, revalidate: 60 };
 };
 
 const Search = ({
