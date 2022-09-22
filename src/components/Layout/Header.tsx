@@ -11,17 +11,8 @@ import {
   Spinner
 } from "react-bootstrap";
 
-import {
-  BsHouse,
-  BsHouseFill,
-  BsPerson,
-  BsPersonFill,
-  BsCart,
-  BsCartFill,
-  BsList,
-  BsChevronLeft
-} from "react-icons/bs";
-
+import { BsPerson, BsCart, BsChevronLeft } from "react-icons/bs";
+import { Buy, Document, Home, User } from "react-iconly";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
@@ -61,39 +52,39 @@ const Header = () => {
   const getIcon = (link: { icon: string; name: string }) => {
     if (link.icon === "home") {
       if (link.icon === "home" && router.pathname === "/") {
-        return <BsHouseFill />;
+        return <Home set="bold" primaryColor={colors.accent} />;
       } else if (
         link.icon === "home" &&
         router.asPath.substring(1) !== "home"
       ) {
-        return <BsHouse />;
+        return <Home set="light" primaryColor={colors.accent} />;
       }
     } else if (link.icon === "profile") {
       if (link.icon === "profile" && router.asPath.substring(1) === "profile") {
-        return <BsPersonFill />;
+        return <User set="bold" primaryColor={colors.accent} />;
       } else if (
         link.icon === "profile" &&
         router.asPath.substring(1) !== "profile"
       ) {
-        return <BsPerson />;
+        return <User set="two-tone" primaryColor={colors.accent} />;
       }
     } else if (link.icon === "cart") {
       if (link.icon === "cart" && router.asPath.substring(1) === "cart") {
-        return <BsCartFill />;
+        return <Buy set="bold" primaryColor={colors.accent} />;
       } else if (
         link.icon === "cart" &&
         router.asPath.substring(1) !== "cart"
       ) {
-        return <BsCart />;
+        return <Buy set="two-tone" primaryColor={colors.accent} />;
       }
     } else if (link.icon === "orders") {
       if (link.icon === "orders" && router.asPath.substring(1) === "orders") {
-        return <BsList />;
+        return <Document set="bold" primaryColor={colors.accent2} />;
       } else if (
         link.icon === "orders" &&
         router.asPath.substring(1) !== "orders"
       ) {
-        return <BsList />;
+        return <Document set="two-tone" primaryColor={colors.accent2} />;
       }
     }
   };
@@ -228,56 +219,58 @@ const Header = () => {
       )}
       {!noSearch && (
         <Navbar
-          className="mobi-nav bg-white rounded"
+          className="mobi-nav bg-white rounded w-100"
           // style={{ boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.04)" }}
           style={{ borderTop: "1.5px solid rgba(0, 0, 0, 0.125)" }}
           fixed="bottom"
         >
-          {/* <Container className="d-flex justify-content-start"> */}
-          <Container>
-            {/* <Nav className="row d-flex justify-content-around gap-4 w-100"> */}
-            <Nav className="row w-100">
-              {links.map((link, key) => (
-                <div className="col-3" key={key}>
-                  <Link
-                    href={`/${link.icon !== "home" ? link.icon : ""}`}
-                    passHref
+          <Container className="d-flex justify-content-between">
+            {links.map((link, key) => (
+              <div key={key}>
+                <Link
+                  href={`/${link.icon !== "home" ? link.icon : ""}`}
+                  passHref
+                >
+                  <div
+                    className="d-flex align-items-center gap-1"
+                    style={
+                      (router.pathname === "/" && link.icon === "home") ||
+                      router.pathname.includes(link.icon)
+                        ? {
+                            width: "100%",
+                            padding: "0.3rem",
+                            borderRadius: 12,
+                            background:
+                              "linear-gradient(98.81deg, rgba(254, 173, 29, 0.1) 0.82%, rgba(249, 168, 77, 0.1)101.53%)"
+                          }
+                        : { color: "inherit" }
+                    }
                   >
-                    <div className="d-flex flex-column align-items-center gap-1 mobi-nav  text-muted">
-                      <span
-                        className="d-flex flex-column position-relative"
-                        style={
-                          (router.pathname === "/" && link.icon === "home") ||
-                          router.pathname.includes(link.icon)
-                            ? {
-                                color: "var(--dp-accent)",
-                                transform: "scale(1.5)"
-                              }
-                            : { color: "inherit" }
-                        }
-                      >
-                        {getIcon(link)}
-                        {link.name === "Cart" && (
-                          <sup>
-                            <Badge
-                              bg="danger"
-                              style={{
-                                position: "absolute",
-                                top: -15,
-                                right: -10
-                              }}
-                            >
-                              {itemsInCart}
-                            </Badge>
-                          </sup>
-                        )}
-                      </span>
-                      <small>{link.name}</small>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </Nav>
+                    <span className="position-relative">
+                      {getIcon(link)}
+                      {link.name === "Cart" && (
+                        <sup>
+                          <Badge
+                            bg="danger"
+                            style={{
+                              position: "absolute",
+                              top: -15,
+                              right: -10
+                            }}
+                          >
+                            {itemsInCart}
+                          </Badge>
+                        </sup>
+                      )}
+                    </span>
+
+                    <small className="text-dark" style={{ fontSize: "0.7rem" }}>
+                      {link.name}
+                    </small>
+                  </div>
+                </Link>
+              </div>
+            ))}
           </Container>
         </Navbar>
       )}
