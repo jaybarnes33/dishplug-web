@@ -11,17 +11,8 @@ import {
   Spinner
 } from "react-bootstrap";
 
-import {
-  BsHouse,
-  BsHouseFill,
-  BsPerson,
-  BsPersonFill,
-  BsCart,
-  BsCartFill,
-  BsList,
-  BsChevronLeft
-} from "react-icons/bs";
-import { Buy, Home, User } from "react-iconly";
+import { BsPerson, BsCart, BsChevronLeft } from "react-icons/bs";
+import { Buy, Document, Home, User } from "react-iconly";
 import Search from "../App/Search/NavSearch";
 import Link from "next/link";
 import { useAuth } from "../Context/Auth";
@@ -88,12 +79,12 @@ const Header = () => {
       }
     } else if (link.icon === "orders") {
       if (link.icon === "orders" && router.asPath.substring(1) === "orders") {
-        return <BsList />;
+        return <Document set="bold" primaryColor={colors.accent2} />;
       } else if (
         link.icon === "orders" &&
         router.asPath.substring(1) !== "orders"
       ) {
-        return <BsList />;
+        return <Document set="two-tone" primaryColor={colors.accent2} />;
       }
     }
   };
@@ -248,6 +239,7 @@ const Header = () => {
                         ? {
                             width: "100%",
                             padding: "0.3rem",
+                            borderRadius: 12,
                             background:
                               "linear-gradient(98.81deg, rgba(254, 173, 29, 0.1) 0.82%, rgba(249, 168, 77, 0.1)101.53%)"
                           }
@@ -271,15 +263,10 @@ const Header = () => {
                         </sup>
                       )}
                     </span>
-                    {(router.pathname === "/" && link.icon === "home") ||
-                      (router.pathname.includes(link.icon) && (
-                        <small
-                          className="text-dark"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          {link.name}
-                        </small>
-                      ))}
+
+                    <small className="text-dark" style={{ fontSize: "0.7rem" }}>
+                      {link.name}
+                    </small>
                   </div>
                 </Link>
               </div>
