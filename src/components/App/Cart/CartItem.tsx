@@ -50,7 +50,6 @@ const CartItem = ({ item }: { item: ICartItem }) => {
       className="d-flex justify-content-center gap-4 align-items-center my-3 p-2 "
       style={{
         backgroundColor: "white",
-        height: 80,
         borderRadius: 22,
         boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
       }}

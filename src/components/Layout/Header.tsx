@@ -57,7 +57,7 @@ const Header = () => {
         link.icon === "home" &&
         router.asPath.substring(1) !== "home"
       ) {
-        return <Home set="light" primaryColor={colors.accent} />;
+        return <Home set="light" size="small" primaryColor={colors.accent} />;
       }
     } else if (link.icon === "profile") {
       if (link.icon === "profile" && router.asPath.substring(1) === "profile") {
@@ -79,12 +79,12 @@ const Header = () => {
       }
     } else if (link.icon === "orders") {
       if (link.icon === "orders" && router.asPath.substring(1) === "orders") {
-        return <Document set="bold" primaryColor={colors.accent2} />;
+        return <Document set="bold" primaryColor={colors.accent} />;
       } else if (
         link.icon === "orders" &&
         router.asPath.substring(1) !== "orders"
       ) {
-        return <Document set="two-tone" primaryColor={colors.accent2} />;
+        return <Document set="two-tone" primaryColor={colors.accent} />;
       }
     }
   };
@@ -219,10 +219,9 @@ const Header = () => {
       )}
       {!noSearch && (
         <Navbar
-          className="mobi-nav bg-white rounded w-100"
-          // style={{ boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.04)" }}
-          style={{ borderTop: "1.5px solid rgba(0, 0, 0, 0.125)" }}
+          className="mobi-nav bg-white rounded m-2 py-2"
           fixed="bottom"
+          style={{ boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)" }}
         >
           <Container className="d-flex justify-content-between">
             {links.map((link, key) => (
