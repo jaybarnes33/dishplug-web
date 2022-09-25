@@ -19,6 +19,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       storeName: "local-cart",
       description: "store cart for anonymous users"
     });
+
+    const db = localforage.createInstance({
+      name: "dishplugv2",
+      storeName: "referrer",
+      description: "referrals"
+    });
+
+    const referrer = new URLSearchParams(window.location.search).get(
+      "referrer"
+    );
+    db.setItem("referrer");
   }, []);
 
   return (
