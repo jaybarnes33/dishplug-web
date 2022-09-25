@@ -25,7 +25,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
               <h1>{pathname === "/login" ? "Welcome Back" : "Get Started"}</h1>
               <p>
                 Please enter your details to{" "}
-                {pathname === "/login"
+                {pathname.includes("login") || pathname.includes("refer")
                   ? "log into your account"
                   : "create an account"}
               </p>
@@ -54,7 +54,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
                 />
               </div> */}
               <div className="mt-3">
-                {pathname === "/login" ? (
+                {pathname.includes("login") || pathname.includes("refer") ? (
                   <p>
                     Don&apos;t have an account?{" "}
                     <span className="text-primary">
