@@ -50,7 +50,10 @@ const Shops = () => {
       </Head>
       <div
         className="d-flex align-items-center"
-        style={{ backgroundColor: "var(--dp-primary)", minHeight: "50vh" }}
+        style={{
+          backgroundImage: "url('/Pattern (7).png')",
+          minHeight: "50vh"
+        }}
       >
         <Container className="d-flex align-items-center justify-content-center mt-4 pt-2">
           <div className="text-center">
