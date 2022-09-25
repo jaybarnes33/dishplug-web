@@ -46,7 +46,7 @@ export const getStaticProps: GetStaticProps<{
 
   const products = await db
     .collectionGroup("products")
-    .orderBy("available", "desc")
+    .where("available", "==", true)
     .withConverter(foodConverter)
     .get();
 
@@ -54,7 +54,10 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
-  return { props: { foods }, revalidate: 60 };
+  return {
+    props: { foods },
+    revalidate: 60
+  };
 };
 
 export default Foods;
