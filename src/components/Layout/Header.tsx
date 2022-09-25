@@ -104,6 +104,7 @@ const Header = () => {
   });
 
   const noSearch = [
+    "refer",
     "login",
     "register",
     "cart",

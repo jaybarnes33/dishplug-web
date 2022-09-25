@@ -35,7 +35,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const Register = () => {
-  const { user } = useAuth();
   const { appVerifier, recaptchaResponse } = useRecaptcha();
   const [verificationId, setVerificationId] = useState("");
   const [otp, setOtp] = useState("");
