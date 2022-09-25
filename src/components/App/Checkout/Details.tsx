@@ -227,12 +227,6 @@ const Details = ({ details }: IPageProps) => {
                 <Col>{currencyFormat(totalAmount)}</Col>
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col>Delivery</Col>
-                <Col>GH₵5</Col>
-              </Row>
-            </ListGroup.Item>
 
             <ListGroup.Item>
               <Row>
