@@ -11,6 +11,7 @@ import { useAuth } from "@/components/Context/Auth";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { formatPhone } from "@/helpers/utils";
+import { referrerdb } from "./_app";
 
 const initialValues = {
   firstName: "",
@@ -40,7 +41,13 @@ const Register = () => {
   const [otp, setOtp] = useState("");
   const { replace } = useRouter();
   const [error, setError] = useState("");
+  const [referrer, setReferrer] = useState("");
 
+  useEffect(() => {
+    referrerdb
+      .getItem("referrer")
+      .then(val => setReferrer(val as unknown as string));
+  }, []);
   useEffect(() => {
     if (recaptchaResponse) {
       const otp = window.prompt(
@@ -102,6 +109,7 @@ const Register = () => {
         },
         body: JSON.stringify({
           uid: newUser.uid,
+          referrer: referrer,
           ...values
         })
       });
