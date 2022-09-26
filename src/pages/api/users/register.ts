@@ -29,8 +29,12 @@ export default async function handler(
 
     await Promise.all([updateUser, setRole, createUserDoc]);
 
+    console.log("doc", createUserDoc);
+    console.log("role", setRole);
+    console.log("update", updateUser);
     res.status(200).json({ message: "user created successfully" });
   } catch (err) {
+    console.log(err);
     const error = err as any;
 
     if (error.errorInfo?.code) {

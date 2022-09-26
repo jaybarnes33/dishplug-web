@@ -15,14 +15,14 @@ import { referrerdb } from "./_app";
 
 const initialValues = {
   name: "",
+
   phone: "",
   password: ""
 };
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().min(2).required().label("First name"),
-  lastName: Yup.string().min(2).required().label("Last name"),
-  email: Yup.string().email().required().label("Email"),
+  name: Yup.string().min(2).required().label("First name"),
+
   phone: Yup.string()
     .phone("GH", "Please enter a valid phone number")
     .required()
@@ -40,7 +40,7 @@ const Register = () => {
   const { replace } = useRouter();
   const [error, setError] = useState("");
   const [referrer, setReferrer] = useState("");
-  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     referrerdb
       .getItem("referrer")
@@ -57,11 +57,11 @@ const Register = () => {
     }
   }, [recaptchaResponse]);
 
-  const onSubmit: FormikConfig<
-    typeof initialValues
-  >["onSubmit"] = async values => {
+  const onSubmit: FormikConfig<typeof initialValues>["onSubmit"] = async (
+    values,
+    actions
+  ) => {
     try {
-      setLoading(true);
       if (!appVerifier) {
         throw new Error(
           "Something went wrong, Please refresh the page and try again"
@@ -81,7 +81,7 @@ const Register = () => {
         setError(error.message);
       }
     } finally {
-      setLoading(false);
+      actions.setSubmitting(false);
     }
   };
 
@@ -121,7 +121,7 @@ const Register = () => {
 
       replace("/");
     },
-    [referrer, values, replace]
+    [values, replace]
   );
 
   useEffect(() => {
@@ -141,7 +141,7 @@ const Register = () => {
               <Form.Control
                 {...getFieldProps("name")}
                 required
-                placeholder="Full Name"
+                placeholder="First Name"
                 isInvalid={Boolean(touched.name && errors.name)}
               />
               <Form.Control.Feedback
@@ -196,8 +196,7 @@ const Register = () => {
             variant="dark"
             disabled={isSubmitting}
           >
-            Register
-            {loading && <Spinner animation="grow" />}
+            Register {isSubmitting && <Spinner animation="grow" />}
           </Button>
         </div>
       </Form>
