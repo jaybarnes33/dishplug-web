@@ -17,9 +17,7 @@ export default async function handler(
     const auth = admin.auth();
     const db = admin.firestore();
 
-    const getAuthUser = phone
-      ? auth.getUserByPhoneNumber(phone.replace("0", "+233"))
-      : auth.getUserByEmail(email);
+    const getAuthUser = auth.getUserByPhoneNumber(phone.replace("0", "+233"));
 
     const getStoreUser = db.collection("buyers").where("phone", "==", phone);
 
@@ -50,7 +48,7 @@ export default async function handler(
         code: error.errorInfo.code,
         get message() {
           return this.code === "auth/user-not-found"
-            ? "Phone number or Email doesn't exist, please check and try again"
+            ? "User with this phone number doesn't exist, please check and try again"
             : error.errorInfo.message;
         }
       });
