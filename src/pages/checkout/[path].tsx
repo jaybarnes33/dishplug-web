@@ -49,7 +49,8 @@ const Checkout = () => {
       className="mt-4 pt-5"
       style={{
         minHeight: "90vh",
-        backgroundImage: "url('/pattern-success.png')"
+        backgroundImage: "url('/pattern-success.png')",
+        backgroundSize: "cover"
       }}
     >
       {/* <Nav className="d-flex justify-content-center gap-3 mt-4 pt-5">
