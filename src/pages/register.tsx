@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { FormikConfig, useFormik } from "formik";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import "yup-phone-lite";
 import FormWrapper from "@/components/Layout/FormWrapper";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
@@ -14,9 +14,7 @@ import { formatPhone } from "@/helpers/utils";
 import { referrerdb } from "./_app";
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
+  name: "",
   phone: "",
   password: ""
 };
@@ -42,7 +40,7 @@ const Register = () => {
   const { replace } = useRouter();
   const [error, setError] = useState("");
   const [referrer, setReferrer] = useState("");
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     referrerdb
       .getItem("referrer")
@@ -59,11 +57,11 @@ const Register = () => {
     }
   }, [recaptchaResponse]);
 
-  const onSubmit: FormikConfig<typeof initialValues>["onSubmit"] = async (
-    values,
-    actions
-  ) => {
+  const onSubmit: FormikConfig<
+    typeof initialValues
+  >["onSubmit"] = async values => {
     try {
+      setLoading(true);
       if (!appVerifier) {
         throw new Error(
           "Something went wrong, Please refresh the page and try again"
@@ -83,7 +81,7 @@ const Register = () => {
         setError(error.message);
       }
     } finally {
-      actions.setSubmitting(false);
+      setLoading(false);
     }
   };
 
@@ -123,7 +121,7 @@ const Register = () => {
 
       replace("/");
     },
-    [values, replace]
+    [referrer, values, replace]
   );
 
   useEffect(() => {
@@ -137,60 +135,24 @@ const Register = () => {
       {error && <p className="text-danger">{error}</p>}
       <Form noValidate onSubmit={handleSubmit}>
         <Row>
-          <Col xs={6}>
+          <Col xs={12}>
             <Form.Group>
-              <Form.Label>First Name</Form.Label>
+              <Form.Label>Full Name</Form.Label>
               <Form.Control
-                {...getFieldProps("firstName")}
+                {...getFieldProps("name")}
                 required
-                placeholder="First Name"
-                isInvalid={Boolean(touched.firstName && errors.firstName)}
+                placeholder="Full Name"
+                isInvalid={Boolean(touched.name && errors.name)}
               />
               <Form.Control.Feedback
-                type={
-                  touched.firstName && errors.firstName ? "invalid" : "valid"
-                }
+                type={touched.name && errors.name ? "invalid" : "valid"}
               >
-                {errors.firstName}
+                {errors.name}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col xs={6}>
-            <Form.Group>
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                {...getFieldProps("lastName")}
-                required
-                placeholder="Last Name"
-                isInvalid={Boolean(touched.lastName && errors.lastName)}
-              />
-              <Form.Control.Feedback
-                type={touched.lastName && errors.lastName ? "invalid" : "valid"}
-              >
-                {errors.lastName}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                {...getFieldProps("email")}
-                required
-                type="email"
-                placeholder="Email"
-                isInvalid={Boolean(touched.email && errors.email)}
-              />
-              <Form.Control.Feedback
-                type={touched.email && errors.email ? "invalid" : "valid"}
-              >
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col xs={6}>
+
+          <Col xs={12}>
             <Form.Group>
               <Form.Label>Phone</Form.Label>
               <Form.Control
@@ -208,7 +170,7 @@ const Register = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col xs={6}>
+          <Col xs={12}>
             <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -235,6 +197,7 @@ const Register = () => {
             disabled={isSubmitting}
           >
             Register
+            {loading && <Spinner animation="grow" />}
           </Button>
         </div>
       </Form>

@@ -19,20 +19,19 @@ const initialValues = {
 
 const validationSchema = Yup.object().shape({
   identity: Yup.string()
-    .required("Please enter your Email or Phone Number")
-    .test("test-name", "Enter Valid Email or Phone Number", function (value) {
+    .required("Please enter your Phone Number")
+    .test("test-name", "Enter Valid Phone Number", function (value) {
       if (!value) return false;
 
-      const isValidEmail = emailRegex.test(value);
       const isValidPhone = phoneRegex.test(value);
 
-      if (!isValidEmail && !isValidPhone) {
+      if (!isValidPhone) {
         return false;
       }
 
       return true;
     })
-    .label("Email or Password"),
+    .label("Phone or Password"),
   password: Yup.string()
     .min(8)
     .required("Password field can't be empty")
@@ -94,7 +93,7 @@ const Login = () => {
       {error && <p className="text-danger">{error}</p>}
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group className="mb-4">
-          <Form.Label>Email or Phone</Form.Label>
+          <Form.Label>Phone</Form.Label>
           <Form.Control
             {...getFieldProps("identity")}
             isInvalid={Boolean(touched.identity && errors.identity)}
