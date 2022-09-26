@@ -76,7 +76,7 @@ const Details = ({ details }: IPageProps) => {
           email: addressInfo.email
         },
         deliveryLocation: addressInfo.location,
-        date: Timestamp.fromDate(new Date()),
+        date: Timestamp.now(),
         items: items?.map(item => ({
           id: item.id,
           name: item.name,
