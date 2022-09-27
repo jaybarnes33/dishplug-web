@@ -12,8 +12,7 @@ export default async function handler(
     const { stores } = req.body;
     const today = new Date();
     const [day] = today.toString().split(" ");
-    const [yesterday] = new Date()
-      .setDate(today.getDate() - 1)
+    const [yesterday] = new Date(new Date().setDate(today.getDate() - 1))
       .toString()
       .split(" ");
 
