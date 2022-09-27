@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { FormikConfig, useFormik } from "formik";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import "yup-phone-lite";
 import FormWrapper from "@/components/Layout/FormWrapper";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
@@ -11,19 +11,18 @@ import { useAuth } from "@/components/Context/Auth";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { formatPhone } from "@/helpers/utils";
+import { referrerdb } from "./_app";
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
+  name: "",
+
   phone: "",
   password: ""
 };
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().min(2).required().label("First name"),
-  lastName: Yup.string().min(2).required().label("Last name"),
-  email: Yup.string().email().required().label("Email"),
+  name: Yup.string().min(2).required().label("First name"),
+
   phone: Yup.string()
     .phone("GH", "Please enter a valid phone number")
     .required()
@@ -40,7 +39,13 @@ const Register = () => {
   const [otp, setOtp] = useState("");
   const { replace } = useRouter();
   const [error, setError] = useState("");
+  const [referrer, setReferrer] = useState("");
 
+  useEffect(() => {
+    referrerdb
+      .getItem("referrer")
+      .then(val => setReferrer(val as unknown as string));
+  }, []);
   useEffect(() => {
     if (recaptchaResponse) {
       const otp = window.prompt(
@@ -102,6 +107,7 @@ const Register = () => {
         },
         body: JSON.stringify({
           uid: newUser.uid,
+          referrer: referrer,
           ...values
         })
       });
@@ -115,7 +121,7 @@ const Register = () => {
 
       replace("/");
     },
-    [values, replace]
+    [referrer, values, replace]
   );
 
   useEffect(() => {
@@ -129,60 +135,24 @@ const Register = () => {
       {error && <p className="text-danger">{error}</p>}
       <Form noValidate onSubmit={handleSubmit}>
         <Row>
-          <Col xs={6}>
+          <Col xs={12}>
             <Form.Group>
-              <Form.Label>First Name</Form.Label>
+              <Form.Label>Full Name</Form.Label>
               <Form.Control
-                {...getFieldProps("firstName")}
+                {...getFieldProps("name")}
                 required
                 placeholder="First Name"
-                isInvalid={Boolean(touched.firstName && errors.firstName)}
+                isInvalid={Boolean(touched.name && errors.name)}
               />
               <Form.Control.Feedback
-                type={
-                  touched.firstName && errors.firstName ? "invalid" : "valid"
-                }
+                type={touched.name && errors.name ? "invalid" : "valid"}
               >
-                {errors.firstName}
+                {errors.name}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col xs={6}>
-            <Form.Group>
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                {...getFieldProps("lastName")}
-                required
-                placeholder="Last Name"
-                isInvalid={Boolean(touched.lastName && errors.lastName)}
-              />
-              <Form.Control.Feedback
-                type={touched.lastName && errors.lastName ? "invalid" : "valid"}
-              >
-                {errors.lastName}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                {...getFieldProps("email")}
-                required
-                type="email"
-                placeholder="Email"
-                isInvalid={Boolean(touched.email && errors.email)}
-              />
-              <Form.Control.Feedback
-                type={touched.email && errors.email ? "invalid" : "valid"}
-              >
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col xs={6}>
+
+          <Col xs={12}>
             <Form.Group>
               <Form.Label>Phone</Form.Label>
               <Form.Control
@@ -200,7 +170,7 @@ const Register = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
-          <Col xs={6}>
+          <Col xs={12}>
             <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -226,7 +196,7 @@ const Register = () => {
             variant="dark"
             disabled={isSubmitting}
           >
-            Register
+            Register {isSubmitting && <Spinner animation="grow" />}
           </Button>
         </div>
       </Form>

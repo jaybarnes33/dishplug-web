@@ -143,7 +143,6 @@ const Header = () => {
                 {isAuthenticated ? (
                   <>
                     <NavDropdown
-                      drop="start"
                       title={
                         <>
                           {loggingOut && (

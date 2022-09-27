@@ -1,11 +1,18 @@
-import React, { ReactNode } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { ReactNode, useEffect, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import styles from "@/styles/form.module.scss";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
+import { ref } from "firebase/storage";
+import { referrerdb } from "@/pages/_app";
+
 const FormWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
+  const [referred, setReferred] = useState(false);
+  useEffect(() => {
+    referrerdb.getItem("referrer").then(() => setReferred(true));
+  }, []);
   return (
     <>
       <Head>
@@ -22,7 +29,13 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
           </Col>
           <Col sm={12} md={6} className={`px-5 ${styles.form} mt-5 pt-5`}>
             <div className="mb-4">
-              <h1>{pathname === "/login" ? "Welcome Back" : "Get Started"}</h1>
+              <h1>
+                {pathname === "/login"
+                  ? "Welcome Back"
+                  : !referred || pathname === "/refer"
+                  ? "Get Started"
+                  : "Claim your discount"}
+              </h1>
               <p>
                 Please enter your details to{" "}
                 {pathname.includes("login") || pathname.includes("refer")

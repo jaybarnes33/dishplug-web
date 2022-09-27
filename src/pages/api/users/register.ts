@@ -9,14 +9,12 @@ export default async function handler(
   if (req.method !== "POST") return res.status(404);
 
   try {
-    const { uid, firstName, lastName, email, phone, password } = req.body;
-    const name = `${firstName} ${lastName}`;
+    const { uid, name, phone, password, referrer } = req.body;
 
     const salt = await genSalt(8);
     const hashedPassword = await hash(password, salt);
 
     const updateUser = admin.auth().updateUser(uid, {
-      email,
       password,
       displayName: name
     });
@@ -24,15 +22,19 @@ export default async function handler(
     const setRole = admin.auth().setCustomUserClaims(uid, { role: "BUYER" });
     const createUserDoc = admin.firestore().doc(`/buyers/${uid}`).create({
       fullName: name,
-      email,
+      referrer,
       phone,
       password: hashedPassword
     });
 
     await Promise.all([updateUser, setRole, createUserDoc]);
 
+    console.log("doc", createUserDoc);
+    console.log("role", setRole);
+    console.log("update", updateUser);
     res.status(200).json({ message: "user created successfully" });
   } catch (err) {
+    console.log(err);
     const error = err as any;
 
     if (error.errorInfo?.code) {
