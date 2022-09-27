@@ -121,7 +121,7 @@ const Register = () => {
 
       replace("/");
     },
-    [values, replace]
+    [referrer, values, replace]
   );
 
   useEffect(() => {
