@@ -12,18 +12,14 @@ export default async function handler(
   if (req.method !== "POST") return res.status(404);
 
   try {
-    const { phone, email, password } = req.body;
+    const { phone, password } = req.body;
 
     const auth = admin.auth();
     const db = admin.firestore();
 
-    const getAuthUser = phone
-      ? auth.getUserByPhoneNumber(phone.replace("0", "+233"))
-      : auth.getUserByEmail(email);
+    const getAuthUser = auth.getUserByPhoneNumber(phone.replace("0", "+233"));
 
-    const getStoreUser = phone
-      ? db.collection("buyers").where("phone", "==", phone)
-      : db.collection("buyers").where("email", "==", email);
+    const getStoreUser = db.collection("buyers").where("phone", "==", phone);
 
     const [, users] = await Promise.all([getAuthUser, getStoreUser]);
     const [user] = (await users.get()).docs;
@@ -52,7 +48,7 @@ export default async function handler(
         code: error.errorInfo.code,
         get message() {
           return this.code === "auth/user-not-found"
-            ? "Phone number or Email doesn't exist, please check and try again"
+            ? "User with this phone number doesn't exist, please check and try again"
             : error.errorInfo.message;
         }
       });

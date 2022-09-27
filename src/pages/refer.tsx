@@ -10,7 +10,7 @@ import { FaRegCopy } from "react-icons/fa";
 const Refer = () => {
   const { user, isAuthenticated } = useAuth();
   const [url, setUrl] = useState("");
-  const [copied, setCopied] = useState(true);
+  const [copied, setCopied] = useState(false);
   useEffect(() => {
     setUrl(`${window.location.origin.toString()}?referrer=${user?.uid}`);
   }, [user]);

@@ -8,18 +8,36 @@ import "@/styles/bootstrap.css";
 import "@/styles/globals.scss";
 import localforage from "localforage";
 import { AppProps } from "next/app";
+import { useRouter } from "next/router";
 
 import { useEffect } from "react";
 import { SSRProvider } from "react-bootstrap";
 
+export const referrerdb = localforage.createInstance({
+  name: "dishplugv2",
+  storeName: "referrer",
+  description: "referrals"
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   useEffect(() => {
     localforage.config({
       name: "dishplugv2",
       storeName: "local-cart",
       description: "store cart for anonymous users"
     });
-  }, []);
+
+    const referrer = new URLSearchParams(window.location.search).get(
+      "referrer"
+    );
+
+    referrerdb.setItem("referrer", referrer);
+
+    if (referrer) {
+      router.push(`/register?referrer=${referrer}`);
+    }
+  }, [router]);
 
   return (
     <SSRProvider>

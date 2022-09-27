@@ -7,6 +7,7 @@ import {
 } from "@/helpers/utils";
 import { firestore } from "@/lib/firebase/client";
 import { IPageProps } from "@/pages/checkout/[path]";
+import { referrerdb } from "@/pages/_app";
 
 import axios from "axios";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
@@ -32,14 +33,18 @@ const Details = ({ details }: IPageProps) => {
   const [addressInfo, setAddressInfo] = useState(details);
   const { totalAmount, availableItems, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
-
+  const [referrer, setReferrer] = useState("");
   useEffect(() => {
+    referrerdb
+      .getItem("referrer")
+      .then(val => setReferrer(val as unknown as string));
+
     const storedDetails = localStorage.getItem("address-info");
     if (storedDetails) {
       setAddressInfo(JSON.parse(storedDetails));
     }
   }, []);
-
+  const discount = referrer ? totalAmount * 0.25 : 0;
   // const initializePayment = usePaystackPayment({
   //   email: addressInfo.email,
   //   amount: Math.ceil(totalAmount * 100),
@@ -144,7 +149,7 @@ const Details = ({ details }: IPageProps) => {
         recipients: stores.map(store => store.phone),
         message: `An order has been made to your store, please check your dashboard`
       });
-
+      referrerdb.removeItem("referrer");
       replace("/success");
     } catch (error) {
       console.log(error);
@@ -223,15 +228,25 @@ const Details = ({ details }: IPageProps) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
-                <Col>Items</Col>
+                <Col>Sub Total</Col>
                 <Col>{currencyFormat(totalAmount)}</Col>
               </Row>
             </ListGroup.Item>
+            {referrer && (
+              <ListGroup.Item>
+                <Row>
+                  <Col>Discount</Col>
+                  <Col>{currencyFormat(discount)}</Col>
+                </Row>
+              </ListGroup.Item>
+            )}
 
             <ListGroup.Item>
               <Row>
                 <Col className={"fw-bold"}>Total</Col>
-                <Col className={"fw-bold"}>{currencyFormat(totalAmount)}</Col>
+                <Col className={"fw-bold"}>
+                  {currencyFormat(totalAmount - discount)}
+                </Col>
               </Row>
             </ListGroup.Item>
           </ListGroup>
