@@ -54,8 +54,8 @@ const Success = () => {
           <h2>Your order is being processed</h2>
           {/* <p>Refer a friend and get up to 25% discount on your next order</p> */}
           <div className="d-flex justify-content-center gap-2">
-            <Link href="/refer" passHref>
-              {/* <Button
+            {/* <Link href="/refer" passHref>
+              <Button
                 className="pt-2 mt-4 mx-2"
                 size="lg"
                 style={{
@@ -66,8 +66,8 @@ const Success = () => {
                 }}
               >
                 Refer a friend
-              </Button> */}
-            </Link>
+              </Button>
+            </Link> */}
             <Link href="/" passHref>
               <Button
                 size="lg"
