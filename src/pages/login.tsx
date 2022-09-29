@@ -39,7 +39,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { replace } = useRouter();
   const [error, setError] = useState("");
 
   const onSubmit: FormikConfig<typeof initialValues>["onSubmit"] = async (
@@ -70,7 +69,6 @@ const Login = () => {
 
       await setPersistence(auth, browserLocalPersistence);
       await signInWithCustomToken(auth, data.token);
-      replace("/");
     } catch (error) {
       if (error instanceof AuthError) {
         setError(error.message);

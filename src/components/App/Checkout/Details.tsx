@@ -44,7 +44,7 @@ const Details = ({ details }: IPageProps) => {
       setAddressInfo(JSON.parse(storedDetails));
     }
   }, []);
-  const discount = referrer ? totalAmount * 0.25 : 0;
+  const discount = referrer ? totalAmount * 0.15 : 0;
   // const initializePayment = usePaystackPayment({
   //   email: addressInfo.email,
   //   amount: Math.ceil(totalAmount * 100),

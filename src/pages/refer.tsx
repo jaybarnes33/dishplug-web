@@ -46,7 +46,7 @@ const Refer = () => {
                   onClick={() =>
                     navigator.clipboard
                       .writeText(url)
-                      .then(suc => setCopied(true))
+                      .then(() => setCopied(true))
                   }
                   className="mx-2"
                   style={{

@@ -7,9 +7,9 @@ import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useRecaptcha } from "@/hooks/recaptcha";
 import { AuthError } from "@/helpers/constructors";
-import { useAuth } from "@/components/Context/Auth";
+
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+
 import { formatPhone } from "@/helpers/utils";
 import { referrerdb } from "./_app";
 
@@ -37,7 +37,7 @@ const Register = () => {
   const { appVerifier, recaptchaResponse } = useRecaptcha();
   const [verificationId, setVerificationId] = useState("");
   const [otp, setOtp] = useState("");
-  const { replace } = useRouter();
+
   const [error, setError] = useState("");
   const [referrer, setReferrer] = useState("");
 
@@ -118,10 +118,8 @@ const Register = () => {
         setError(data.message);
         throw new AuthError(data.code, data.message);
       }
-
-      replace("/");
     },
-    [referrer, values, replace]
+    [referrer, values]
   );
 
   useEffect(() => {

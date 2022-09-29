@@ -32,10 +32,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       "referrer"
     );
 
-    referrerdb.setItem("referrer", referrer);
-
     if (referrer) {
-      router.push(`/register?referrer=${referrer}`);
+      referrerdb.setItem("referrer", referrer);
+      router.push("/register?redirect=/");
     }
   }, [router]);
 
