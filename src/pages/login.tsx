@@ -41,7 +41,7 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
   const { replace } = useRouter();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const onSubmit: FormikConfig<typeof initialValues>["onSubmit"] = async (
     values,
     actions
@@ -49,7 +49,7 @@ const Login = () => {
     try {
       const email = emailRegex.test(values.identity) ? values.identity : "";
       const phone = phoneRegex.test(values.identity) ? values.identity : "";
-      setLoading(true);
+
       const res = await fetch("/api/users/login", {
         method: "POST",
         headers: {
@@ -71,7 +71,6 @@ const Login = () => {
       await setPersistence(auth, browserLocalPersistence);
       await signInWithCustomToken(auth, data.token);
       replace("/");
-      setLoading(false);
     } catch (error) {
       if (error instanceof AuthError) {
         setError(error.message);
@@ -129,7 +128,7 @@ const Login = () => {
             disabled={isSubmitting}
           >
             Login
-            {loading && <Spinner animation="grow" />}
+            {isSubmitting && <Spinner animation="grow" />}
           </Button>
         </div>
       </Form>

@@ -32,7 +32,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
               <h1>
                 {pathname === "/login"
                   ? "Welcome Back"
-                  : !referred || pathname === "/refer"
+                  : !referred || pathname !== "/refer"
                   ? "Get Started"
                   : "Claim your discount"}
               </h1>

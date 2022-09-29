@@ -137,8 +137,10 @@ const Register = () => {
         <Row>
           <Col xs={12}>
             <Form.Group>
-              <Form.Label>Full Name</Form.Label>
+              <Form.Label htmlFor="name">Full Name</Form.Label>
               <Form.Control
+                type="text"
+                id="name"
                 {...getFieldProps("name")}
                 required
                 placeholder="First Name"
@@ -154,13 +156,14 @@ const Register = () => {
 
           <Col xs={12}>
             <Form.Group>
-              <Form.Label>Phone</Form.Label>
+              <Form.Label htmlFor="phone">Phone</Form.Label>
               <Form.Control
                 {...getFieldProps("phone")}
                 type="tel"
                 required
                 placeholder="Ex. 0240000000"
                 autoComplete="off"
+                id="phone"
                 isInvalid={Boolean(touched.phone && errors.phone)}
               />
               <Form.Control.Feedback
@@ -172,8 +175,9 @@ const Register = () => {
           </Col>
           <Col xs={12}>
             <Form.Group>
-              <Form.Label>Password</Form.Label>
+              <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control
+                id="password"
                 {...getFieldProps("password")}
                 required
                 type="password"

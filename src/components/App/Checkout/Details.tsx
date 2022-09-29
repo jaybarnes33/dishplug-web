@@ -89,6 +89,7 @@ const Details = ({ details }: IPageProps) => {
           quantity: item.quantity,
           store_id: item.store_id
         })),
+        referredBy: referrer,
         paid: paymentMethod === "online",
         paymentOnDelivery: paymentMethod === "delivery",
         type: "delivery",
