@@ -10,6 +10,7 @@ import {
   FirestoreDataConverter,
   Timestamp
 } from "firebase-admin/firestore";
+import { useAuth } from "@/components/Context/Auth";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
