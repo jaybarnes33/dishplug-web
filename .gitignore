@@ -2,7 +2,7 @@
 
 #service worker
 sw.js.map
-
+sw.js
 # dependencies
 /node_modules
 /.pnp
