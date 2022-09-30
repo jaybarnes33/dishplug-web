@@ -25,7 +25,7 @@ import {
   Row,
   Spinner
 } from "react-bootstrap";
-// import { usePaystackPayment } from "react-paystack";
+import { usePaystackPayment } from "react-paystack";
 
 const Details = ({ details }: IPageProps) => {
   const { user } = useAuth();
@@ -45,12 +45,12 @@ const Details = ({ details }: IPageProps) => {
     }
   }, []);
   const discount = referrer ? totalAmount * 0.15 : 0;
-  // const initializePayment = usePaystackPayment({
-  //   email: addressInfo.email,
-  //   amount: Math.ceil(totalAmount * 100),
-  //   currency: "GHS",
-  //   publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
-  // });
+  const initializePayment = usePaystackPayment({
+    email: addressInfo.email,
+    amount: Math.ceil((totalAmount - discount) * 100),
+    currency: "GHS",
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
+  });
 
   const saveCheckout = async (
     items: TCart[] | null,
@@ -159,12 +159,12 @@ const Details = ({ details }: IPageProps) => {
     }
   };
 
-  // const onSuccess = (
-  //   response: Record<string, string | number>,
-  //   items: TCart[] | null
-  // ) => {
-  //   saveCheckout(items, "online", response);
-  // };
+  const onSuccess = (
+    response: Record<string, string | number>,
+    items: TCart[] | null
+  ) => {
+    saveCheckout(items, "online", response);
+  };
 
   const checkoutWithoutPayment = async (items: TCart[] | null) => {
     saveCheckout(items, "delivery");
@@ -257,14 +257,14 @@ const Details = ({ details }: IPageProps) => {
                 type="button"
                 size="lg"
                 style={{ backgroundColor: "#F9A84D", border: "none" }}
-                disabled /* ={availableItems.length === 0}
+                disabled={availableItems.length === 0}
                 onClick={() =>
                   initializePayment(
                     (res: Record<string, string>) =>
                       onSuccess(res, availableItems),
                     onClose
                   )
-                } */
+                }
               >
                 Place Order{" "}
                 {loading && <Spinner animation="border" size="sm" />}
