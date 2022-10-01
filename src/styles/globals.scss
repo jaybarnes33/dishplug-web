@@ -80,3 +80,8 @@ a {
     }
   }
 }
+
+.navbar-expand .navbar-nav .dropdown-menu {
+  position: absolute;
+  left: -5rem;
+}

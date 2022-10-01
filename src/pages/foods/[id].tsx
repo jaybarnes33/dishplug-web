@@ -93,21 +93,24 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         className="mt-4 pt-5 d-flex align-items-center"
         style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
-        <div
-          className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
-          style={{
-            zIndex: 9,
-            backgroundColor: colors.white,
-            width: 40,
-            height: 40,
-            borderRadius: 40
-          }}
-        >
-          <FaShoppingCart color={colors.accent2} />
-          <sup className="position-absolute end-0 mt-2 ms-2">
-            <Badge bg="danger">{itemsInCart}</Badge>
-          </sup>
-        </div>
+        <Link href="cart">
+          <div
+            className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
+            style={{
+              zIndex: 999999,
+              backgroundColor: colors.white,
+              width: 40,
+              height: 40,
+              borderRadius: 40
+            }}
+          >
+            <FaShoppingCart color={colors.accent2} />
+            <sup className="position-absolute end-0 mt-2 ms-2">
+              <Badge bg="danger">{itemsInCart}</Badge>
+            </sup>
+          </div>
+        </Link>
+
         <>
           <div
             className="position-fixed top-0 rounded"
@@ -172,31 +175,36 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 >
                   {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
                 </Button>
-                <Toast
-                  animation
-                  className="position-absolute me-2"
-                  style={{ top: "-5rem", right: 0 }}
-                  onClose={() => setToast(false)}
-                  show={toast}
-                  delay={5000}
-                  autohide
-                >
-                  <Toast.Header>
-                    <RoundImg
-                      rounded
-                      alt={food.name}
-                      src={food.image}
-                      width={20}
-                      height={20}
-                    />
-                    <span className="px-2">
-                      {food.name} has been added to your cart
-                    </span>
-                  </Toast.Header>
-                  <Toast.Body className="text-primary">
-                    <Link href="/checkout/address">Proceed to checkout?</Link>
-                  </Toast.Body>
-                </Toast>
+                {toast && (
+                  <div className="position-fixed h-100 w-100 start-0 d-flex align-items-center">
+                    {" "}
+                    <Toast
+                      animation
+                      onClose={() => setToast(false)}
+                      show={toast}
+                      delay={5000}
+                      autohide
+                    >
+                      <Toast.Header>
+                        <RoundImg
+                          rounded
+                          alt={food.name}
+                          src={food.image}
+                          width={20}
+                          height={20}
+                        />
+                        <span className="px-2">
+                          {food.name} has been added to your cart
+                        </span>
+                      </Toast.Header>
+                      <Toast.Body className="text-primary">
+                        <Link href="/checkout/address">
+                          Proceed to checkout?
+                        </Link>
+                      </Toast.Body>
+                    </Toast>
+                  </div>
+                )}
               </div>
             </Card>
           </div>
