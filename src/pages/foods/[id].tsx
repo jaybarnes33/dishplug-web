@@ -153,8 +153,8 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </Card.Body>
 
               <div
-                className="d-grid place-items-center px-3 position-fixed w-100 left-0"
-                style={{ bottom: "3rem" }}
+                className="d-grid place-items-center px-3 position-fixed w-100 left-0 gap-2"
+                style={{ bottom: "2rem" }}
               >
                 <Button
                   size="lg"
@@ -175,35 +175,19 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 >
                   {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
                 </Button>
-                {toast && (
-                  <div className="position-fixed h-100 w-100 start-0 d-flex align-items-center">
-                    {" "}
-                    <Toast
-                      animation
-                      onClose={() => setToast(false)}
-                      show={toast}
-                      delay={5000}
-                      autohide
+                {itemsInCart > 0 && (
+                  <Link href="/checkout/address">
+                    <Button
+                      size="lg"
+                      style={{
+                        backgroundColor: colors.white,
+                        border: "none",
+                        color: colors.accent
+                      }}
                     >
-                      <Toast.Header>
-                        <RoundImg
-                          rounded
-                          alt={food.name}
-                          src={food.image}
-                          width={20}
-                          height={20}
-                        />
-                        <span className="px-2">
-                          {food.name} has been added to your cart
-                        </span>
-                      </Toast.Header>
-                      <Toast.Body className="text-primary">
-                        <Link href="/checkout/address">
-                          Proceed to checkout?
-                        </Link>
-                      </Toast.Body>
-                    </Toast>
-                  </div>
+                      Proceed to checkout
+                    </Button>
+                  </Link>
                 )}
               </div>
             </Card>
