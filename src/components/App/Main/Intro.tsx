@@ -10,7 +10,7 @@ const Intro = () => {
   return (
     <div className={`${styles.intro} mt-5`}>
       <Container>
-        <h1 className="pt-5 mt-5 mb-3 pe-5 me-5">
+        <h1 className="pt-2 mt-5 mb-3 pe-5 me-5">
           Hey, what do you want to eat?
         </h1>
 
