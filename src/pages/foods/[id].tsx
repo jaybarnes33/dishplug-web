@@ -157,7 +157,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 style={{ bottom: "2rem" }}
               >
                 <Button
-      
+      className="w-100"
                   style={
                     isUnavailable
                       ? {
@@ -178,7 +178,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 {itemsInCart > 0 && (
                   <Link href="/checkout/address">
                     <Button
-                      
+                      className="w-100"
                       style={{
                         backgroundColor: colors.white,
                         border: "none",
