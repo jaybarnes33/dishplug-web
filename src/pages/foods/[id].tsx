@@ -153,7 +153,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </Card.Body>
 
               <div
-                className="d-grid place-items-center px-3 position-fixed w-100 left-0 gap-2"
+                className="d-flex justify-content-between  px-3 position-fixed w-100 left-0 gap-2"
                 style={{ bottom: "2rem" }}
               >
                 <Button
