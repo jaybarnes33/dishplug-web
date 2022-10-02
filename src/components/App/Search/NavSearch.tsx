@@ -49,7 +49,7 @@ function Search() {
     <Form onSubmit={handleSubmit} ref={searchRef} className="d-none">
       <Form.Control
         value={keyword}
-        placeholder="Hey, what do you want to eat?"
+        placeholder="Search for food, drinks and more."
         onChange={handleChange}
         style={{
           width: "min(88vw, 500px)",
