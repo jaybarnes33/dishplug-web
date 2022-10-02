@@ -93,7 +93,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         className="mt-4 pt-5 d-flex align-items-center"
         style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
-        <Link href="cart">
+        <Link href="/cart">
           <div
             className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
             style={{
