@@ -11,10 +11,10 @@ export default async function handler(
   try {
     const { stores } = req.body;
     const today = new Date();
-    const [day] = today.toString().split(" ");
+    const [day] = today.toISOString().split("T");
     const [yesterday] = new Date(new Date().setDate(today.getDate() - 1))
-      .toString()
-      .split(" ");
+      .toISOString()
+      .split("T");
 
     const db = admin.firestore();
 
