@@ -7,9 +7,9 @@ import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { useRecaptcha } from "@/hooks/recaptcha";
 import { AuthError } from "@/helpers/constructors";
-import { useAuth } from "@/components/Context/Auth";
+
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+
 import { formatPhone } from "@/helpers/utils";
 import { referrerdb } from "./_app";
 
@@ -37,7 +37,7 @@ const Register = () => {
   const { appVerifier, recaptchaResponse } = useRecaptcha();
   const [verificationId, setVerificationId] = useState("");
   const [otp, setOtp] = useState("");
-  const { replace } = useRouter();
+
   const [error, setError] = useState("");
   const [referrer, setReferrer] = useState("");
 
@@ -118,10 +118,8 @@ const Register = () => {
         setError(data.message);
         throw new AuthError(data.code, data.message);
       }
-
-      replace("/");
     },
-    [referrer, values, replace]
+    [referrer, values]
   );
 
   useEffect(() => {
@@ -137,8 +135,10 @@ const Register = () => {
         <Row>
           <Col xs={12}>
             <Form.Group>
-              <Form.Label>Full Name</Form.Label>
+              <Form.Label htmlFor="name">Full Name</Form.Label>
               <Form.Control
+                type="text"
+                id="name"
                 {...getFieldProps("name")}
                 required
                 placeholder="First Name"
@@ -154,13 +154,14 @@ const Register = () => {
 
           <Col xs={12}>
             <Form.Group>
-              <Form.Label>Phone</Form.Label>
+              <Form.Label htmlFor="phone">Phone</Form.Label>
               <Form.Control
                 {...getFieldProps("phone")}
                 type="tel"
                 required
                 placeholder="Ex. 0240000000"
                 autoComplete="off"
+                id="phone"
                 isInvalid={Boolean(touched.phone && errors.phone)}
               />
               <Form.Control.Feedback
@@ -172,8 +173,9 @@ const Register = () => {
           </Col>
           <Col xs={12}>
             <Form.Group>
-              <Form.Label>Password</Form.Label>
+              <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control
+                id="password"
                 {...getFieldProps("password")}
                 required
                 type="password"

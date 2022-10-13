@@ -1,20 +1,21 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import styles from "@/styles/form.module.scss";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import { ref } from "firebase/storage";
 import { referrerdb } from "@/pages/_app";
+import Auth from "../Auth/Auth";
 
 const FormWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
   const [referred, setReferred] = useState(false);
+
   useEffect(() => {
     referrerdb.getItem("referrer").then(() => setReferred(true));
   }, []);
   return (
-    <>
+    <Auth>
       <Head>
         <title>{pathname === "/login" ? "Login" : "Register"}</title>
       </Head>
@@ -32,7 +33,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
               <h1>
                 {pathname === "/login"
                   ? "Welcome Back"
-                  : !referred || pathname === "/refer"
+                  : !referred || pathname !== "/refer"
                   ? "Get Started"
                   : "Claim your discount"}
               </h1>
@@ -87,7 +88,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
           </Col>
         </Row>
       </>
-    </>
+    </Auth>
   );
 };
 

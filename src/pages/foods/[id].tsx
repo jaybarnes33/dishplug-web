@@ -93,21 +93,24 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         className="mt-4 pt-5 d-flex align-items-center"
         style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
-        <div
-          className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
-          style={{
-            zIndex: 9,
-            backgroundColor: colors.white,
-            width: 40,
-            height: 40,
-            borderRadius: 40
-          }}
-        >
-          <FaShoppingCart color={colors.accent2} />
-          <sup className="position-absolute end-0 mt-2 ms-2">
-            <Badge bg="danger">{itemsInCart}</Badge>
-          </sup>
-        </div>
+        <Link href="/cart">
+          <div
+            className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
+            style={{
+              zIndex: 999999,
+              backgroundColor: colors.white,
+              width: 40,
+              height: 40,
+              borderRadius: 40
+            }}
+          >
+            <FaShoppingCart color={colors.accent2} />
+            <sup className="position-absolute end-0 mt-2 ms-2">
+              <Badge bg="danger">{itemsInCart}</Badge>
+            </sup>
+          </div>
+        </Link>
+
         <>
           <div
             className="position-fixed top-0 rounded"
@@ -150,11 +153,11 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
               </Card.Body>
 
               <div
-                className="d-grid place-items-center px-3 position-fixed w-100 left-0"
-                style={{ bottom: "3rem" }}
+                className="d-flex justify-content-between  px-3 position-fixed w-100 left-0 gap-2"
+                style={{ bottom: "2rem" }}
               >
                 <Button
-                  size="lg"
+      className="w-100"
                   style={
                     isUnavailable
                       ? {
@@ -172,31 +175,20 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 >
                   {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
                 </Button>
-                <Toast
-                  animation
-                  className="position-absolute me-2"
-                  style={{ top: "-5rem", right: 0 }}
-                  onClose={() => setToast(false)}
-                  show={toast}
-                  delay={5000}
-                  autohide
-                >
-                  <Toast.Header>
-                    <RoundImg
-                      rounded
-                      alt={food.name}
-                      src={food.image}
-                      width={20}
-                      height={20}
-                    />
-                    <span className="px-2">
-                      {food.name} has been added to your cart
-                    </span>
-                  </Toast.Header>
-                  <Toast.Body className="text-primary">
-                    <Link href="/checkout/address">Proceed to checkout?</Link>
-                  </Toast.Body>
-                </Toast>
+                {itemsInCart > 0 && (
+                  <Link href="/checkout/address">
+                    <Button
+                      className="w-100"
+                      style={{
+                        backgroundColor: colors.white,
+                        border: "none",
+                        color: colors.accent
+                      }}
+                    >
+                      Proceed to checkout
+                    </Button>
+                  </Link>
+                )}
               </div>
             </Card>
           </div>
