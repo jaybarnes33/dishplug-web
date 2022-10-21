@@ -7,6 +7,7 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   reactStrictMode: true,
   swcMinify: true,
+  outputStandalone: false,
   images: { domains: ["firebasestorage.googleapis.com"] },
   async redirects() {
     return [
@@ -16,7 +17,8 @@ module.exports = withPWA({
         permanent: true
       }
     ];
-  }
+  }, 
+  
 });
 
 // module.exports = {
