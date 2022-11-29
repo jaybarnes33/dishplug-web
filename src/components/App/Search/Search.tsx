@@ -46,8 +46,8 @@ function Search() {
         style={{
           width: "100%",
           border: "none",
-          backgroundColor: "rgba(249, 168, 77, 0.2)",
-          color: "var(--dp-accent2)"
+          backgroundColor: "#eee",
+          color: "#1a1a1a"
         }}
         size="lg"
         type="search"

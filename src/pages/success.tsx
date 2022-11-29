@@ -48,7 +48,7 @@ const Success = () => {
           height={230}
           alt=""
           roundedCircle
-          style={{ objectFit: "cover", border: "7px solid #F9A84D" }}
+          style={{ objectFit: "cover", border: "7px solid var(--dp-primary)" }}
         />
         <div className="mt-5 text-center px-2">
           <h2>Your order is being processed</h2>

@@ -55,8 +55,8 @@ function Search() {
           width: "min(88vw, 500px)",
           marginLeft: "2vw",
           height: "2rem",
-          backgroundColor: "rgba(249, 168, 77, 0.2)",
-          color: "var(--dp-accent2)"
+          backgroundColor: "#eee",
+          color: "#1a1a1a"
         }}
         className="search"
         type="search"

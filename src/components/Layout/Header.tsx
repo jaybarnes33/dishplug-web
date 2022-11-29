@@ -52,39 +52,39 @@ const Header = () => {
   const getIcon = (link: { icon: string; name: string }) => {
     if (link.icon === "home") {
       if (link.icon === "home" && router.pathname === "/") {
-        return <Home set="bold" primaryColor={colors.accent} />;
+        return <Home set="bold" primaryColor={colors.primary} />;
       } else if (
         link.icon === "home" &&
         router.asPath.substring(1) !== "home"
       ) {
-        return <Home set="light" size="small" primaryColor={colors.accent} />;
+        return <Home set="light" size="small" primaryColor={colors.primary} />;
       }
     } else if (link.icon === "profile") {
       if (link.icon === "profile" && router.asPath.substring(1) === "profile") {
-        return <User set="bold" primaryColor={colors.accent} />;
+        return <User set="bold" primaryColor={colors.primary} />;
       } else if (
         link.icon === "profile" &&
         router.asPath.substring(1) !== "profile"
       ) {
-        return <User set="two-tone" primaryColor={colors.accent} />;
+        return <User set="two-tone" primaryColor={colors.primary} />;
       }
     } else if (link.icon === "cart") {
       if (link.icon === "cart" && router.asPath.substring(1) === "cart") {
-        return <Buy set="bold" primaryColor={colors.accent} />;
+        return <Buy set="bold" primaryColor={colors.primary} />;
       } else if (
         link.icon === "cart" &&
         router.asPath.substring(1) !== "cart"
       ) {
-        return <Buy set="two-tone" primaryColor={colors.accent} />;
+        return <Buy set="two-tone" primaryColor={colors.primary} />;
       }
     } else if (link.icon === "orders") {
       if (link.icon === "orders" && router.asPath.substring(1) === "orders") {
-        return <Document set="bold" primaryColor={colors.accent} />;
+        return <Document set="bold" primaryColor={colors.primary} />;
       } else if (
         link.icon === "orders" &&
         router.asPath.substring(1) !== "orders"
       ) {
-        return <Document set="two-tone" primaryColor={colors.accent} />;
+        return <Document set="two-tone" primaryColor={colors.primary} />;
       }
     }
   };
@@ -129,9 +129,9 @@ const Header = () => {
           <Container className="d-flex flex-wrap  flex-md-nowrap">
             <NavbarBrand
               as={Image}
-              src="/logoblack.png"
-              width={140}
-              height={70}
+              src="/green-dish.png"
+              width={35}
+              height={35}
               objectFit="contain"
             />
             <>

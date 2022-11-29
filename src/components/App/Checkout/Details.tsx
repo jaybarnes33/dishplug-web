@@ -275,7 +275,7 @@ const Details = ({ details }: IPageProps) => {
                 type="button"
                 size="lg"
                 disabled={availableItems.length === 0}
-                style={{ backgroundColor: "#F9A84D", border: "none" }}
+                style={{ backgroundColor: "var(--dp-primary)", border: "none" }}
                 onClick={() => checkoutWithoutPayment(availableItems)}
               >
                 Place Order{" "}

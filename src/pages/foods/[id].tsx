@@ -97,14 +97,14 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
           <div
             className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
             style={{
-              zIndex: 999999,
+              zIndex: 99999999,
               backgroundColor: colors.white,
               width: 40,
               height: 40,
               borderRadius: 40
             }}
           >
-            <FaShoppingCart color={colors.accent2} />
+            <FaShoppingCart color={colors.primary} />
             <sup className="position-absolute end-0 mt-2 ms-2">
               <Badge bg="danger">{itemsInCart}</Badge>
             </sup>
@@ -157,7 +157,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 style={{ bottom: "2rem" }}
               >
                 <Button
-      className="w-100"
+                  className="w-100"
                   style={
                     isUnavailable
                       ? {
@@ -166,7 +166,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                           backgroundColor: "transparent"
                         }
                       : {
-                          backgroundColor: colors.accent,
+                          backgroundColor: colors.primary,
                           border: "none"
                         }
                   }
@@ -182,7 +182,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
                       style={{
                         backgroundColor: colors.white,
                         border: "none",
-                        color: colors.accent
+                        color: colors.dark
                       }}
                     >
                       Proceed to checkout

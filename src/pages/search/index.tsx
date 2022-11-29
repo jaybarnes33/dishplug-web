@@ -28,6 +28,7 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
+  console.log(foods);
   return { props: { foods }, revalidate: 60 };
 };
 

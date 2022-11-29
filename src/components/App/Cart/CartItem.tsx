@@ -65,7 +65,7 @@ const CartItem = ({ item }: { item: ICartItem }) => {
       </div>
       <div className="d-flex flex-column align-items-start justify-content-center">
         <span>{item.name}</span>
-        <span style={{ color: colors.primary, fontWeight: "bolder" }}>
+        <span style={{ color: colors.accent2, fontWeight: "bolder" }}>
           GH{item.price}
         </span>
       </div>

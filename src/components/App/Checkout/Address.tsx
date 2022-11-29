@@ -96,14 +96,18 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             <Col xs={6} className="p-1">
               <Form.Group>
                 <Form.FloatingLabel label="Name">
-                  <Form.Control {...getFieldProps("name")} />
+                  <Form.Control {...getFieldProps("name")} required />
                 </Form.FloatingLabel>
               </Form.Group>
             </Col>
             <Col xs={6} className="p-1">
               <Form.Group>
                 <Form.FloatingLabel label="Phone">
-                  <Form.Control {...getFieldProps("phone")} type="tel" />
+                  <Form.Control
+                    {...getFieldProps("phone")}
+                    type="tel"
+                    required
+                  />
                 </Form.FloatingLabel>
               </Form.Group>
             </Col>
@@ -111,7 +115,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
             <Col md={6} className="p-1">
               <Form.Group>
                 <Form.FloatingLabel label="location">
-                  <Form.Control {...getFieldProps("location")} />
+                  <Form.Control {...getFieldProps("location")} required />
                 </Form.FloatingLabel>
               </Form.Group>
             </Col>
@@ -141,6 +145,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
                 id="payment-on-delivery"
                 value="delivery"
                 inline
+                required
                 label="Payment on delivery"
               />
               <Form.Check
@@ -149,6 +154,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
                 inline
                 id="online-payment"
                 label="Pay now"
+                required
                 value="online"
               />
             </div>
@@ -172,6 +178,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
                 {...getFieldProps("email")}
                 type="email"
                 placeholder="doe@gmail.com"
+                required
               />
             </div>
           </div>
@@ -180,7 +187,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
         <Button
           className="d-flex mx-auto"
           type="submit"
-          style={{ backgroundColor: "#F9A84D", border: "none" }}
+          style={{ backgroundColor: colors.primary, border: "none" }}
           size="lg"
         >
           Submit

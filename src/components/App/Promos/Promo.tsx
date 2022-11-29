@@ -23,7 +23,7 @@ const Promo = ({ name, image, bg }: PromoProps) => {
         <div className="py-5 position-relative" style={{ zIndex: 2 }}>
           <h5 className="text-light fw-bold">{name}</h5>
 
-          <Button className="fw-bold text-warning" variant={"light"} size="sm">
+          <Button className="fw-bold" variant={"light"} size="sm">
             Coming Soon
           </Button>
         </div>

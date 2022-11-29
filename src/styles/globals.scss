@@ -1,10 +1,10 @@
 @import "@fontsource/sen";
 :root {
-  --dp-primary: #ffa500;
+  --dp-primary: #15d178;
   --dp-danger: red;
   --dp-dark: #1a1a1a;
   --dp-white: #ffffff;
-  --dp-accent: #f9a84d;
+  --dp-accent: #03a47b;
   --dp-accent2: #da6317;
   --dp-secondary: #eee;
   --dp-light: #f4f4f4;
@@ -52,7 +52,7 @@ a {
 }
 
 .search::-webkit-input-placeholder {
-  color: var(--dp-accent2);
+  color: #1a1a1a;
 }
 
 .navbar {
@@ -76,7 +76,6 @@ a {
     * {
       border-radius: 50px;
       border: none;
-      background-color: rgb(238, 238, 238);
     }
   }
 }
