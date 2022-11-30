@@ -60,7 +60,7 @@ const CartItem = ({ item }: { item: ICartItem }) => {
           alt=""
           width={62}
           height={62}
-          style={{ borderRadius: 16 }}
+          style={{ borderRadius: 16, objectFit: "cover" }}
         />
       </div>
       <div className="d-flex flex-column align-items-start justify-content-center">
