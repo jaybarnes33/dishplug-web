@@ -8,5 +8,15 @@
         "5C:6E:D9:4D:25:91:CE:64:90:95:DC:8E:F3:F3:31:BC:4B:EA:4F:AD:FE:28:13:BE:02:8D:B5:60:C0:C8:10:1F"
       ]
     }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.dishplug.app.twa",
+      "sha256_cert_fingerprints": [
+        "D3:8C:6B:03:71:EE:9A:F8:EA:33:16:4F:CC:76:81:54:AF:BE:68:BB:A3:F5:A9:7D:DB:05:F3:00:98:C9:84:DC"
+      ]
+    }
   }
 ]
