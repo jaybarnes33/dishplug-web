@@ -3,7 +3,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { FoodType } from "@/types";
 
 import Food from "@/components/App/Main/Cards/Food";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
 import admin from "@/lib/firebase/node";
 import { useKeyword } from "@/hooks/useKeyWord";
 import { foodConverter } from "..";
@@ -28,27 +29,29 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
-  console.log(foods);
   return { props: { foods }, revalidate: 60 };
 };
 
 const Search = ({
   foods: items
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { query } = useRouter();
   const [foods, setFoods] = useState<FoodType[]>([]);
 
   const keyword = useKeyword();
   useEffect(() => {
     if (items) {
       setFoods(
-        items.filter(item =>
-          [item.name, item.description].some(i =>
-            i?.toLowerCase().includes(String(keyword.toLowerCase()))
-          )
-        )
+        items.filter(item => {
+          if (item.store_city === query.city) {
+            return [item.name, item.description].some(i =>
+              i?.toLowerCase().includes(keyword.toLowerCase())
+            );
+          }
+        })
       );
     }
-  }, [keyword, items]);
+  }, [keyword, items, query.city]);
   return (
     <>
       <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>

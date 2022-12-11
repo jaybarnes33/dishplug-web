@@ -11,6 +11,9 @@ import {
   Timestamp
 } from "firebase-admin/firestore";
 import { useAuth } from "@/components/Context/Auth";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/dist/client/router";
+import useFoodsInCity from "@/hooks/useFoodsInCity";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
@@ -22,7 +25,8 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       store: {
         id: item.store_id,
         name: item.store_name,
-        contact: item.store_phone
+        contact: item.store_phone,
+        city: item.store_city
       }
     };
   },
@@ -38,14 +42,15 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       available: data.available,
       store_id: data.store.id,
       store_name: data.store.name,
-      store_phone: data.store.contact
+      store_phone: data.store.contact,
+      store_city: data.store.city
     };
   }
 };
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
-}> = async ({}) => {
+}> = async () => {
   const db = admin.firestore();
 
   db.doc("get_static_props/homepage").update({
@@ -56,7 +61,7 @@ export const getStaticProps: GetStaticProps<{
   const products = await db
     .collectionGroup("products")
     .where("available", "==", true)
-    // .where("featured", "==", true)
+    .where("featured", "==", true)
     .limit(4)
 
     .withConverter(foodConverter)
@@ -72,6 +77,9 @@ export const getStaticProps: GetStaticProps<{
 export default function Home({
   foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { query } = useRouter();
+  const foodsInCity = useFoodsInCity(foods, query.city as string);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -87,7 +95,7 @@ export default function Home({
 
       <main className={styles.main}>
         <Intro />
-        <Featured foods={foods} />
+        <Featured foods={foodsInCity} />
         {/* <Join /> */}
       </main>
     </div>
