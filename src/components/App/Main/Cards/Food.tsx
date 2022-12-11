@@ -22,6 +22,7 @@ const Food = ({ food }: { food: FoodType }) => {
       image: food.image,
       store_id: food.store_id,
       store_name: food.store_name,
+      store_city: food.store_city,
       store_phone: food.store_phone
     });
   };
