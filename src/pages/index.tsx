@@ -53,11 +53,6 @@ export const getStaticProps: GetStaticProps<{
 }> = async () => {
   const db = admin.firestore();
 
-  db.doc("get_static_props/homepage").update({
-    count: FieldValue.increment(1),
-    date: Timestamp.now()
-  });
-
   const products = await db
     .collectionGroup("products")
     .where("available", "==", true)
