@@ -29,7 +29,8 @@ export default async function handler(
         store: {
           id: store.id,
           name: store.data().name,
-          contact: store.data().contact
+          contact: store.data().contact,
+          city: store.data().city
         }
       });
     });
