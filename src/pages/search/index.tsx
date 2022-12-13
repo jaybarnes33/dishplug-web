@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import admin from "@/lib/firebase/node";
 import { useKeyword } from "@/hooks/useKeyWord";
 import { foodConverter } from "..";
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
@@ -38,7 +37,7 @@ const Search = ({
     if (items) {
       setFoods(
         items.filter(item => {
-          if (item.store_city === query.city) {
+          if (item?.store_city === query?.city) {
             return [item.name, item.description].some(i =>
               i?.toLowerCase().includes(keyword.toLowerCase())
             );
