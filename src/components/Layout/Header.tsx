@@ -185,7 +185,7 @@ const Header = () => {
 
                     <NavDropdown
                       title={<BsPerson color="black" />}
-                      className="d-block d-md-none me-5"
+                      className="d-block d-md-none me-1"
                       drop="down"
                     >
                       <NavDropdown.Item>
