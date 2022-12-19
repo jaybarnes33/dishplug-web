@@ -11,6 +11,7 @@ import {
   Timestamp
 } from "firebase-admin/firestore";
 import { useAuth } from "@/components/Context/Auth";
+import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import useFoodsInCity from "@/hooks/useFoodsInCity";
@@ -89,11 +90,11 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <Container as="main" className={styles.main}>
         <Intro />
         <Featured foods={foodsInCity} />
         {/* <Join /> */}
-      </main>
+      </Container>
     </div>
   );
 }
