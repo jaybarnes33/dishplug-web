@@ -74,8 +74,11 @@ export default function Home({
   foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { query } = useRouter();
-  console.log("city", query.city);
   const foodsInCity = useFoodsInCity(foods, query.city as string);
+
+  useEffect(() => {
+    alert(`city ${query.city}`);
+  }, [query.city]);
 
   return (
     <div className={styles.container}>
