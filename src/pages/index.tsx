@@ -77,7 +77,7 @@ export default function Home({
   const foodsInCity = useFoodsInCity(foods, query.city as string);
 
   useEffect(() => {
-    alert(`city ${query.city}`);
+    if (query.city) alert(`city ${query.city}`);
   }, [query.city]);
 
   return (
