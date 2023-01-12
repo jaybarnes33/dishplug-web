@@ -5,16 +5,11 @@ import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
-import {
-  FieldValue,
-  FirestoreDataConverter,
-  Timestamp
-} from "firebase-admin/firestore";
-import { useAuth } from "@/components/Context/Auth";
+import { FirestoreDataConverter } from "firebase-admin/firestore";
 import { Container } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/dist/client/router";
-import useFoodsInCity from "@/hooks/useFoodsInCity";
+import { useMealsByLocation } from "@/hooks/useMealsByLocation";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
@@ -74,7 +69,7 @@ export default function Home({
   foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { query } = useRouter();
-  const foodsInCity = useFoodsInCity(foods, query.city as string);
+  const sortedFoods = useMealsByLocation(foods);
 
   useEffect(() => {
     if (query.city) alert(`city ${query.city}`);
@@ -95,7 +90,7 @@ export default function Home({
 
       <Container as="main" className={styles.main}>
         <Intro />
-        <Featured foods={foodsInCity} />
+        <Featured foods={sortedFoods} />
         {/* <Join /> */}
       </Container>
     </div>

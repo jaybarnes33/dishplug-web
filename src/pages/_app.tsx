@@ -1,6 +1,7 @@
 import AuthProvider from "@/components/Context/Auth";
 import AvailabilityProvider from "@/components/Context/Availability";
 import CartProvider from "@/components/Context/Cart";
+import LocationProvider from "@/components/Context/Location";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 import Header from "@/components/Layout/Header";
@@ -43,12 +44,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div style={{ minHeight: "90vh" }}>
         <ErrorBoundary>
           <AuthProvider>
-            <AvailabilityProvider>
-              <CartProvider>
-                <Header />
-                <Component {...pageProps} />
-              </CartProvider>
-            </AvailabilityProvider>
+            <LocationProvider
+              searchedLocation={router.query.city as string | undefined}
+            >
+              <AvailabilityProvider>
+                <CartProvider>
+                  <Header />
+                  <Component {...pageProps} />
+                </CartProvider>
+              </AvailabilityProvider>
+            </LocationProvider>
           </AuthProvider>
         </ErrorBoundary>
       </div>
