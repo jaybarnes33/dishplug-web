@@ -2,6 +2,7 @@ import AuthProvider from "@/components/Context/Auth";
 import AvailabilityProvider from "@/components/Context/Availability";
 import CartProvider from "@/components/Context/Cart";
 import LocationProvider from "@/components/Context/Location";
+import SearchProvider from "@/components/Context/Search";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 import Header from "@/components/Layout/Header";
@@ -47,12 +48,14 @@ function MyApp({ Component, pageProps }: AppProps) {
             <LocationProvider
               searchedLocation={router.query.city as string | undefined}
             >
-              <AvailabilityProvider>
-                <CartProvider>
-                  <Header />
-                  <Component {...pageProps} />
-                </CartProvider>
-              </AvailabilityProvider>
+              <SearchProvider>
+                <AvailabilityProvider>
+                  <CartProvider>
+                    <Header />
+                    <Component {...pageProps} />
+                  </CartProvider>
+                </AvailabilityProvider>
+              </SearchProvider>
             </LocationProvider>
           </AuthProvider>
         </ErrorBoundary>
