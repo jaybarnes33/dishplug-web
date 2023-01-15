@@ -73,18 +73,12 @@ const Map = ({ open, handleClose }: IProps) => {
               lng: position.coords.longitude
             };
 
-            // const marker = new google.maps.Marker({
-            //   position: pos,
-            //   map,
-            //   animation: google.maps.Animation.DROP
-            // });
-
             const service = new google.maps.places.PlacesService(map);
-            service?.textSearch(
+            service?.findPlaceFromQuery(
               {
                 query: "Anaji Queen of Peace inside",
-                location: pos,
-                radius: 100
+                fields: ["name", "geometry"],
+                locationBias: pos
               },
               (results, status) => {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
