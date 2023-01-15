@@ -11,9 +11,9 @@ export const useMealsByLocation = (foods: FoodType[]) => {
       foods.sort((a, b) =>
         !b.available
           ? 0
-          : a.store_city === location && b.store_city === location
+          : a.store_city === location.city && b.store_city === location.city
           ? 0
-          : a.store_city === location && b.store_city !== location
+          : a.store_city === location.city && b.store_city !== location.city
           ? -1
           : 1
       )

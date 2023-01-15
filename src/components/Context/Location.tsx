@@ -1,38 +1,58 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 
 interface IProviderProps {
   children: React.ReactNode;
-  searchedLocation?: string;
 }
 
+type TLocation = {
+  city: string;
+  deliveryLocation: string;
+};
+
 interface IContextProps {
-  location: string;
+  location: TLocation;
+  updateLocation: (newLocation: TLocation) => void;
 }
 
 const LocationContext = createContext<IContextProps | null>(null);
 
-const LocationProvider = ({ children, searchedLocation }: IProviderProps) => {
-  const [location, setLocation] = useState("");
+const LocationProvider = ({ children }: IProviderProps) => {
+  const [location, setLocation] = useState({
+    city: "",
+    deliveryLocation: ""
+  });
+
+  const updateLocation = useCallback((newLocation: TLocation) => {
+    setLocation(newLocation);
+  }, []);
 
   useEffect(() => {
-    if (searchedLocation) {
-      setLocation(searchedLocation);
-      localStorage.setItem("location", searchedLocation);
+    const savedLocation = localStorage.getItem("location");
+
+    if (savedLocation) {
+      setLocation(JSON.parse(savedLocation));
     } else {
-      const savedLocation = localStorage.getItem("location");
-      if (savedLocation) setLocation(savedLocation);
-      else {
-        const newLocation = prompt("Enter your location?");
-        if (newLocation) {
-          setLocation(newLocation);
-          localStorage.setItem("location", newLocation);
-        }
+      const deliveryLocation = prompt("Enter your location?");
+      if (deliveryLocation) {
+        setLocation(prevLocation => ({ ...prevLocation, deliveryLocation }));
       }
     }
-  }, [searchedLocation]);
+  }, []);
+
+  useEffect(() => {
+    if (location.city || location.deliveryLocation) {
+      localStorage.setItem("location", JSON.stringify(location));
+    }
+  }, [location]);
 
   return (
-    <LocationContext.Provider value={{ location }}>
+    <LocationContext.Provider value={{ location, updateLocation }}>
       {children}
     </LocationContext.Provider>
   );

@@ -12,7 +12,6 @@ const LocationDisplay = () => {
 
   const handleOpen = () => {
     setShowMap(true);
-    console.log("first");
     if (!MapComponent) {
       const MapDialog = dynamic(() => import("./Map"), {
         suspense: true
@@ -22,7 +21,6 @@ const LocationDisplay = () => {
   };
 
   const handleClose = () => {
-    console.log("first");
     setShowMap(false);
   };
 
@@ -30,7 +28,7 @@ const LocationDisplay = () => {
     <>
       <button className={classes.location} onClick={handleOpen}>
         <i className="start-icon">i</i>
-        {location}
+        <span>{location.deliveryLocation}</span>
       </button>
       <Suspense fallback={<p>...Loading</p>}>
         {showMap && MapComponent ? (
