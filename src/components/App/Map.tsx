@@ -76,7 +76,7 @@ const Map = ({ open, handleClose }: IProps) => {
             const service = new google.maps.places.PlacesService(map);
             service?.findPlaceFromQuery(
               {
-                query: "Anaji Queen of Peace inside",
+                query: location,
                 fields: ["name", "geometry"],
                 locationBias: pos
               },
