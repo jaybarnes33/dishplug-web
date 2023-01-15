@@ -17,15 +17,15 @@ const LocationProvider = ({ children, searchedLocation }: IProviderProps) => {
   useEffect(() => {
     if (searchedLocation) {
       setLocation(searchedLocation);
-      localStorage.setItem("city", searchedLocation);
+      localStorage.setItem("location", searchedLocation);
     } else {
-      const savedLocation = localStorage.getItem("city");
+      const savedLocation = localStorage.getItem("location");
       if (savedLocation) setLocation(savedLocation);
       else {
-        const newLocation = prompt("Which city do you leave in?");
+        const newLocation = prompt("Enter your location?");
         if (newLocation) {
           setLocation(newLocation);
-          localStorage.setItem("city", newLocation);
+          localStorage.setItem("location", newLocation);
         }
       }
     }
