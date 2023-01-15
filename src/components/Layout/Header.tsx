@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -21,6 +22,10 @@ import { auth } from "@/lib/firebase/client";
 import { useCart } from "../Context/Cart";
 import Image from "next/image";
 import colors from "@/styles/colors";
+
+const LocationDisplay = dynamic(() => import("../App/LocationDisplay"), {
+  ssr: false
+});
 
 const Header = () => {
   const router = useRouter();
@@ -113,6 +118,7 @@ const Header = () => {
     "checkout",
     "success"
   ].some(path => router.pathname.includes(path));
+
   return (
     <>
       {noSearch && !router.pathname.includes("success") && (
@@ -135,12 +141,13 @@ const Header = () => {
               height={35}
               objectFit="contain"
             />
+            <LocationDisplay />
             <>
               <Nav className="order-3 order-md-2">
                 {!isHomePage && !noSearch && <Search />}
               </Nav>
 
-              <Nav className="ms-auto gap-3 order-2 order-md-3">
+              <Nav className="gap-3 order-2 order-md-3">
                 {isAuthenticated ? (
                   <>
                     <NavDropdown

@@ -7,8 +7,6 @@ import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
 import { FirestoreDataConverter } from "firebase-admin/firestore";
 import { Container } from "react-bootstrap";
-import { useEffect } from "react";
-import { useRouter } from "next/dist/client/router";
 import { useMealsByLocation } from "@/hooks/useMealsByLocation";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
@@ -68,12 +66,7 @@ export const getStaticProps: GetStaticProps<{
 export default function Home({
   foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { query } = useRouter();
   const sortedFoods = useMealsByLocation(foods);
-
-  useEffect(() => {
-    if (query.city) alert(`city ${query.city}`);
-  }, [query.city]);
 
   return (
     <div className={styles.container}>
