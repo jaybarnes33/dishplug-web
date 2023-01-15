@@ -45,9 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div style={{ minHeight: "90vh" }}>
         <ErrorBoundary>
           <AuthProvider>
-            <LocationProvider
-              searchedLocation={router.query.city as string | undefined}
-            >
+            <LocationProvider>
               <SearchProvider>
                 <AvailabilityProvider>
                   <CartProvider>
