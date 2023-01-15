@@ -113,7 +113,7 @@ const Map = ({ open, handleClose }: IProps) => {
         );
       }
     }
-  }, [map]);
+  }, [map, location]);
 
   useEffect(() => {
     if (map && marker) {
