@@ -95,7 +95,7 @@ const Map = ({ open, handleClose }: IProps) => {
                     setMarker(marker);
                     if (position) {
                       map.setCenter(position);
-                      map.setZoom(14);
+                      map.setZoom(17);
                     }
                   }
                 }
