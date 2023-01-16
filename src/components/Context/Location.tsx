@@ -13,6 +13,7 @@ interface IProviderProps {
 type TLocation = {
   city: string;
   deliveryLocation: string;
+  coords: google.maps.LatLngLiteral | null;
 };
 
 interface IContextProps {
@@ -23,9 +24,10 @@ interface IContextProps {
 const LocationContext = createContext<IContextProps | null>(null);
 
 const LocationProvider = ({ children }: IProviderProps) => {
-  const [location, setLocation] = useState({
+  const [location, setLocation] = useState<TLocation>({
     city: "",
-    deliveryLocation: ""
+    deliveryLocation: "",
+    coords: null
   });
 
   const updateLocation = useCallback((newLocation: TLocation) => {

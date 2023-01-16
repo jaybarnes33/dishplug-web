@@ -58,31 +58,42 @@ const Map = ({ open, handleClose }: IProps) => {
 
   useEffect(() => {
     if (map && service && !runCount.current) {
-      service?.findPlaceFromQuery(
-        {
-          query: location.deliveryLocation,
-          fields: ["name", "geometry"]
-        },
-        (results, status) => {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (const result of results) {
-              const position = result.geometry?.location.toJSON();
+      const updateMarkerPosition = (
+        position: google.maps.LatLngLiteral | null
+      ) => {
+        if (position) {
+          const marker = new google.maps.Marker({
+            position,
+            map,
+            animation: google.maps.Animation.DROP
+          });
 
-              const marker = new google.maps.Marker({
-                position,
-                map,
-                animation: google.maps.Animation.DROP
-              });
+          setMarker(marker);
+          map.setCenter(position);
+          map.setZoom(17);
+        }
+      };
 
-              setMarker(marker);
-              if (position) {
-                map.setCenter(position);
-                map.setZoom(17);
+      if (location.coords?.lat && location.coords.lng) {
+        updateMarkerPosition(location.coords);
+      } else {
+        service?.findPlaceFromQuery(
+          {
+            query: location.deliveryLocation,
+            fields: ["name", "geometry"],
+            locationBias: location.coords || undefined
+          },
+          (results, status) => {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+              console.log(results);
+              for (const result of results) {
+                const position = result.geometry?.location.toJSON() || null;
+                updateMarkerPosition(position);
               }
             }
           }
-        }
-      );
+        );
+      }
 
       runCount.current += 1;
     }
@@ -104,7 +115,8 @@ const Map = ({ open, handleClose }: IProps) => {
       geocoder.geocode({ location: selectedCoords }, locations => {
         const newLocation = {
           city: "",
-          deliveryLocation: ""
+          deliveryLocation: "",
+          coords: selectedCoords
         };
 
         newLocation.city =
