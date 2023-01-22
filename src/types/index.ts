@@ -10,6 +10,7 @@ export interface FoodType {
   available: boolean;
   store_id: string;
   store_name: string;
+  store_city: string;
   store_phone: string;
 }
 
@@ -37,6 +38,7 @@ interface IOrder {
     store: {
       id: string;
       name: string;
+      city: string;
       contact: string;
     };
   }[];

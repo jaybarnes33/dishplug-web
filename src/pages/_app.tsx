@@ -1,6 +1,8 @@
 import AuthProvider from "@/components/Context/Auth";
 import AvailabilityProvider from "@/components/Context/Availability";
 import CartProvider from "@/components/Context/Cart";
+import LocationProvider from "@/components/Context/Location";
+import SearchProvider from "@/components/Context/Search";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 import Header from "@/components/Layout/Header";
@@ -43,12 +45,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div style={{ minHeight: "90vh" }}>
         <ErrorBoundary>
           <AuthProvider>
-            <AvailabilityProvider>
-              <CartProvider>
-                <Header />
-                <Component {...pageProps} />
-              </CartProvider>
-            </AvailabilityProvider>
+            <LocationProvider>
+              <SearchProvider>
+                <AvailabilityProvider>
+                  <CartProvider>
+                    <Header />
+                    <Component {...pageProps} />
+                  </CartProvider>
+                </AvailabilityProvider>
+              </SearchProvider>
+            </LocationProvider>
           </AuthProvider>
         </ErrorBoundary>
       </div>

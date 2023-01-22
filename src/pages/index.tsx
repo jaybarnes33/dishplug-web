@@ -5,13 +5,9 @@ import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
-import {
-  FieldValue,
-  FirestoreDataConverter,
-  Timestamp
-} from "firebase-admin/firestore";
-import { useAuth } from "@/components/Context/Auth";
+import { FirestoreDataConverter } from "firebase-admin/firestore";
 import { Container } from "react-bootstrap";
+import { useMealsByLocation } from "@/hooks/useMealsByLocation";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
@@ -23,7 +19,8 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       store: {
         id: item.store_id,
         name: item.store_name,
-        contact: item.store_phone
+        contact: item.store_phone,
+        city: item.store_city
       }
     };
   },
@@ -39,25 +36,21 @@ export const foodConverter: FirestoreDataConverter<FoodType> = {
       available: data.available,
       store_id: data.store.id,
       store_name: data.store.name,
-      store_phone: data.store.contact
+      store_phone: data.store.contact,
+      store_city: data.store.city
     };
   }
 };
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
-}> = async ({}) => {
+}> = async () => {
   const db = admin.firestore();
-
-  db.doc("get_static_props/homepage").update({
-    count: FieldValue.increment(1),
-    date: Timestamp.now()
-  });
 
   const products = await db
     .collectionGroup("products")
     .where("available", "==", true)
-    // .where("featured", "==", true)
+    .where("featured", "==", true)
     .limit(4)
 
     .withConverter(foodConverter)
@@ -73,6 +66,8 @@ export const getStaticProps: GetStaticProps<{
 export default function Home({
   foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const sortedFoods = useMealsByLocation(foods);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -88,7 +83,7 @@ export default function Home({
 
       <Container as="main" className={styles.main}>
         <Intro />
-        <Featured foods={foods} />
+        <Featured foods={sortedFoods} />
         {/* <Join /> */}
       </Container>
     </div>

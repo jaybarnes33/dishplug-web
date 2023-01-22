@@ -38,7 +38,8 @@ const cartConverter: FirestoreDataConverter<TCart> = {
       store: {
         id: item.store_id,
         name: item.store_name,
-        phone: item.store_phone
+        phone: item.store_phone,
+        city: item.store_city
       }
     };
   },
@@ -53,6 +54,7 @@ const cartConverter: FirestoreDataConverter<TCart> = {
       quantity: data.quantity,
       store_id: data.store.id,
       store_name: data.store.name,
+      store_city: data.store.city,
       store_phone: data.store.phone
     };
   }

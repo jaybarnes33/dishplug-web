@@ -1,20 +1,24 @@
+import { useSearch } from "@/components/Context/Search";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 
 function Search() {
-  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [keyword, setKeyword] = useState("");
+  const { push } = useRouter();
+  const { updateKeyword } = useSearch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
-  };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    router.push(`/search?keyword=${keyword}`);
+    const formData = new FormData(event.currentTarget);
+    const keyword = formData.get("keyword");
+
+    if (keyword && typeof keyword === "string") {
+      updateKeyword(keyword);
+      push(`/search?keyword=${keyword}`);
+    }
   };
 
   const handleScroll = () => {
@@ -48,10 +52,9 @@ function Search() {
       }}
     >
       <Form.Control
-        value={keyword}
         ref={inputRef}
+        name="keyword"
         placeholder="Search for food, drinks and more"
-        onChange={handleChange}
         style={{
           width: "calc(100% - 62px - 8px)", // subtract the width of the button and the gap
           border: "none",

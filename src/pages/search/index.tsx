@@ -3,21 +3,16 @@ import { Col, Container, Row } from "react-bootstrap";
 import { FoodType } from "@/types";
 
 import Food from "@/components/App/Main/Cards/Food";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import admin from "@/lib/firebase/node";
-import { useKeyword } from "@/hooks/useKeyWord";
+import { useMealsByLocation } from "@/hooks/useMealsByLocation";
 import { foodConverter } from "..";
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
+import { useSearch } from "@/components/Context/Search";
 
 export const getStaticProps: GetStaticProps<{
   foods: FoodType[];
 }> = async ({}) => {
   const db = admin.firestore();
-
-  db.doc("get_static_props/search").update({
-    count: FieldValue.increment(1),
-    date: Timestamp.now()
-  });
 
   const products = await db
     .collectionGroup("products")
@@ -28,34 +23,35 @@ export const getStaticProps: GetStaticProps<{
     return doc.data();
   });
 
-  console.log(foods);
   return { props: { foods }, revalidate: 60 };
 };
 
 const Search = ({
   foods: items
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { debouncedKeyword: keyword } = useSearch();
   const [foods, setFoods] = useState<FoodType[]>([]);
+  const sortedFoods = useMealsByLocation(foods);
 
-  const keyword = useKeyword();
   useEffect(() => {
     if (items) {
       setFoods(
-        items.filter(item =>
-          [item.name, item.description].some(i =>
-            i?.toLowerCase().includes(String(keyword.toLowerCase()))
-          )
-        )
+        items.filter(item => {
+          return [item.name, item.description].some(i =>
+            i?.toLowerCase().includes(keyword.toLowerCase())
+          );
+        })
       );
     }
   }, [keyword, items]);
+
   return (
     <>
       <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
         <Container className="py-5">
-          {foods.length ? (
+          {sortedFoods.length ? (
             <Row>
-              {foods.map((food, index) => (
+              {sortedFoods.map((food, index) => (
                 <Col xs={6} md={4} lg={3} key={index}>
                   <Food food={food} />
                 </Col>

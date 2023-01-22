@@ -37,11 +37,6 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({ params }) => {
   const db = admin.firestore();
 
-  db.doc("get_static_props/food").update({
-    count: FieldValue.increment(1),
-    date: Timestamp.now()
-  });
-
   const products = await db
     .collectionGroup("products")
     .withConverter(foodConverter)
@@ -72,6 +67,7 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       image: food.image,
       store_id: food.store_id,
       store_name: food.store_name,
+      store_city: food?.store_city,
       store_phone: food.store_phone
     });
 

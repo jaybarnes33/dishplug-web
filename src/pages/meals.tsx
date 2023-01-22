@@ -1,8 +1,8 @@
 import Food from "@/components/App/Main/Cards/Food";
+import { useMealsByLocation } from "@/hooks/useMealsByLocation";
 
 import admin from "@/lib/firebase/node";
 import type { FoodType } from "@/types";
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
@@ -11,6 +11,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { foodConverter } from ".";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const sortedFoods = useMealsByLocation(foods);
+
   return (
     <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
       <Head>
@@ -23,7 +25,7 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
       <h2 className="text-center mt-5">Foods</h2>
       <Container>
         <Row>
-          {foods.map((food, index) => (
+          {sortedFoods.map((food, index) => (
             <Col xs={6} md={4} lg={3} key={index}>
               <Food food={food} />
             </Col>
@@ -39,14 +41,9 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({}) => {
   const db = admin.firestore();
 
-  db.doc("get_static_props/meals").update({
-    count: FieldValue.increment(1),
-    date: Timestamp.now()
-  });
-
   const products = await db
     .collectionGroup("products")
-    .where("available", "==", true)
+    .orderBy("available", "desc")
     .withConverter(foodConverter)
     .get();
 

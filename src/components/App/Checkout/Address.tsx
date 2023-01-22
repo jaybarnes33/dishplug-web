@@ -1,8 +1,8 @@
 import { useAuth } from "@/components/Context/Auth";
+import { useLocation } from "@/components/Context/Location";
 import { formatPhone } from "@/helpers/utils";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
 import colors from "@/styles/colors";
-import axios from "axios";
 import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -13,43 +13,17 @@ import { FaMoneyBillAlt } from "react-icons/fa";
 const Address = ({ updateDetails, details }: IPageProps) => {
   const { user } = useAuth();
   const { replace } = useRouter();
+  const { location } = useLocation();
   const [storedInfo, setStoredInfo] = useState<Omit<
     typeof details,
     "paymentMethod"
   > | null>(null);
-  const [city, setCity] = useState<string>("");
-  const [location, setLocation] = useState<{ lat: number; lng: number }>();
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        console.log(pos.coords);
-        setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        // setLocation({ lat: 5.599428166666667, lng: -0.23336099999999999 });
-      },
-      e => console.log(e),
-      { enableHighAccuracy: true, maximumAge: 0 }
-    );
 
+  useEffect(() => {
     const storedInfo = localStorage.getItem("address-info");
     if (storedInfo) setStoredInfo(JSON.parse(storedInfo));
   }, []);
 
-  useEffect(() => {
-    const geocoder = new google.maps.Geocoder();
-    (async () => {
-      const {
-        data: { location: loc }
-      } = await axios.post(
-        `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_MAPS_KEY}`
-      );
-      geocoder.geocode({ location: loc }, (res, status) => {
-        if (status === "OK") {
-          console.log(res[0].address_components);
-          setCity(res[0]?.formatted_address);
-        }
-      });
-    })();
-  }, [location]);
   const onSubmit = (values: TValues) => {
     updateDetails(values);
     localStorage.setItem("address-info", JSON.stringify(values));
@@ -59,7 +33,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
   const { values, getFieldProps, handleSubmit } = useFormik({
     initialValues: {
       name: user?.displayName || storedInfo?.name || "",
-      location: storedInfo?.location || city,
+      location: location.deliveryLocation || storedInfo?.location || "",
       phone: formatPhone(user?.phoneNumber || storedInfo?.phone || "", "local"),
       email: user?.email || storedInfo?.email || "",
       paymentMethod: details.paymentMethod
