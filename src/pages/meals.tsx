@@ -27,6 +27,7 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <Row>
           {sortedFoods.map((food, index) => (
             <Col xs={6} md={4} lg={3} key={index}>
+              {console.log({ sortedFoods, index })}
               <Food food={food} />
             </Col>
           ))}

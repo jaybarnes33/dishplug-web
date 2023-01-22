@@ -7,17 +7,19 @@ export const useMealsByLocation = (foods: FoodType[]) => {
   const [foodsInCity, setFoodsInCity] = useState<FoodType[]>([]);
 
   useEffect(() => {
-    setFoodsInCity(() =>
-      foods.sort((a, b) =>
-        !b.available
-          ? 0
-          : a.store_city === location.city && b.store_city === location.city
-          ? 0
-          : a.store_city === location.city && b.store_city !== location.city
-          ? -1
-          : 1
-      )
-    );
+    if (location.city) {
+      setFoodsInCity(() =>
+        foods.sort((a, b) =>
+          !b.available
+            ? 0
+            : a.store_city === location.city && b.store_city === location.city
+            ? 0
+            : a.store_city === location.city && b.store_city !== location.city
+            ? -1
+            : 1
+        )
+      );
+    }
   }, [foods, location]);
 
   return foodsInCity;
