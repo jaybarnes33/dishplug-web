@@ -11,7 +11,7 @@ interface IProps {
 
 const Featured = ({ foods }: IProps) => {
   return (
-    <Container>
+    <>
       <div
         className="pt-3 pb-1
       d-flex justify-content-between align-items-center"
@@ -33,7 +33,7 @@ const Featured = ({ foods }: IProps) => {
           </Col>
         ))}
       </Row>
-    </Container>
+    </>
   );
 };
 

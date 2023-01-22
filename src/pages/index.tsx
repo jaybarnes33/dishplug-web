@@ -11,6 +11,7 @@ import {
   Timestamp
 } from "firebase-admin/firestore";
 import { useAuth } from "@/components/Context/Auth";
+import { Container } from "react-bootstrap";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
   toFirestore(item) {
@@ -85,11 +86,11 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <Container as="main" className={styles.main}>
         <Intro />
         <Featured foods={foods} />
         {/* <Join /> */}
-      </main>
+      </Container>
     </div>
   );
 }

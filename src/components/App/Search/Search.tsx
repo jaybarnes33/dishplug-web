@@ -4,7 +4,8 @@ import { Button, Form } from "react-bootstrap";
 
 function Search() {
   const router = useRouter();
-  const searchRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [keyword, setKeyword] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,10 +18,14 @@ function Search() {
   };
 
   const handleScroll = () => {
-    if (window.scrollY >= 80) {
-      searchRef.current?.classList.add("d-none");
-    } else {
-      searchRef.current?.classList.remove("d-none");
+    if (inputRef.current && buttonRef.current) {
+      if (window.scrollY >= 60) {
+        inputRef.current.style.width = "100%";
+        buttonRef.current.style.transform = "translateX(100%)";
+      } else {
+        inputRef.current.style.width = "calc(100% - 62px - 8px)";
+        buttonRef.current.style.transform = "initial";
+      }
     }
   };
 
@@ -36,25 +41,43 @@ function Search() {
     <Form
       className="d-flex gap-2"
       onSubmit={handleSubmit}
-      ref={searchRef}
-      style={{ position: "relative", zIndex: 1 }}
+      style={{
+        zIndex: 1,
+        padding: "5px 0 8px",
+        overflowX: "hidden"
+      }}
     >
       <Form.Control
         value={keyword}
+        ref={inputRef}
         placeholder="Search for food, drinks and more"
         onChange={handleChange}
         style={{
-          width: "100%",
+          width: "calc(100% - 62px - 8px)", // subtract the width of the button and the gap
           border: "none",
           backgroundColor: "#eee",
-          color: "#1a1a1a"
+          color: "#1a1a1a",
+          zIndex: 100,
+          transition: "width ease-out 120ms"
         }}
         size="lg"
         type="search"
         className="search"
       />
 
-      <Button variant="dark" type="submit" size="sm">
+      <Button
+        ref={buttonRef}
+        style={{
+          width: 62,
+          height: "calc(100% - 13px)", // minus spacing from container
+          position: "absolute",
+          right: 0,
+          transition: "transform ease-out 120ms"
+        }}
+        variant="dark"
+        type="submit"
+        size="sm"
+      >
         Search
       </Button>
     </Form>

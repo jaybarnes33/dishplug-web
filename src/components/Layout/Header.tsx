@@ -29,6 +29,7 @@ const Header = () => {
   const { isAuthenticated } = useAuth();
   const { replace } = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
+  const isHomePage = router.pathname === "/";
 
   const logout = async () => {
     try {
@@ -136,7 +137,7 @@ const Header = () => {
             />
             <>
               <Nav className="order-3 order-md-2">
-                {!noSearch && <Search />}
+                {!isHomePage && !noSearch && <Search />}
               </Nav>
 
               <Nav className="ms-auto gap-3 order-2 order-md-3">
