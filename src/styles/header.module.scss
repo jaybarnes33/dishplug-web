@@ -7,10 +7,10 @@
   display: flex;
   gap: 8px;
 
-  p {
+  span {
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-bottom: 0;
+    overflow: hidden;
   }
 
   &:hover,
