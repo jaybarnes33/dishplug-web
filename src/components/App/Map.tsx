@@ -85,7 +85,6 @@ const Map = ({ open, handleClose }: IProps) => {
           },
           (results, status) => {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-              console.log(results);
               for (const result of results) {
                 const position = result.geometry?.location.toJSON() || null;
                 updateMarkerPosition(position);
