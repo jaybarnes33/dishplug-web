@@ -83,7 +83,7 @@ export default function Home({
 
       <Container as="main" className={styles.main}>
         <Intro />
-        <Featured foods={sortedFoods} />
+        <Featured foods={foods} />
         {/* <Join /> */}
       </Container>
     </div>
