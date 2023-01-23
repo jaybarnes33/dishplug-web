@@ -82,7 +82,9 @@ const Food = ({ food }: { food: FoodType }) => {
           <small className="text-danger">{currencyFormat(food.price)}</small>
           {!pathname.includes("stores") && (
             <Link href={`/stores/${food.store_id}`}>
-              <small> {food.store_city}</small>
+              <small>
+                {food.store_name}, {food.store_city}
+              </small>
             </Link>
           )}
         </div>
