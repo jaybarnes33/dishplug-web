@@ -12,13 +12,13 @@ module.exports = withPWA({
   async redirects() {
     return [
       {
-        source: "/foods/*",
-        destination: "/dishes/*",
+        source: "/foods/:slug*",
+        destination: "/dishes/:slug*",
         permanent: true
       },
       {
-        source: "/meals/*",
-        destination: "/dishes/*",
+        source: "/meals/:slug*",
+        destination: "/dishes/:slug*",
         permanent: true
       }
     ];
