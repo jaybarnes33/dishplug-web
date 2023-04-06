@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { ReactNode, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+
 import { useAuth } from "../Context/Auth";
 
 const Auth = ({ children }: { children: ReactNode }) => {
@@ -23,9 +23,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
       {!isAuthenticated ? (
         <div>{children}</div>
       ) : (
-        <div className="loader-wrapper">
-          <Spinner animation="grow" />
-        </div>
+        <div className="loader-wrapper">loading...</div>
       )}
     </>
   );

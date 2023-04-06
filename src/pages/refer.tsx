@@ -1,7 +1,7 @@
 import { useAuth } from "@/components/Context/Auth";
 
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Container, Tooltip } from "react-bootstrap";
+
 import { TwitterShareButton, WhatsappShareButton } from "react-share";
 import { TwitterIcon, WhatsappIcon } from "react-share";
 import Login from "./login";
@@ -26,10 +26,10 @@ const Refer = () => {
         backgroundRepeat: "repeat"
       }}
     >
-      <Container>
+      <div>
         {!isAuthenticated ? (
           <>
-            <Alert>Please login first to get a referral link</Alert>
+            <p>Please login first to get a referral link</p>
             <Login />
           </>
         ) : (
@@ -41,7 +41,7 @@ const Refer = () => {
               <h3> Your referral link is </h3>
               <p className="bg-light px-2 rounded text-secondary">
                 <small>{url}</small>
-                <Button
+                <button
                   disabled={copied}
                   onClick={() =>
                     navigator.clipboard
@@ -63,12 +63,12 @@ const Refer = () => {
                   ) : (
                     "Copied"
                   )}
-                </Button>
-                {copied && <Tooltip title="copied" />}
+                </button>
+                {copied && <p>copied</p>}
               </p>
               <div>
                 <h5>Share on:</h5>
-                <div className="d-flex gap-2">
+                <div className="flex gap-2">
                   <WhatsappShareButton
                     title={message}
                     url={url}
@@ -88,7 +88,7 @@ const Refer = () => {
             </div>
           </div>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

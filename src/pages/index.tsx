@@ -1,12 +1,12 @@
 import Intro from "@/components/App/Main/Intro";
 import Head from "next/head";
-import styles from "../styles/Home.module.scss";
+
 import Featured from "@/components/App/Main/Featured/Featured";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { FoodType } from "@/types";
 import admin from "@/lib/firebase/node";
 import { FirestoreDataConverter } from "firebase-admin/firestore";
-import { Container } from "react-bootstrap";
+
 import { useMealsByLocation } from "@/hooks/useMealsByLocation";
 
 export const foodConverter: FirestoreDataConverter<FoodType> = {
@@ -69,7 +69,7 @@ export default function Home({
   const sortedFoods = useMealsByLocation(foods);
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Dishplug || Have your food delivered in minutes.</title>
         <meta name="description" content="Your meal is just a click away." />
@@ -81,11 +81,11 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container as="main" className={styles.main}>
+      <main className="md:px-[3rem] pt-[2rem]">
         <Intro />
         <Featured foods={foods} />
         {/* <Join /> */}
-      </Container>
-    </div>
+      </main>
+    </>
   );
 }

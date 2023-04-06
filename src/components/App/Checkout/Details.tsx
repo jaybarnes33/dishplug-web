@@ -12,19 +12,11 @@ import { referrerdb } from "@/pages/_app";
 import axios from "axios";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Image,
-  ListGroup,
-  Row,
-  Spinner
-} from "react-bootstrap";
+
 import { usePaystackPayment } from "react-paystack";
 
 const Details = ({ details }: IPageProps) => {
@@ -175,117 +167,112 @@ const Details = ({ details }: IPageProps) => {
   };
 
   return (
-    <Container>
+    <div>
       <Head>
         <title>Checkout</title>
       </Head>
-      <Row>
-        <Col md={8}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>Customer Details</h2>
-              <strong className={"fw-bold"}>Address: </strong>
-              {addressInfo.location}, <br /> {addressInfo.phone}{" "}
-              {addressInfo.email},
-            </ListGroup.Item>
+      <div className="flex flex-col">
+        <div>
+          <div>
+            <div className="border-b">
+              <h2 className="text-xl font-bold">Customer Details</h2>
+              <div>
+                <strong className={"font-semibold"}>Delivery Location: </strong>{" "}
+                {addressInfo.location}
+              </div>
+              <div>
+                <strong className={"font-semibold"}>Contact Info: </strong>{" "}
+                {addressInfo.phone} {addressInfo.email},
+              </div>
+            </div>
 
-            <ListGroup.Item>
-              <h2>Order(s)</h2>
+            <div>
+              <h2 className="font-semibold text-lg mt-2">Order(s)</h2>
               {availableItems?.length === 0 ? (
-                <Alert variant="danger">Your Cart is empty</Alert>
+                <p>Your Cart is empty</p>
               ) : (
-                <ListGroup>
+                <div>
                   {availableItems?.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image
-                            src={item.image || ""}
-                            alt={item.name}
-                            fluid
-                            rounded
-                            style={{ maxWidth: "30px" }}
-                          />
-                        </Col>
-                        <Col>
+                    <div className="border-t" key={index}>
+                      <div className="flex items-center gap-1 m-1 ">
+                        <Image
+                          src={item.image || ""}
+                          alt={item.name}
+                          width={25}
+                          height={25}
+                          style={{ maxWidth: "30px" }}
+                        />
+
+                        <div>
                           <Link href={`/product/${item.id}`}>{item.name}</Link>
-                        </Col>
-                        <Col md={4}>
+                        </div>
+                        <div>
                           {item.quantity} x {item.price} = GH₵
                           {item.quantity * item.price}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </ListGroup>
+                </div>
               )}
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col md={4}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>Order Summary</h2>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col>Sub Total</Col>
-                <Col>{currencyFormat(totalAmount)}</Col>
-              </Row>
-            </ListGroup.Item>
-            {referrer && (
-              <ListGroup.Item>
-                <Row>
-                  <Col>Discount</Col>
-                  <Col>{currencyFormat(discount)}</Col>
-                </Row>
-              </ListGroup.Item>
-            )}
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h2 className="text-xl font-bold mt-2">Order Summary</h2>
+          </div>
 
-            <ListGroup.Item>
-              <Row>
-                <Col className={"fw-bold"}>Total</Col>
-                <Col className={"fw-bold"}>
-                  {currencyFormat(totalAmount - discount)}
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          </ListGroup>
-          <ListGroup.Item className="d-grid p-2">
+          <div className="flex gap-3">
+            <text>Sub Total</text>
+            <text>{currencyFormat(totalAmount)}</text>
+          </div>
+
+          {referrer && (
+            <div className="flex gap-3">
+              <text className="font-semibold">Discount</text>
+              <text>{currencyFormat(discount)}</text>
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <text className={"font-semibold"}>Total</text>
+            <text>{currencyFormat(totalAmount - discount)}</text>
+          </div>
+
+          <div className="w-full pt-2">
             {addressInfo.paymentMethod === "online" && (
-              <Button
+              <button
                 type="button"
-                size="lg"
-                style={{ backgroundColor: "#F9A84D", border: "none" }}
+                className="bg-primary hover:bg-primary2 py-1 px-1 rounded text-neutral-100 w-full"
                 disabled={availableItems.length === 0}
                 onClick={() =>
                   initializePayment(
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
                     (res: Record<string, string>) =>
                       onSuccess(res, availableItems),
                     onClose
                   )
                 }
               >
-                Place Order{" "}
-                {loading && <Spinner animation="border" size="sm" />}
-              </Button>
+                Place Order {loading && "loading...."}
+              </button>
             )}
             {addressInfo.paymentMethod === "delivery" && (
-              <Button
+              <button
                 type="button"
-                size="lg"
                 disabled={availableItems.length === 0}
-                style={{ backgroundColor: "var(--dp-primary)", border: "none" }}
+                className="bg-primary hover:bg-primary2 py-1 px-1 rounded text-neutral-100"
                 onClick={() => checkoutWithoutPayment(availableItems)}
               >
-                Place Order{" "}
-                {loading && <Spinner animation="border" size="sm" />}
-              </Button>
+                Place Order {loading && "loading ..."}
+              </button>
             )}
-          </ListGroup.Item>
-        </Col>
-      </Row>
-    </Container>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

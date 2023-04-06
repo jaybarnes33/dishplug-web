@@ -4,7 +4,7 @@ const colors: {
   white: "#fff";
   dark: "#1a1a1a";
   light: "#f4f4f4";
-  accent: "#03a47b";
+  primary2: "#03a47b";
   accent2: "#DA6317";
 } = {
   primary: "#15d178",
@@ -12,7 +12,7 @@ const colors: {
   white: "#fff",
   dark: "#1a1a1a",
   light: "#f4f4f4",
-  accent: "#03a47b",
+  primary2: "#03a47b",
   accent2: "#DA6317"
 };
 

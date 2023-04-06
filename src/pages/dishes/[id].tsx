@@ -7,7 +7,7 @@ import type { FoodType } from "@/types";
 import Head from "next/head";
 import Image from "next/image";
 import admin from "@/lib/firebase/node";
-import { Badge, Button, Card, Image as RoundImg, Toast } from "react-bootstrap";
+
 import { foodConverter } from "..";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
@@ -18,7 +18,6 @@ import colors from "@/styles/colors";
 import Link from "next/link";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
@@ -53,7 +52,6 @@ export const getStaticProps: GetStaticProps<{
 };
 
 const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [toast, setToast] = useState<boolean>(false);
   const { addToCart, itemsInCart } = useCart();
   const { unavailableFoods } = useAvailability();
 
@@ -70,8 +68,6 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
       store_city: food?.store_city,
       store_phone: food.store_phone
     });
-
-    setToast(true);
   };
 
   return (
@@ -86,109 +82,54 @@ const Food = ({ food }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <meta property="og:image" content={food.image} />
       </Head>
       <div
-        className="mt-4 pt-5 d-flex align-items-center"
+        className="relative mt-4 pt-5 flex flex-col md:px-[30%]"
         style={{ minHeight: "90vh", backgroundColor: "white" }}
       >
-        <Link href="/cart">
-          <div
-            className="position-fixed top-0 end-0 me-3 mt-4 pt-1 d-flex align-items-center justify-content-center"
-            style={{
-              zIndex: 99999999,
-              backgroundColor: colors.white,
-              width: 40,
-              height: 40,
-              borderRadius: 40
-            }}
-          >
-            <FaShoppingCart color={colors.primary} />
-            <sup className="position-absolute end-0 mt-2 ms-2">
-              <Badge bg="danger">{itemsInCart}</Badge>
-            </sup>
-          </div>
-        </Link>
+        <div className="bg-white shadow-md p-3 rounded-xl">
+          <Image
+            src={food.image || ""}
+            width={200}
+            height={130}
+            alt=""
+            className="w-full h-[450px] rounded-xl"
+          />
 
-        <>
-          <div
-            className="position-fixed top-0 rounded"
-            style={{ height: "50vh", width: "100%" }}
-          >
-            <Image
-              src={food.image || ""}
-              layout="fill"
-              alt=""
-              objectFit="cover"
-              objectPosition="center"
-            />
-          </div>
+          <div>
+            <div>
+              <div className="my-1">
+                <h1 className="text-2xl font-bold mt-1">{food.name}</h1>
 
-          <div
-            style={{
-              marginTop: "35vh",
-              width: "100vw"
-            }}
-          >
-            <Card
-              style={{
-                backgroundColor: "white!important",
-                border: "none",
-                borderRadius: 30
-              }}
-            >
-              <Card.Body>
-                <p>
-                  <h1>{food.name}</h1>
-                  <Rating value={food.rating || 0} />
-                </p>
-                <p>
-                  <h2 style={{ color: colors.accent2 }}>
-                    {currencyFormat(food.price)}
-                  </h2>
-                </p>
-                <p>{food.description}</p>
-                <p>{food.rating || 0} reviews</p>
-              </Card.Body>
+                <h2 className="mt-1" style={{ color: colors.accent2 }}>
+                  {currencyFormat(food.price)}
+                </h2>
+
+                <p className="mt-1">{food.description}</p>
+                <p className="mt-1">{food.rating || 0} reviews</p>
+              </div>
 
               <div
-                className="d-flex justify-content-between  px-3 position-fixed w-100 left-0 gap-2"
+                className="flex justify-between flex-wrap  mt-2  w-full  gap-2"
                 style={{ bottom: "2rem" }}
               >
-                <Button
-                  className="w-100"
-                  style={
-                    isUnavailable
-                      ? {
-                          color: "#212121",
-                          border: "2px solid dark",
-                          backgroundColor: "transparent"
-                        }
-                      : {
-                          backgroundColor: colors.primary,
-                          border: "none"
-                        }
-                  }
+                <button
+                  className="w-full bg-primary hover:bg-primary2 text-neutral-100 px-2 py-3 rounded"
                   onClick={handleAddToCart}
                   disabled={isUnavailable}
                 >
-                  {isUnavailable ? "NOT AVAILABLE" : "Add to cart"}
-                </Button>
+                  {isUnavailable ? "NOT AVAILABLE" : "Add to my order"}
+                </button>
                 {itemsInCart > 0 && (
-                  <Link href="/checkout/address">
-                    <Button
-                      className="w-100"
-                      style={{
-                        backgroundColor: colors.white,
-                        border: "none",
-                        color: colors.dark
-                      }}
-                    >
-                      Proceed to checkout
-                    </Button>
+                  <Link
+                    href="/checkout/address"
+                    className="w-full border rounded border-neutral-700 px-2 py-3 text-neutral-700 hover:bg-neutral-700 hover:text-neutral-100"
+                  >
+                    <button className="w-full">Proceed to checkout</button>
                   </Link>
                 )}
               </div>
-            </Card>
+            </div>
           </div>
-        </>
+        </div>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+
 import styles from "@/styles/form.module.scss";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { referrerdb } from "@/pages/_app";
 import Auth from "../Auth/Auth";
 
 const FormWrapper = ({ children }: { children: ReactNode }) => {
-  const { pathname } = useRouter();
+  const { pathname, back } = useRouter();
   const [referred, setReferred] = useState(false);
 
   useEffect(() => {
@@ -19,18 +19,23 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
       <Head>
         <title>{pathname === "/login" ? "Login" : "Register"}</title>
       </Head>
-      <>
-        <Row className={styles.formWrapper}>
-          <Col md={6} className="desktop-only px-5">
-            <div className={styles.imgWrapper}>
-              <p>
-                Order food and have it delivered to your doorstep in minutes
-              </p>
-            </div>
-          </Col>
-          <Col sm={12} md={6} className={`px-5 ${styles.form} mt-5 pt-5`}>
-            <div className="mb-4">
-              <h1>
+
+      <p
+        className="text-xl absolute top-5 hover:text-accent"
+        onClick={() => back()}
+      >
+        &larr; Go back
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen items-center ">
+        <div className="desktop-only px-5 hidden md:block md:col-span-5">
+          <div className={styles.imgWrapper}>
+            <p>Order food and have it delivered to your doorstep in minutes</p>
+          </div>
+        </div>
+        <div className={`px-5 col-span-7 flex w-full items-center `}>
+          <div className="w-full  xs:border xs:shadow md:border-none md:shadow-none   mt-5 p-5">
+            <div className="mb-4 text-center">
+              <h1 className="text-2xl font-bold">
                 {pathname === "/login"
                   ? "Welcome Back"
                   : !referred || pathname !== "/refer"
@@ -49,7 +54,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
             <div className={styles.continueWith}>
               {/* Or continue with */}
               {/* <div
-                className={`${styles.buttons} buttons d-flex gap-3 justify-content-center`}
+                className={`${styles.buttons} buttons flex gap-3 justify-content-center`}
               >
                 <Image
                   width={35}
@@ -71,7 +76,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
                 {pathname.includes("login") || pathname.includes("refer") ? (
                   <p>
                     Don&apos;t have an account?{" "}
-                    <span className="text-primary">
+                    <span className="text-primary hover:text-primary2">
                       <Link href="/register">Sign up</Link>
                     </span>
                   </p>
@@ -85,9 +90,9 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
                 )}
               </div>
             </div>
-          </Col>
-        </Row>
-      </>
+          </div>
+        </div>
+      </div>
     </Auth>
   );
 };

@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "@fontsource/sen";
+@import "@fontsource/inter";
+@import "@fontsource/roboto";
+
+* {
+  font-family: "Roboto";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Sen";
+}
+:root {
+  --dp-primary: #15d178;
+  --dp-danger: red;
+  --dp-dark: #1a1a1a;
+  --dp-white: #ffffff;
+  --dp-accent: #03a47b;
+  --dp-accent2: #da6317;
+  --dp-secondary: #eee;
+  --dp-light: #f4f4f4;
+}

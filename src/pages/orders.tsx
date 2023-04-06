@@ -1,6 +1,6 @@
 import { useAuth } from "@/components/Context/Auth";
 import React, { useEffect, useState } from "react";
-import { Alert, Container, Table } from "react-bootstrap";
+
 import { TUserOrder } from "@/types";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { firestore } from "@/lib/firebase/client";
@@ -27,19 +27,17 @@ const Orders = () => {
   }, [user, user?.uid]);
 
   return (
-    <div className="mt-5 pt-5">
-      <Container className="mt-5">
+    <div className="mt-5 pt-5 min-h-[70vh]">
+      <div className="mt-5">
         {user ? (
           <>
             <h2>Hi, {user?.displayName}</h2>
             <p>Find your orders below</p>
 
             {!orders.length ? (
-              <Alert variant="danger">
-                You haven&apos;t made any orders yet
-              </Alert>
+              <p>You haven&apos;t made any orders yet</p>
             ) : (
-              <Table striped bordered hover responsive>
+              <table>
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -58,15 +56,13 @@ const Orders = () => {
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
             )}
           </>
         ) : (
-          <Alert variant="danger">
-            Please login or sign up to save and retrieve your orders
-          </Alert>
+          <p>Please login or sign up to save and retrieve your orders</p>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

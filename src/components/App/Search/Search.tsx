@@ -1,7 +1,6 @@
 import { useSearch } from "@/components/Context/Search";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
-import { Button, Form } from "react-bootstrap";
 
 function Search() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,8 +41,8 @@ function Search() {
   }, []);
 
   return (
-    <Form
-      className="d-flex gap-2"
+    <form
+      className="flex gap-2"
       onSubmit={handleSubmit}
       style={{
         zIndex: 1,
@@ -51,7 +50,7 @@ function Search() {
         overflowX: "hidden"
       }}
     >
-      <Form.Control
+      <input
         ref={inputRef}
         name="keyword"
         placeholder="Search for food, drinks and more"
@@ -63,12 +62,11 @@ function Search() {
           zIndex: 100,
           transition: "width ease-out 120ms"
         }}
-        size="lg"
         type="search"
         className="search"
       />
 
-      <Button
+      <button
         ref={buttonRef}
         style={{
           width: 62,
@@ -77,13 +75,11 @@ function Search() {
           right: 0,
           transition: "transform ease-out 120ms"
         }}
-        variant="dark"
         type="submit"
-        size="sm"
       >
         Search
-      </Button>
-    </Form>
+      </button>
+    </form>
   );
 }
 

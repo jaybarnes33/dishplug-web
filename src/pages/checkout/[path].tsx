@@ -45,15 +45,8 @@ const Checkout = () => {
   const Page = path ? components[path as keyof TComponents].component : null;
 
   return (
-    <div
-      className="mt-4 pt-5"
-      style={{
-        minHeight: "90vh",
-        backgroundImage: "url('/pattern-success.png')",
-        backgroundSize: "cover"
-      }}
-    >
-      {/* <Nav className="d-flex justify-content-center gap-3 mt-4 pt-5">
+    <div className="mt-4 pt-5">
+      {/* <Nav className="flex justify-content-center gap-3 mt-4 pt-5">
         {Object.keys(components).map((item, index) => (
           <Nav.Link
             className="text-muted"

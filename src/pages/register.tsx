@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { formatPhone } from "@/helpers/utils";
 import { referrerdb } from "./_app";
+import Input from "@/components/Core/Input";
 
 const initialValues = {
   name: "",
@@ -131,77 +132,62 @@ const Register = () => {
   return (
     <FormWrapper>
       {error && <p className="text-danger">{error}</p>}
-      <Form noValidate onSubmit={handleSubmit}>
-        <Row>
-          <Col xs={12}>
-            <Form.Group>
-              <Form.Label htmlFor="name">Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                id="name"
-                {...getFieldProps("name")}
-                required
-                placeholder="First Name"
-                isInvalid={Boolean(touched.name && errors.name)}
-              />
-              <Form.Control.Feedback
-                type={touched.name && errors.name ? "invalid" : "valid"}
-              >
-                {errors.name}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
+      <form noValidate onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-2">
+          <div>
+            <label htmlFor="name">Full Name *</label>
+            <Input
+              type="text"
+              id="name"
+              {...getFieldProps("name")}
+              required
+              placeholder="Full Name"
+            />
+            {Boolean(touched.name && errors.name) && (
+              <small className="text-red-500">{errors.name}</small>
+            )}
+          </div>
 
-          <Col xs={12}>
-            <Form.Group>
-              <Form.Label htmlFor="phone">Phone</Form.Label>
-              <Form.Control
-                {...getFieldProps("phone")}
-                type="tel"
-                required
-                placeholder="Ex. 0240000000"
-                autoComplete="off"
-                id="phone"
-                isInvalid={Boolean(touched.phone && errors.phone)}
-              />
-              <Form.Control.Feedback
-                type={touched.phone && errors.phone ? "invalid" : "valid"}
-              >
-                {errors.phone}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col xs={12}>
-            <Form.Group>
-              <Form.Label htmlFor="password">Password</Form.Label>
-              <Form.Control
-                id="password"
-                {...getFieldProps("password")}
-                required
-                type="password"
-                autoComplete="new-password"
-                isInvalid={Boolean(touched.password && errors.password)}
-              />
-              <Form.Control.Feedback
-                type={touched.password && errors.password ? "invalid" : "valid"}
-              >
-                {errors.password}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Row>
-        <div className="d-flex justify-content-center">
-          <Button
+          <div>
+            <label htmlFor="phone">Phone</label>
+            <Input
+              {...getFieldProps("phone")}
+              type="tel"
+              required
+              placeholder="Ex. 0240000000"
+              autoComplete="off"
+              id="phone"
+            />
+            {Boolean(touched.phone && errors.phone) && (
+              <small className="text-red-500">{errors.phone}</small>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <Input
+              id="password"
+              {...getFieldProps("password")}
+              required
+              type="password"
+              autoComplete="new-password"
+            />
+            {Boolean(touched.password && errors.password) && (
+              <small className="text-red-500">{errors.password}</small>
+            )}
+          </div>
+        </div>
+        <div className="flex justify-center mt-2">
+          <button
             id="submit-button"
+            className="bg-primary text-white rounded hover:bg-primary2 px-2 py-2"
             type="submit"
-            size="lg"
-            variant="dark"
             disabled={isSubmitting}
           >
             Register {isSubmitting && <Spinner animation="grow" />}
-          </Button>
+          </button>
         </div>
-      </Form>
+      </form>
     </FormWrapper>
   );
 };

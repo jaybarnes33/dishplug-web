@@ -1,35 +1,35 @@
 import { useAuth } from "@/components/Context/Auth";
+import Input from "@/components/Core/Input";
 import Link from "next/link";
 import React from "react";
-import { Alert, Container, Form } from "react-bootstrap";
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth();
   return (
-    <div className="mt-5 pt-5">
-      <Container className="mt-5">
+    <div className="mt-5 pt-5 min-h-[70vh]">
+      <div className="mt-5">
         {!isAuthenticated && (
-          <Alert variant="danger">
+          <p>
             Please <Link href="/login">login</Link> to access your profile
-          </Alert>
+          </p>
         )}
         {user && (
-          <Form>
-            <Form.Group>
-              <Form.Label htmlFor="name">Name</Form.Label>
-              <Form.Control value={user?.displayName || " "}></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="email">Email</Form.Label>
-              <Form.Control value={user?.email || " "}></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="phone">Phone</Form.Label>
-              <Form.Control value={user?.phoneNumber || " "}></Form.Control>
-            </Form.Group>
-          </Form>
+          <form>
+            <div>
+              <label htmlFor="name">Name</label>
+              <Input value={user?.displayName || " "}></Input>
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <Input value={user?.email || " "}></Input>
+            </div>
+            <div>
+              <label htmlFor="phone">Phone</label>
+              <Input value={user?.phoneNumber || " "}></Input>
+            </div>
+          </form>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import { useState, Suspense } from "react";
 import { useLocation } from "../Context/Location";
 import type { IProps as MapProps } from "./Map";
-import classes from "../../styles/header.module.scss";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import colors from "@/styles/colors";
 
 const LocationDisplay = () => {
   const { location } = useLocation();
@@ -27,11 +27,9 @@ const LocationDisplay = () => {
 
   return (
     <>
-      <button className={classes.location} onClick={handleOpen}>
-        <i className="start-icon">
-          <FaMapMarkerAlt />
-        </i>
-        <span>{location.deliveryLocation}</span>
+      <button className="flex items-center gap-1 " onClick={handleOpen}>
+        <FaMapMarkerAlt size={15} className="text-primary" />
+        <span className="text-xs mt-1">{location.deliveryLocation}</span>
       </button>
       <Suspense fallback={<p>...Loading</p>}>
         {showMap && MapComponent ? (

@@ -1,55 +1,54 @@
+import Input from "@/components/Core/Input";
 import { useKeyword } from "@/hooks/useKeyword";
+import colors from "@/styles/colors";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
-import { Form } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 
 function Search() {
   const router = useRouter();
   const searchRef = useRef<HTMLFormElement>(null);
-  const { handleChange } = useKeyword();
+  const { handleChange, keyword } = useKeyword();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
-  const handleScroll = () => {
-    if (window.scrollY < 81) {
-      searchRef.current?.classList.add("d-none");
-    } else {
-      searchRef.current?.classList.remove("d-none");
-    }
-  };
+  // const handleScroll = () => {
+  //   if (window.scrollY < 81) {
+  //     searchRef.current?.classList.add("d-none");
+  //   } else {
+  //     searchRef.current?.classList.remove("d-none");
+  //   }
+  // };
 
-  useEffect(() => {
-    if (router.pathname === "/") {
-      searchRef.current?.classList.add("d-none");
-      window.addEventListener("scroll", handleScroll);
-    } else {
-      searchRef.current?.classList.remove("d-none");
-    }
+  // useEffect(() => {
+  //   if (router.pathname === "/") {
+  //     searchRef.current?.classList.add("d-none");
+  //     window.addEventListener("scroll", handleScroll);
+  //   } else {
+  //     searchRef.current?.classList.remove("d-none");
+  //   }
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [router.pathname]);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [router.pathname]);
 
   return (
-    <Form onSubmit={handleSubmit} ref={searchRef} className="d-none">
-      <Form.Control
+    <form
+      onSubmit={handleSubmit}
+      ref={searchRef}
+      className="ml-auto bg-neutral-200 flex items-center placeholder:text-dark  gap-2 px-3 focus-within:outline-2 focus:outline-neutral-950 w-full md:min-w-[40%] rounded-md"
+    >
+      <FaSearch color={colors.secondary} size={15} />
+      <Input
         placeholder="Search for food, drinks and more."
         onChange={handleChange}
-        style={{
-          width: "min(88vw, 500px)",
-          marginLeft: "2vw",
-          height: "2rem",
-          backgroundColor: "#eee",
-          color: "#1a1a1a"
-        }}
-        className="search"
+        value={keyword}
         type="search"
-        size="lg"
       />
-    </Form>
+    </form>
   );
 }
 

@@ -4,16 +4,16 @@ import CartProvider from "@/components/Context/Cart";
 import LocationProvider from "@/components/Context/Location";
 import SearchProvider from "@/components/Context/Search";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import Footer from "@/components/Layout/Footer";
 
 import Header from "@/components/Layout/Header";
-import "@/styles/bootstrap.css";
-import "@/styles/globals.scss";
+
+import "@/styles/globals.css";
 import localforage from "localforage";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 
 import { useEffect } from "react";
-import { SSRProvider } from "react-bootstrap";
 
 export const referrerdb = localforage.createInstance({
   name: "dishplugv2",
@@ -23,6 +23,9 @@ export const referrerdb = localforage.createInstance({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const { pathname } = router;
+
+  const noHeader = ["/login", "/register"];
   useEffect(() => {
     localforage.config({
       name: "dishplugv2",
@@ -41,24 +44,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <SSRProvider>
-      <div style={{ minHeight: "90vh" }}>
-        <ErrorBoundary>
+    <>
+      <ErrorBoundary>
+        <LocationProvider>
           <AuthProvider>
-            <LocationProvider>
-              <SearchProvider>
-                <AvailabilityProvider>
-                  <CartProvider>
-                    <Header />
+            <SearchProvider>
+              <AvailabilityProvider>
+                <CartProvider>
+                  {!noHeader.includes(pathname) && <Header />}
+                  <div className="px-3 pt-28 md:pt-20 md:px-7 text-neutral-700 ">
                     <Component {...pageProps} />
-                  </CartProvider>
-                </AvailabilityProvider>
-              </SearchProvider>
-            </LocationProvider>
+                  </div>
+                  {!noHeader.includes(pathname) && <Footer />}
+                </CartProvider>
+              </AvailabilityProvider>
+            </SearchProvider>
           </AuthProvider>
-        </ErrorBoundary>
-      </div>
-    </SSRProvider>
+        </LocationProvider>
+      </ErrorBoundary>
+    </>
   );
 }
 

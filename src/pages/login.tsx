@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { FormikConfig, useFormik } from "formik";
-import { Button, Form, Spinner } from "react-bootstrap";
+
 import FormWrapper from "@/components/Layout/FormWrapper";
 import { emailRegex, phoneRegex } from "@/helpers/constants";
 import { AuthError } from "@/helpers/constructors";
@@ -10,8 +10,9 @@ import {
   signInWithCustomToken
 } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
-import { useRouter } from "next/router";
+
 import { useState } from "react";
+import Input from "@/components/Core/Input";
 const initialValues = {
   identity: "",
   password: ""
@@ -88,48 +89,49 @@ const Login = () => {
   return (
     <FormWrapper>
       {error && <p className="text-danger">{error}</p>}
-      <Form noValidate onSubmit={handleSubmit}>
-        <Form.Group className="mb-4">
-          <Form.Label>Phone</Form.Label>
-          <Form.Control
+      <form noValidate onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label>Phone</label>
+          <Input
             {...getFieldProps("identity")}
-            isInvalid={Boolean(touched.identity && errors.identity)}
             placeholder="Ex. 0240000000"
             required
           />
-          <Form.Control.Feedback
-            type={touched.identity && errors.identity ? "invalid" : "valid"}
-          >
-            {errors.identity}
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+          {Boolean(touched.identity && errors.identity) && (
+            <div
+            // type={touched.identity && errors.identity ? "invalid" : "valid"}
+            >
+              {errors.identity}
+            </div>
+          )}
+        </div>
+        <div>
+          <label>Password</label>
+          <Input
             {...getFieldProps("password")}
             type="password"
-            isInvalid={Boolean(touched.password && errors.password)}
             placeholder="Secured Password"
             required
           />
-          <Form.Control.Feedback
-            type={touched.password && errors.password ? "invalid" : "valid"}
-          >
-            {errors.password}
-          </Form.Control.Feedback>
-        </Form.Group>
-        <div className="d-flex justify-content-center">
-          <Button
+          {Boolean(touched.password && errors.password) && (
+            <div
+            // type={touched.password && errors.password ? "invalid" : "valid"}
+            >
+              {errors.password}
+            </div>
+          )}
+        </div>
+        <div className="flex justify-center mt-3">
+          <button
+            className="bg-primary text-neutral-100 p-2 px-3 rounded font-semibold hover:bg-primary2"
             type="submit"
-            variant="dark"
-            size="lg"
             disabled={isSubmitting}
           >
             Login
-            {isSubmitting && <Spinner animation="grow" />}
-          </Button>
+            {isSubmitting && "loading"}
+          </button>
         </div>
-      </Form>
+      </form>
     </FormWrapper>
   );
 };
