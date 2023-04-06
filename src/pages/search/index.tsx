@@ -48,19 +48,17 @@ const Search = ({
   return (
     <>
       <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
-        <Container className="py-5">
-          {sortedFoods.length ? (
-            <div className="grid md:grid-cols-3 gap-3">
-              {sortedFoods.map(food => (
-                <Food food={food} key={food.id} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-danger">
-              Your search for {keyword} didn&apos;t match any
-            </p>
-          )}
-        </Container>
+        {sortedFoods.length ? (
+          <div className="grid md:grid-cols-3 gap-3">
+            {sortedFoods.map(food => (
+              <Food food={food} key={food.id} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-danger">
+            Your search for {keyword} didn&apos;t match any
+          </p>
+        )}
       </section>
     </>
   );
