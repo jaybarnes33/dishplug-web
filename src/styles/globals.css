@@ -4,9 +4,11 @@
 @import "@fontsource/sen";
 @import "@fontsource/inter";
 @import "@fontsource/roboto";
+@import "@fontsource/montserrat/variable.css";
+@import "@fontsource/roboto-condensed";
 
 * {
-  font-family: "Roboto";
+  font-weight: "Roboto";
 }
 
 h1,
@@ -15,8 +17,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Sen";
+  font-family: "MontserratVariable", sans-serif;
 }
+
 :root {
   --dp-primary: #15d178;
   --dp-danger: red;
