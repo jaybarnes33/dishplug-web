@@ -25,12 +25,14 @@ const Header = () => {
       <LocationDisplay />
 
       <Search />
-      <button className="relative ml-[3rem] text-neutral-100 order-last md:order-3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">
-        <BsCart4 />
-        <span className="absolute -top-1 -right-1 text-white bg-accent w-5 h-5 rounded-full">
-          {itemsInCart}
-        </span>
-      </button>
+      <Link href="/cart" passHref>
+        <button className="relative ml-[3rem] text-neutral-100 order-last md:order-3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">
+          <BsCart4 />
+          <span className="absolute -top-1 -right-1 text-white bg-accent w-5 h-5 rounded-full">
+            {itemsInCart}
+          </span>
+        </button>
+      </Link>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button className="ml-[3rem] order-last md:order-3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">

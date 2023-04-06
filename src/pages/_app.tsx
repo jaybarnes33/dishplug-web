@@ -23,6 +23,9 @@ export const referrerdb = localforage.createInstance({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const { pathname } = router;
+
+  const noHeader = ["/login", "/register"];
   useEffect(() => {
     localforage.config({
       name: "dishplugv2",
@@ -48,11 +51,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             <SearchProvider>
               <AvailabilityProvider>
                 <CartProvider>
-                  <Header />
+                  {!noHeader.includes(pathname) && <Header />}
                   <div className="px-3 md:px-7 text-neutral-700">
                     <Component {...pageProps} />
                   </div>
-                  <Footer />
+                  {!noHeader.includes(pathname) && <Footer />}
                 </CartProvider>
               </AvailabilityProvider>
             </SearchProvider>

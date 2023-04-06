@@ -8,7 +8,7 @@ import { referrerdb } from "@/pages/_app";
 import Auth from "../Auth/Auth";
 
 const FormWrapper = ({ children }: { children: ReactNode }) => {
-  const { pathname } = useRouter();
+  const { pathname, back } = useRouter();
   const [referred, setReferred] = useState(false);
 
   useEffect(() => {
@@ -19,18 +19,23 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
       <Head>
         <title>{pathname === "/login" ? "Login" : "Register"}</title>
       </Head>
-      <>
-        <div className={styles.formWrapper}>
-          <div className="desktop-only px-5">
-            <div className={styles.imgWrapper}>
-              <p>
-                Order food and have it delivered to your doorstep in minutes
-              </p>
-            </div>
+
+      <p
+        className="text-xl absolute top-5 hover:text-accent"
+        onClick={() => back()}
+      >
+        &larr; Go back
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen items-center ">
+        <div className="desktop-only px-5 hidden md:block md:col-span-5">
+          <div className={styles.imgWrapper}>
+            <p>Order food and have it delivered to your doorstep in minutes</p>
           </div>
-          <div className={`px-5 ${styles.form} mt-5 pt-5`}>
-            <div className="mb-4">
-              <h1>
+        </div>
+        <div className={`px-5 col-span-7 flex w-full items-center `}>
+          <div className="w-full  xs:border xs:shadow md:border-none md:shadow-none   mt-5 p-5">
+            <div className="mb-4 text-center">
+              <h1 className="text-2xl font-bold">
                 {pathname === "/login"
                   ? "Welcome Back"
                   : !referred || pathname !== "/refer"
@@ -71,7 +76,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
                 {pathname.includes("login") || pathname.includes("refer") ? (
                   <p>
                     Don&apos;t have an account?{" "}
-                    <span className="text-primary">
+                    <span className="text-primary hover:text-primary2">
                       <Link href="/register">Sign up</Link>
                     </span>
                   </p>
@@ -87,7 +92,7 @@ const FormWrapper = ({ children }: { children: ReactNode }) => {
             </div>
           </div>
         </div>
-      </>
+      </div>
     </Auth>
   );
 };
