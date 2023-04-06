@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Button, Card, CardImg } from "react-bootstrap";
+
 import Image from "next/image";
 import type { FoodType } from "@/types";
 import { FaBuilding, FaMapMarkerAlt, FaShoppingCart } from "react-icons/fa";
@@ -28,81 +28,53 @@ const Food = ({ food }: { food: FoodType }) => {
   };
 
   return (
-    <Card
-      style={{
-        border: "none",
-        cursor: "pointer",
-        height: 235
-      }}
-      className="position-relative my-3"
-    >
+    <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
       <Link href={`/foods/${food.id}`}>
-        <div
-          style={{ width: "100%", height: "120px", zIndex: 0 }}
-          className="position-absolute"
-        >
-          <CardImg
-            as={Image}
-            src={food.image || "/"}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-          />
-        </div>
+        <Image
+          alt={food.name}
+          src={food.image || "/"}
+          className="w-full h-[160px] rounded-xl object-cover"
+          width={100}
+          height={100}
+        />
       </Link>
       {unavailableFoods.includes(food.id) ? (
-        <Badge bg="dark" style={{ position: "absolute", right: 0, top: 0 }}>
-          Not available
-        </Badge>
+        <p>Not available</p>
       ) : (
-        <Button
-          variant="light"
-          className="d-flex justify-content-center align-items-center"
+        <button
+          className="flex justify-center items-center w-7 h-7 bg-yellow-600 rounded-full text-white absolute top-3 right-3"
           onClick={handleAddToCart}
-          style={{
-            backgroundColor: "white!important",
-            width: 40,
-            height: 40,
-            position: "absolute",
-            right: -5,
-            top: -15,
-            borderRadius: 50
-          }}
         >
-          <FaShoppingCart color={colors.accent2} size={20} />
-        </Button>
+          <FaShoppingCart color="white" size={15} />
+        </button>
       )}
 
-      <Card.Body style={{ padding: 0, marginTop: 125 }} className="mb-2 px-2">
-        <div className="d-flex flex-column mb-2">
+      <div className="mb-2 px-2">
+        <div className="flex flex-col ">
           <Link href={`/foods/${food.id}`}>
-            <h6>{food.name}</h6>
+            <h6 className="capitalize font-semibold mt-1 text-xl">
+              {food.name}
+            </h6>
           </Link>
 
-          <small style={{ color: colors.accent2 }}>
+          <small className="text-primary text-base font-semibold mt-1">
             {currencyFormat(food.price)}
           </small>
           {!pathname.includes("stores") && (
-            <div className="d-flex flex-column justify-content-between">
+            <div className="flex gap-2  text-neutral-500 mt-1">
               <Link href={`/stores/${food.store_id}`}>
-                <small className="mx-1 d-flex gap-1 align-items-center">
-                  <span>
-                    <FaBuilding color={colors.accent} size={12} />
-                  </span>
+                <small className=" flex gap-1 items-center">
                   {food.store_name}
                 </small>
               </Link>
-              <small className="mx-1 d-flex gap-1 align-items-center">
-                <span>
-                  <FaMapMarkerAlt color={colors.accent} size={12} />
-                </span>
-                <span>{food.store_city}</span>
+              <small className=" flex gap-1 items-center">
+                {food.store_city}
               </small>
             </div>
           )}
         </div>
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 };
 

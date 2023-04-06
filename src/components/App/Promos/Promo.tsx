@@ -1,54 +1,38 @@
 import colors from "@/styles/colors";
 import Image from "next/image";
 import React from "react";
-import { Button } from "react-bootstrap";
+
 import Pattern from "../../../../public/pattern-white.png";
 interface PromoProps {
   name: string;
-
+  desc: string;
   image: string;
   bg: string;
 }
-const Promo = ({ name, image, bg }: PromoProps) => {
+const Promo = ({ name, image, bg, desc }: PromoProps) => {
   return (
-    <>
-      <div className="main d-flex gap-2 position-relative p-2 justify-content-between">
-        <Image
-          src={image}
-          alt={name}
-          width={140}
-          height={140}
-          objectFit="cover"
-        />
-        <div className="py-5 position-relative" style={{ zIndex: 2 }}>
-          <h5 className="text-light fw-bold">{name}</h5>
-
-          <Button className="fw-bold" variant={"light"} size="sm">
-            Coming Soon
-          </Button>
+    <div className="w-full h-[160px] relative child-hover:z-[-1] ">
+      <div
+        className={`flex w-full h-full ${bg} rounded-xl gap-2 relative p-2  items-center `}
+      >
+        <Image src={image} alt={name} width={140} height={140} />
+        <div className="py-5 relative" style={{ zIndex: 2 }}>
+          <h5 className="text-neutral-100 font-semibold  tracking-wide text-2xl">
+            {name}
+          </h5>
         </div>
 
         <div
-          className="position-absolute"
+          className="absolute"
           style={{ top: 0, right: 0, width: "60%", height: "100%", zIndex: 1 }}
         >
-          <Image src={Pattern} alt=" " layout="fill" objectFit="cover" />
+          <Image src={Pattern} alt=" " fill />
         </div>
       </div>
-      <style jsx>
-        {`
-          .main {
-            flex: 1;
-            width: 280px;
-            border-radius: 12px;
-            background-color: ${(colors as Record<string, string>)[bg]};
-          }
-          div {
-            width: 280px;
-          }
-        `}
-      </style>
-    </>
+      <div className="absolute rounded-xl w-full h-full top-0 left-0 z-[-3] bg-[#1a1a1a] grid place-items-center px-2 text-white">
+        {desc}
+      </div>
+    </div>
   );
 };
 

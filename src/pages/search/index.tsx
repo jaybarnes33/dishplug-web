@@ -50,13 +50,11 @@ const Search = ({
       <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
         <Container className="py-5">
           {sortedFoods.length ? (
-            <Row>
-              {sortedFoods.map((food, index) => (
-                <Col xs={6} md={4} lg={3} key={index}>
-                  <Food food={food} />
-                </Col>
+            <div className="grid md:grid-cols-3 gap-3">
+              {sortedFoods.map(food => (
+                <Food food={food} key={food.id} />
               ))}
-            </Row>
+            </div>
           ) : (
             <p className="text-danger">
               Your search for {keyword} didn&apos;t match any

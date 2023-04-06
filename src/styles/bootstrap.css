@@ -4903,13 +4903,13 @@ fieldset:disabled .btn {
 
 @-webkit-keyframes progress-bar-stripes {
   0% {
-    background-position-x: 1rem;
+    background-x: 1rem;
   }
 }
 
 @keyframes progress-bar-stripes {
   0% {
-    background-position-x: 1rem;
+    background-x: 1rem;
   }
 }
 .progress {
@@ -7432,23 +7432,23 @@ fieldset:disabled .btn {
   box-shadow: none !important;
 }
 
-.position-static {
+.static {
   position: static !important;
 }
 
-.position-relative {
+.relative {
   position: relative !important;
 }
 
-.position-absolute {
+.absolute {
   position: absolute !important;
 }
 
-.position-fixed {
+.fixed {
   position: fixed !important;
 }
 
-.position-sticky {
+.sticky {
   position: -webkit-sticky !important;
   position: sticky !important;
 }
@@ -8352,7 +8352,7 @@ fieldset:disabled .btn {
   font-weight: 400 !important;
 }
 
-.fw-bold {
+.font-semibold {
   font-weight: 700 !important;
 }
 
@@ -8360,7 +8360,7 @@ fieldset:disabled .btn {
   font-weight: 600 !important;
 }
 
-.fw-bolder {
+.font-semibolder {
   font-weight: bolder !important;
 }
 

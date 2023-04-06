@@ -1,9 +1,10 @@
 import { useAvailability } from "@/components/Context/Availability";
 import { useCart } from "@/components/Context/Cart";
 import colors from "@/styles/colors";
+import Image from "next/image";
 import React from "react";
-import { Button, Col, Image, Row } from "react-bootstrap";
-import { FaMinus, FaMinusSquare, FaPlus, FaPlusSquare } from "react-icons/fa";
+
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 interface ICartItem {
   image: string;
@@ -13,14 +14,7 @@ interface ICartItem {
   quantity: number;
 }
 const CartItem = ({ item }: { item: ICartItem }) => {
-  const {
-    cart,
-    totalAmount,
-
-    increment,
-    decrement,
-    removeFromCart
-  } = useCart();
+  const { increment, decrement } = useCart();
   const { unavailableFoods } = useAvailability();
 
   const handleInc = (
@@ -47,7 +41,7 @@ const CartItem = ({ item }: { item: ICartItem }) => {
 
   return (
     <div
-      className="d-flex justify-content-center gap-4 align-items-center my-3 p-2 "
+      className="flex justify-content-center gap-4 items-center my-3 p-2 "
       style={{
         backgroundColor: "white",
         borderRadius: 22,
@@ -63,16 +57,15 @@ const CartItem = ({ item }: { item: ICartItem }) => {
           style={{ borderRadius: 16, objectFit: "cover" }}
         />
       </div>
-      <div className="d-flex flex-column align-items-start justify-content-center">
+      <div className="flex flex-column items-start justify-content-center">
         <span>{item.name}</span>
         <span style={{ color: colors.accent2, fontWeight: "bolder" }}>
           GH{item.price}
         </span>
       </div>
 
-      <div className="d-flex ms-auto me-2 gap-2 align-items-center">
-        <Button
-          size="sm"
+      <div className="flex ms-auto me-2 gap-2 items-center">
+        <button
           data-id={item.id}
           onClick={handleDec}
           style={{
@@ -81,24 +74,23 @@ const CartItem = ({ item }: { item: ICartItem }) => {
             backgroundColor: "rgba(249, 168, 77, 0.2)"
           }}
         >
-          <FaMinus color={colors.accent} />
-        </Button>
+          <FaMinus color={colors.primary2} />
+        </button>
         {item.quantity}
 
-        <Button
+        <button
           data-id={item.id}
-          size="sm"
           style={{
             border: "none",
             borderRadius: "5px",
 
-            backgroundColor: colors.accent
+            backgroundColor: colors.primary2
           }}
           onClick={handleInc}
           disabled={unavailableFoods.includes(item.id)}
         >
           <FaPlus color={colors.light} />
-        </Button>
+        </button>
       </div>
     </div>
   );

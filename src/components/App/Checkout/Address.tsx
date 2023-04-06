@@ -1,5 +1,6 @@
 import { useAuth } from "@/components/Context/Auth";
 import { useLocation } from "@/components/Context/Location";
+import Input from "@/components/Core/Input";
 import { formatPhone } from "@/helpers/utils";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
 import colors from "@/styles/colors";
@@ -7,7 +8,7 @@ import { useFormik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+
 import { FaMoneyBillAlt } from "react-icons/fa";
 
 const Address = ({ updateDetails, details }: IPageProps) => {
@@ -42,132 +43,112 @@ const Address = ({ updateDetails, details }: IPageProps) => {
   });
 
   return (
-    <Container>
+    <div>
       <Head>
         <title>Address</title>
       </Head>
-      <Form onSubmit={handleSubmit}>
-        <div
-          className="py-3 mb-3"
-          style={{
-            backgroundColor: "white",
-            borderRadius: 22,
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
-          }}
-        >
-          <div className="d-flex justify-content-between mb-2 px-4">
-            <small className="text-muted">Address</small>
-            {/* <small
-              style={{ color: colors.accent2, cursor: "pointer" }}
-              onClick={handleEdit}
-            >
-              Edit
-            </small> */}
+      <form
+        onSubmit={handleSubmit}
+        className="md:max-w-[500px] md:mx-auto  p-3"
+      >
+        <div className="py-3 px-3 mb-3 bg-white border shadow rounded">
+          <div className="grid grid-cols-2">
+            <div className="flex flex-col p-1">
+              <label htmlFor="name">
+                <small>Name</small>
+              </label>
+              <Input
+                {...getFieldProps("name")}
+                required
+                placeholder="John Doe"
+              />
+            </div>
+
+            <div className="p-1 flex flex-col">
+              <label htmlFor="phone">
+                <small>Phone</small>
+              </label>
+              <Input
+                {...getFieldProps("phone")}
+                type="tel"
+                required
+                placeholder="054121231"
+              />
+            </div>
           </div>
-          <Row className="mx-2">
-            {/* <FaMapMarkerAlt color={colors.accent2} size={40} /> */}
-
-            <Col xs={6} className="p-1">
-              <Form.Group>
-                <Form.FloatingLabel label="Name">
-                  <Form.Control {...getFieldProps("name")} required />
-                </Form.FloatingLabel>
-              </Form.Group>
-            </Col>
-            <Col xs={6} className="p-1">
-              <Form.Group>
-                <Form.FloatingLabel label="Phone">
-                  <Form.Control
-                    {...getFieldProps("phone")}
-                    type="tel"
-                    required
-                  />
-                </Form.FloatingLabel>
-              </Form.Group>
-            </Col>
-
-            <Col md={6} className="p-1">
-              <Form.Group>
-                <Form.FloatingLabel label="location">
-                  <Form.Control {...getFieldProps("location")} required />
-                </Form.FloatingLabel>
-              </Form.Group>
-            </Col>
-          </Row>
+          <div>
+            <div className="p-1 flex flex-col">
+              <label htmlFor="location">
+                <small>Location</small>
+              </label>
+              <Input
+                {...getFieldProps("location")}
+                required
+                placeholder="First Love"
+              />
+            </div>
+          </div>
         </div>
-        <div
-          className="my-3 py-3 "
-          style={{
-            backgroundColor: "white",
-            borderRadius: 22,
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
-          }}
-        >
-          <div className="d-flex justify-content-between mb-2 ">
+        <div className="my-3 py-3 px-3 bg-white border shadow">
+          <div className="flex justify-content-between mb-2 ">
             <small className="text-muted px-4">Payment Method</small>
           </div>
-          <div className="d-flex justify-content-between gap-4 px-4 align-items-center">
+          <div className="flex justify-content-between gap-4 px-4 items-center">
             <FaMoneyBillAlt
               color={colors.accent2}
               size={40}
               style={{ transform: "rotate(-45deg)" }}
             />
             <div>
-              <Form.Check
-                {...getFieldProps("paymentMethod")}
-                type="radio"
-                id="payment-on-delivery"
-                value="delivery"
-                inline
-                required
-                label="Payment on delivery"
-              />
-              <Form.Check
-                {...getFieldProps("paymentMethod")}
-                type="radio"
-                inline
-                id="online-payment"
-                label="Pay now"
-                required
-                value="online"
-              />
+              <div className="flex items-center">
+                <label htmlFor="online-payment">Pay now</label>
+                <Input
+                  {...getFieldProps("paymentMethod")}
+                  type="radio"
+                  id="online-payment"
+                  required
+                  value="online"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label htmlFor="payment-on-delivery">Payment on delivery</label>
+                <Input
+                  {...getFieldProps("paymentMethod")}
+                  type="radio"
+                  id="payment-on-delivery"
+                  value="delivery"
+                  required
+                />
+              </div>
             </div>
           </div>
         </div>
         {values.paymentMethod === "online" && (
-          <div
-            className="my-3 py-3 "
-            style={{
-              backgroundColor: "white",
-              borderRadius: 22,
-              boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)"
-            }}
-          >
-            <div className="d-flex justify-content-between mb-2 ">
-              <small className="text-muted px-4">Email</small>
-            </div>
-
-            <div className="d-flex px-4">
-              <Form.Control
+          <div className="my-3 py-3 px-3 bg-white border shadow rounded">
+            <div className="flex p-1 flex-col">
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <Input
                 {...getFieldProps("email")}
                 type="email"
                 placeholder="doe@gmail.com"
                 required
+                id="email"
               />
             </div>
           </div>
         )}
 
-        <Button
-          className="d-flex mx-auto"
+        <button
+          className="flex mx-auto rounded bg-primary text-white py-1 px-2 hover:bg-primary2"
           type="submit"
-          style={{ backgroundColor: colors.primary, border: "none" }}
-          size="lg"
         >
           Submit
-        </Button>
-      </Form>
-    </Container>
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -3,8 +3,6 @@ import CartItem from "@/components/App/Cart/CartItem";
 import { useAvailability } from "@/components/Context/Availability";
 import { useCart } from "@/components/Context/Cart";
 
-import { Alert, Container } from "react-bootstrap";
-
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
   const { unavailableFoods } = useAvailability();
@@ -17,14 +15,12 @@ const Cart = () => {
 
   return (
     <div style={{ minHeight: "90vh" }}>
-      <div className="position-fixed w-100">
-        <Container className="mt-2 pt-5 ">
+      <div className="fixed w-100">
+        <div className="mt-2 pt-5 ">
           <h1>Cart</h1>
           <div>
             {cart?.some(food => unavailableFoods.includes(food.id)) ? (
-              <Alert variant="warning">
-                Some foods in your cart are currently unavailable
-              </Alert>
+              <p>Some foods in your cart are currently unavailable</p>
             ) : null}
             <div
               style={{
@@ -38,7 +34,7 @@ const Cart = () => {
             </div>
           </div>
           <CartFooter />
-        </Container>
+        </div>
       </div>
     </div>
   );

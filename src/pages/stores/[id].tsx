@@ -49,20 +49,20 @@ const Shops = () => {
         <meta name="description" content={store?.name} />
       </Head>
       <div
-        className="d-flex align-items-center"
+        className="flex items-center"
         style={{
           backgroundImage: "url('/Pattern (7).png')",
           minHeight: "50vh"
         }}
       >
-        <Container className="d-flex align-items-center justify-content-center mt-4 pt-2">
+        <Container className="flex items-center justify-content-center mt-4 pt-2">
           <div className="text-center">
             <h1 className="text-center">{store?.name}</h1>
-            <div className="d-flex gap-4">
-              <p className="d-flex align-items-center gap-1">
+            <div className="flex gap-4">
+              <p className="flex items-center gap-1">
                 <FaMapMarkerAlt /> {store?.city}
               </p>
-              <p className="d-flex align-items-center gap-1">
+              <p className="flex items-center gap-1">
                 <a href={`tel:+233${store?.contact.slice(1)}`}>
                   {" "}
                   <FaPhoneAlt /> {store?.contact}

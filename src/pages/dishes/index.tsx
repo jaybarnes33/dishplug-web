@@ -7,31 +7,28 @@ import type { FoodType } from "@/types";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
-import { Col, Container, Row } from "react-bootstrap";
-import { foodConverter } from ".";
+import { foodConverter } from "..";
 
 const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const sortedFoods = useMealsByLocation(foods);
 
   return (
-    <section className="mt-5 pt-5" style={{ minHeight: "90vh" }}>
+    <section className="pt-2" style={{ minHeight: "90vh" }}>
       <Head>
-        <title>Foods</title>
+        <title>Dishes</title>
         <meta
           name="keywords"
           content="Food delivery in Ghana, Food in Tarkwa, UMaT Food, Tarkwa Fried Rice, Hostel Crust Pizza"
         />
       </Head>
-      <h2 className="text-center mt-5">Foods</h2>
-      <Container>
-        <Row>
-          {sortedFoods.map((food, index) => (
-            <Col xs={6} md={4} lg={3} key={index}>
-              <Food food={food} />
-            </Col>
+      <h2 className="text-2xl font-bold mt-5">Dishes</h2>
+      <div>
+        <div className="grid md:grid-cols-3 gap-3">
+          {sortedFoods.map(food => (
+            <Food key={food.id} food={food} />
           ))}
-        </Row>
-      </Container>
+        </div>
+      </div>
     </section>
   );
 };

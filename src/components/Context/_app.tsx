@@ -1,7 +1,7 @@
 import AuthProvider from "@/components/Context/Auth";
 import AvailabilityProvider from "@/components/Context/Availability";
 import CartProvider from "@/components/Context/Cart";
-import LocationProvider from "@/components/Context/Location";
+import font-semiboldovider from "@/components/Context/Location";
 import SearchProvider from "@/components/Context/Search";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Footer from "@/components/Layout/Footer";
@@ -43,8 +43,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ErrorBoundary>
-        <LocationProvider>
-          <AuthProvider>
+          <font-semiboldovider>
+        <AuthProvider>
             <SearchProvider>
               <AvailabilityProvider>
                 <CartProvider>
@@ -56,8 +56,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </CartProvider>
               </AvailabilityProvider>
             </SearchProvider>
-          </AuthProvider>
-        </LocationProvider>
+        </AuthProvider>
+          </font-semiboldovider>
       </ErrorBoundary>
     </>
   );
