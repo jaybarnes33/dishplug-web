@@ -27,9 +27,9 @@ const LocationDisplay = () => {
 
   return (
     <>
-      <button className="flex items-center gap-1" onClick={handleOpen}>
-        <FaMapMarkerAlt size={15} color={colors.primary2} />
-        <span className="text-sm">{location.deliveryLocation}</span>
+      <button className="flex items-center gap-1 " onClick={handleOpen}>
+        <FaMapMarkerAlt size={15} className="text-primary" />
+        <span className="text-xs mt-1">{location.deliveryLocation}</span>
       </button>
       <Suspense fallback={<p>...Loading</p>}>
         {showMap && MapComponent ? (

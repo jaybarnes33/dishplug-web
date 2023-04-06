@@ -30,16 +30,16 @@ const Header = () => {
 
       <div className="flex gap-3 ml-auto md:order-last">
         <Link href="/cart">
-          <button className="relative md:ml-[3rem] text-neutral-100 3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">
+          <button className="relative md:ml-[3rem] text-neutral-100 3 h-8 w-8 md:h-10 md:w-10 flex items-center justify-center rounded-full bg-primary2">
             <BsCart4 />
-            <span className="absolute -top-1 -right-1 text-white bg-accent w-5 h-5 rounded-full">
+            <span className="absolute -top-1 -right-1 text-white bg-accent w-4 h-4 text-xs rounded-full">
               {itemsInCart}
             </span>
           </button>
         </Link>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <button className="md:ml-[3rem] order-last md:order-3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">
+            <button className="md:ml-[3rem] order-last md:order-3 h-8 w-8 md:h-10 md:w-10 flex items-center justify-center rounded-full bg-primary2">
               <User color="white" />
             </button>
           </DropdownMenu.Trigger>
