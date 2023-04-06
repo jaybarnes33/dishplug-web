@@ -11,7 +11,9 @@
   "dependencies": {
     "@dotmind/react-use-pwa": "^1.0.4",
     "@fontsource/inter": "^4.5.15",
+    "@fontsource/montserrat": "^4.5.14",
     "@fontsource/roboto": "^4.5.8",
+    "@fontsource/roboto-condensed": "^4.5.9",
     "@fontsource/sen": "^4.5.9",
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@googlemaps/markerclusterer": "^2.0.15",
