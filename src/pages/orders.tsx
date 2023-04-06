@@ -27,7 +27,7 @@ const Orders = () => {
   }, [user, user?.uid]);
 
   return (
-    <div className="mt-5 pt-5">
+    <div className="mt-5 pt-5 min-h-[70vh]">
       <div className="mt-5">
         {user ? (
           <>

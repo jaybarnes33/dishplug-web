@@ -9,13 +9,12 @@ interface PromoProps {
   image: string;
   bg: string;
 }
-const Promo = ({ name, image, bg, desc }: PromoProps) => {
+const Promo = ({ name, bg, desc }: PromoProps) => {
   return (
     <div className="w-full h-[160px] relative child-hover:z-[-1] ">
       <div
-        className={`flex w-full h-full ${bg} rounded-xl gap-2 relative p-2  items-center `}
+        className={`flex w-[280px] md:w-full h-full ${bg} rounded-xl gap-2 relative p-2  items-center `}
       >
-        <Image src={image} alt={name} width={140} height={140} />
         <div className="py-5 relative" style={{ zIndex: 2 }}>
           <h5 className="text-neutral-100 font-semibold  tracking-wide text-2xl">
             {name}

@@ -15,9 +15,9 @@ const Cart = () => {
 
   return (
     <div style={{ minHeight: "90vh" }}>
-      <div className="fixed w-100">
+      <div className="relative md:w-[70%] min-h-[90vh] mx-auto">
         <div className="mt-2 pt-5 ">
-          <h1>Cart</h1>
+          <h1 className="text-2xl font-bold">Cart</h1>
           <div>
             {cart?.some(food => unavailableFoods.includes(food.id)) ? (
               <p>Some foods in your cart are currently unavailable</p>

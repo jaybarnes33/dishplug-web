@@ -57,8 +57,8 @@ const CartItem = ({ item }: { item: ICartItem }) => {
           style={{ borderRadius: 16, objectFit: "cover" }}
         />
       </div>
-      <div className="flex flex-column items-start justify-content-center">
-        <span>{item.name}</span>
+      <div className="flex flex-col items-start justify-center">
+        <span className="text-lg font-bold">{item.name}</span>
         <span style={{ color: colors.accent2, fontWeight: "bolder" }}>
           GH{item.price}
         </span>
@@ -68,6 +68,7 @@ const CartItem = ({ item }: { item: ICartItem }) => {
         <button
           data-id={item.id}
           onClick={handleDec}
+          className="p-1"
           style={{
             border: "none",
             borderRadius: "5px",
@@ -80,6 +81,7 @@ const CartItem = ({ item }: { item: ICartItem }) => {
 
         <button
           data-id={item.id}
+          className="p-1"
           style={{
             border: "none",
             borderRadius: "5px",

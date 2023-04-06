@@ -4,10 +4,16 @@ import Promo from "./Promo";
 const Promos = () => {
   const promos = [
     {
-      name: "Sunday Special",
-      desc: "Get up to 10% discount on your sunday orders",
+      name: "Holiday Special",
+      desc: "Get up to 15% discount on select meals on holidays",
       image: "/1.png",
-      bg: "bg-primary"
+      bg: "bg-dark"
+    },
+    {
+      name: "Sunday Special",
+      desc: "Get up to 10% discount on your unday orders",
+      image: "/1.png",
+      bg: "bg-accent"
     },
 
     {
@@ -15,17 +21,11 @@ const Promos = () => {
       desc: "Get up to 25% discount when you buy together with your friends",
       image: "/2.png",
       bg: "bg-primary2"
-    },
-    {
-      name: "Holiday Special",
-      desc: "Get up to 15% discount on select meals on holidays",
-      image: "/1.png",
-      bg: "bg-accent"
     }
   ];
   return (
     <div
-      className="flex gap-2 my-3 justify-content-between"
+      className="flex gap-2 my-3 justify-between"
       style={{ overflowX: "scroll" }}
     >
       {promos.map((promo, key) => (

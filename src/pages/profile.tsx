@@ -1,11 +1,12 @@
 import { useAuth } from "@/components/Context/Auth";
+import Input from "@/components/Core/Input";
 import Link from "next/link";
 import React from "react";
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth();
   return (
-    <div className="mt-5 pt-5">
+    <div className="mt-5 pt-5 min-h-[70vh]">
       <div className="mt-5">
         {!isAuthenticated && (
           <p>
@@ -16,15 +17,15 @@ const Profile = () => {
           <form>
             <div>
               <label htmlFor="name">Name</label>
-              <input value={user?.displayName || " "}></input>
+              <Input value={user?.displayName || " "}></Input>
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input value={user?.email || " "}></input>
+              <Input value={user?.email || " "}></Input>
             </div>
             <div>
               <label htmlFor="phone">Phone</label>
-              <input value={user?.phoneNumber || " "}></input>
+              <Input value={user?.phoneNumber || " "}></Input>
             </div>
           </form>
         )}

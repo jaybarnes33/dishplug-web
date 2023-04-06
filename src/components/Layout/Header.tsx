@@ -4,9 +4,12 @@ import React from "react";
 import LocationDisplay from "../App/LocationDisplay";
 import Search from "../App/Search/NavSearch";
 import { RxPerson as User } from "react-icons/rx";
+import { BsCart4 } from "react-icons/bs";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { useCart } from "../Context/Cart";
 const Header = () => {
+  const { itemsInCart } = useCart();
   return (
     <nav className="flex py-4 gap-5 border border-neutral-200 px-4 md:px-12 f">
       <Link href="/">
@@ -20,7 +23,14 @@ const Header = () => {
       </Link>
 
       <LocationDisplay />
+
       <Search />
+      <button className="relative ml-[3rem] text-neutral-100 order-last md:order-3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">
+        <BsCart4 />
+        <span className="absolute -top-1 -right-1 text-white bg-accent w-5 h-5 rounded-full">
+          {itemsInCart}
+        </span>
+      </button>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button className="ml-[3rem] order-last md:order-3 h-10 w-10 flex items-center justify-center rounded-full bg-primary2">

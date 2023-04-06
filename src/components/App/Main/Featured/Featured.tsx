@@ -16,7 +16,7 @@ const Featured = ({ foods }: IProps) => {
         className="pt-3 pb-1
         flex justify-between items-center"
       >
-        <h2 className="text-center text-xl font-semibold">Featured Food</h2>
+        <h2 className="text-center text-2xl font-bold">Featured Food</h2>
 
         <Link href="/meals" className="flex gap-3 items-center">
           View all
