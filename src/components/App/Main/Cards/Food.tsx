@@ -2,13 +2,13 @@ import React from "react";
 
 import Image from "next/image";
 import type { FoodType } from "@/types";
-import { FaBuilding, FaMapMarkerAlt, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { currencyFormat } from "@/helpers/utils";
 import { useCart } from "@/components/Context/Cart";
 import { useRouter } from "next/router";
 import { useAvailability } from "@/components/Context/Availability";
-import colors from "@/styles/colors";
+
 const Food = ({ food }: { food: FoodType }) => {
   const { pathname } = useRouter();
   const { addToCart } = useCart();
@@ -52,7 +52,7 @@ const Food = ({ food }: { food: FoodType }) => {
       <div className="mb-2 px-2">
         <div className="flex flex-col ">
           <Link href={`/foods/${food.id}`}>
-            <h6 className="capitalize font-semibold mt-1 text-xl">
+            <h6 className="capitalize font-semibold mt-1 text-lg">
               {food.name}
             </h6>
           </Link>

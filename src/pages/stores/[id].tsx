@@ -49,38 +49,39 @@ const Shops = () => {
         <meta name="description" content={store?.name} />
       </Head>
       <div
-        className="flex items-center"
+        className="flex justify-center items-center"
         style={{
           backgroundImage: "url('/Pattern (7).png')",
           minHeight: "50vh"
         }}
       >
-        <Container className="flex items-center justify-content-center mt-4 pt-2">
-          <div className="text-center">
-            <h1 className="text-center">{store?.name}</h1>
-            <div className="flex gap-4">
+        <div className="flex items-center justify-center mt-4 pt-2">
+          <div>
+            <h1 className="text-center text-2xl font-bold tracking-wide">
+              {store?.name}
+            </h1>
+            <div className="flex gap-4 items-center">
               <p className="flex items-center gap-1">
                 <FaMapMarkerAlt /> {store?.city}
               </p>
-              <p className="flex items-center gap-1">
-                <a href={`tel:+233${store?.contact.slice(1)}`}>
-                  {" "}
+              <p className="flex items-center gap-1 hover:text-primary2">
+                <a
+                  className="flex items-center gap-1"
+                  href={`tel:+233${store?.contact.slice(1)}`}
+                >
                   <FaPhoneAlt /> {store?.contact}
-                </a>{" "}
+                </a>
               </p>
             </div>
           </div>
-        </Container>
+        </div>
       </div>
-      <Container>
-        <Row>
-          {foods.map(food => (
-            <Col xs={6} md={4} lg={3} key={food.id}>
-              <Food food={food} />
-            </Col>
-          ))}
-        </Row>
-      </Container>
+
+      <div className=" md:px-[3rem] grid md:grid-cols-3 gap-3">
+        {foods.map(food => (
+          <Food food={food} key={food.id} />
+        ))}
+      </div>
     </div>
   );
 };

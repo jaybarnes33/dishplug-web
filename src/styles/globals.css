@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "@fontsource/sen";
-@import "@fontsource/inter";
+@import "@fontsource/inter/variable.css";
 @import "@fontsource/roboto";
 @import "@fontsource/montserrat/variable.css";
 @import "@fontsource/roboto-condensed";
@@ -17,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "MontserratVariable", sans-serif;
+  font-family: "InterVariable", sans-serif;
 }
 
 :root {
