@@ -28,7 +28,7 @@ const Food = ({ food }: { food: FoodType }) => {
   };
 
   return (
-    <div className="relative my-3 px-2  hover:shadow-md hover:bg-white rounded-xl ">
+    <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
       <div className="relative">
         <Link href={`/foods/${food.id}`}>
           <Image
