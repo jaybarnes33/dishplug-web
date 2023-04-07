@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { usePaystackPayment } from "react-paystack";
+import Spinner from "@/components/Core/Spinner";
 
 const Details = ({ details }: IPageProps) => {
   const { user } = useAuth();
@@ -256,7 +257,7 @@ const Details = ({ details }: IPageProps) => {
                   )
                 }
               >
-                Place Order {loading && "loading...."}
+                Place Order {loading && <Spinner />}
               </button>
             )}
             {addressInfo.paymentMethod === "delivery" && (
@@ -266,7 +267,7 @@ const Details = ({ details }: IPageProps) => {
                 className="bg-primary hover:bg-primary2 py-1 px-1 rounded text-neutral-100"
                 onClick={() => checkoutWithoutPayment(availableItems)}
               >
-                Place Order {loading && "loading ..."}
+                Place Order {loading && <Spinner />}
               </button>
             )}
           </div>

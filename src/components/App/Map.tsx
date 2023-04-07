@@ -3,13 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "../Context/Location";
 import classes from "../../styles/dialog.module.scss";
-import {
-  FaRegTimesCircle,
-  FaTimes,
-  FaTimesCircle,
-  FaWindowClose
-} from "react-icons/fa";
-import Places from "../Location/Places";
+import { FaRegTimesCircle } from "react-icons/fa";
 
 export interface IProps {
   open: boolean;

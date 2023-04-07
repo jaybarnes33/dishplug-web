@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { FormikConfig, useFormik } from "formik";
-import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
+
 import "yup-phone-lite";
 import FormWrapper from "@/components/Layout/FormWrapper";
 import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { formatPhone } from "@/helpers/utils";
 import { referrerdb } from "./_app";
 import Input from "@/components/Core/Input";
+import Spinner from "@/components/Core/Spinner";
 
 const initialValues = {
   name: "",
@@ -184,7 +185,7 @@ const Register = () => {
             type="submit"
             disabled={isSubmitting}
           >
-            Register {isSubmitting && <Spinner animation="grow" />}
+            Register {isSubmitting && <Spinner />}
           </button>
         </div>
       </form>

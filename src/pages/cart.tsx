@@ -7,6 +7,7 @@ const Cart = () => {
   const { cart, removeFromCart } = useCart();
   const { unavailableFoods } = useAvailability();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { id } = event.currentTarget.dataset;
     if (!id) throw new Error("icon button requires a data-id attribute");

@@ -1,12 +1,11 @@
 import Input from "@/components/Core/Input";
 import { useKeyword } from "@/hooks/useKeyword";
 import colors from "@/styles/colors";
-import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+
+import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
 function Search() {
-  const router = useRouter();
   const searchRef = useRef<HTMLFormElement>(null);
   const { handleChange, keyword } = useKeyword();
 

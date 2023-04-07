@@ -12,12 +12,9 @@ import { foodConverter } from "..";
 import { useCart } from "@/components/Context/Cart";
 import { currencyFormat } from "@/helpers/utils";
 import { useAvailability } from "@/components/Context/Availability";
-import Rating from "@/components/App/Rating";
 
 import colors from "@/styles/colors";
 import Link from "next/link";
-import { useState } from "react";
-import { FaShoppingCart } from "react-icons/fa";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const db = admin.firestore();
