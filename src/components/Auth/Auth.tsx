@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useEffect } from "react";
 
 import { useAuth } from "../Context/Auth";
+import Spinner from "../Core/Spinner";
 
 const Auth = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, user } = useAuth();
@@ -18,15 +19,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
       }
     }
   }, [isAuthenticated, router, user]);
-  return (
-    <>
-      {!isAuthenticated ? (
-        <div>{children}</div>
-      ) : (
-        <div className="loader-wrapper">loading...</div>
-      )}
-    </>
-  );
+  return <>{!isAuthenticated ? <div>{children}</div> : <Spinner />}</>;
 };
 
 export default Auth;

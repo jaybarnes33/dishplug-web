@@ -1,7 +1,7 @@
 import { FoodType, StoreType } from "@/types";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+
 import { firestore } from "@/lib/firebase/client";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import Food from "@/components/App/Main/Cards/Food";

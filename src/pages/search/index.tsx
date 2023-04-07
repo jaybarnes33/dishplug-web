@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+
 import { FoodType } from "@/types";
 
 import Food from "@/components/App/Main/Cards/Food";

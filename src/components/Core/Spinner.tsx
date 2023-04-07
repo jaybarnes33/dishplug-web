@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 
 const Spinner = () => {
-  const [show, setShow] = useState(false);
+  //   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(true);
-    }, 2000);
+  //   useEffect(() => {
+  //     const timer = setTimeout(() => {
+  //       setShow(true);
+  //     }, 2000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //     return () => clearTimeout(timer);
+  //   }, []);
 
-  console.log({ show });
-  if (!show) return null;
+  //   console.log({ show });
+  //   if (!show) return null;
 
-  console.log({ show });
+  //   console.log({ show });
 
   return (
     <div role="status">

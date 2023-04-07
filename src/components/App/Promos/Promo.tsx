@@ -1,4 +1,3 @@
-import colors from "@/styles/colors";
 import Image from "next/image";
 import React from "react";
 

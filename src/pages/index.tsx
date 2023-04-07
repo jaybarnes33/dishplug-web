@@ -66,6 +66,7 @@ export const getStaticProps: GetStaticProps<{
 export default function Home({
   foods
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sortedFoods = useMealsByLocation(foods);
 
   return (
