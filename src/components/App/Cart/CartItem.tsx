@@ -58,10 +58,8 @@ const CartItem = ({ item }: { item: ICartItem }) => {
         />
       </div>
       <div className="flex flex-col items-start justify-center">
-        <span className="text-lg font-bold">{item.name}</span>
-        <span style={{ color: colors.accent2, fontWeight: "bolder" }}>
-          GH{item.price}
-        </span>
+        <span className="text-lg font-semibold">{item.name}</span>
+        <small className="text-accent font-semibold">GH{item.price}</small>
       </div>
 
       <div className="flex ms-auto me-2 gap-2 items-center">

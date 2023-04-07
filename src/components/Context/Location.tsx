@@ -1,3 +1,4 @@
+import { useModal } from "@/hooks/useModal";
 import {
   createContext,
   useCallback,
@@ -29,29 +30,22 @@ const LocationProvider = ({ children }: IProviderProps) => {
     deliveryLocation: "",
     coords: null
   });
+  const { toggle } = useModal();
 
   const updateLocation = useCallback((newLocation: TLocation) => {
     setLocation(newLocation);
+    localStorage.setItem("location", JSON.stringify(newLocation));
   }, []);
 
   useEffect(() => {
     const savedLocation = localStorage.getItem("location");
 
-    if (savedLocation) {
+    if (savedLocation && JSON.parse(savedLocation).city) {
       setLocation(JSON.parse(savedLocation));
     } else {
-      const deliveryLocation = prompt("Enter your location?");
-      if (deliveryLocation) {
-        setLocation(prevLocation => ({ ...prevLocation, deliveryLocation }));
-      }
+      toggle();
     }
-  }, []);
-
-  useEffect(() => {
-    if (location.city || location.deliveryLocation) {
-      localStorage.setItem("location", JSON.stringify(location));
-    }
-  }, [location]);
+  }, [toggle]);
 
   return (
     <LocationContext.Provider value={{ location, updateLocation }}>

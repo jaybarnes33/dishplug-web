@@ -39,7 +39,7 @@ function Search() {
     <form
       onSubmit={handleSubmit}
       ref={searchRef}
-      className="ml-auto bg-neutral-200 flex items-center placeholder:text-dark  gap-2 px-3 focus-within:outline-2 focus:outline-neutral-950 w-full md:min-w-[40%] rounded-md"
+      className="ml-auto bg-gray-50 flex items-center placeholder:text-dark  gap-2 px-3 focus-within:outline-2 focus:outline-neutral-950 w-full md:min-w-[40%] rounded-md"
     >
       <FaSearch color={colors.secondary} size={15} />
       <Input

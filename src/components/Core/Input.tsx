@@ -6,7 +6,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const Input = ({ onChange, ...others }: InputProps) => {
   return (
     <input
-      className="flex-1 h-full bg-neutral-200 p-3  rounded focus-within:outline-none w-full"
+      className="flex-1 h-full bg-gray-50 p-3  rounded focus-within:outline-none w-full"
       {...others}
       onChange={onChange}
     />

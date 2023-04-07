@@ -3,6 +3,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "../Context/Location";
 import classes from "../../styles/dialog.module.scss";
+import {
+  FaRegTimesCircle,
+  FaTimes,
+  FaTimesCircle,
+  FaWindowClose
+} from "react-icons/fa";
+import Places from "../Location/Places";
 
 export interface IProps {
   open: boolean;
@@ -84,9 +91,12 @@ const Map = ({ open, handleClose }: IProps) => {
             locationBias: location.coords || undefined
           },
           (results, status) => {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (
+              status == google.maps.places.PlacesServiceStatus.OK &&
+              results
+            ) {
               for (const result of results) {
-                const position = result.geometry?.location.toJSON() || null;
+                const position = result.geometry?.location?.toJSON() || null;
                 updateMarkerPosition(position);
               }
             }
@@ -100,7 +110,7 @@ const Map = ({ open, handleClose }: IProps) => {
 
   useEffect(() => {
     if (map && marker) {
-      map.addListener("click", ({ latLng }) => {
+      map.addListener("click", ({ latLng }: { latLng: google.maps.LatLng }) => {
         marker.setPosition(latLng);
         map.panTo(latLng);
         setSelectedCoords(latLng.toJSON());
@@ -119,11 +129,11 @@ const Map = ({ open, handleClose }: IProps) => {
         };
 
         newLocation.city =
-          locations.find(location => location.types.includes("locality"))
+          locations?.find(location => location.types.includes("locality"))
             ?.address_components[0].long_name || "";
 
         newLocation.deliveryLocation =
-          locations.find(location =>
+          locations?.find(location =>
             [
               "premise",
               "street_address",
@@ -148,12 +158,8 @@ const Map = ({ open, handleClose }: IProps) => {
     >
       <div id="dialog-header" className={classes.header}>
         <h2>Select Delivery Location</h2>
-        <button
-          className={classes.close_icon}
-          aria-label="close map"
-          onClick={handleClose}
-        >
-          <i>X</i>
+        <button aria-label="close map" onClick={handleClose}>
+          <FaRegTimesCircle size={20} />
         </button>
       </div>
       <section id="map" style={{ width: "100%", height: "100%" }}></section>

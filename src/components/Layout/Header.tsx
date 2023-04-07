@@ -8,13 +8,17 @@ import { BsCart4 } from "react-icons/bs";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useCart } from "../Context/Cart";
+import Places from "../Location/Places";
+import { useModal } from "@/hooks/useModal";
+
 const Header = () => {
+  const { open, toggle } = useModal();
   const { itemsInCart } = useCart();
   return (
-    <nav className="flex py-4 flex-wrap gap-5 border border-neutral-200 px-4 md:px-12 fixed top-0 w-full z-50 bg-white">
+    <nav className="flex py-4 flex-wrap gap-5 border border-neutral-200 px-2 md:px-12 fixed top-0 w-full z-50 bg-white">
       <Link href="/">
         <Image
-          className="w-10 h-10"
+          className="w-7 h-7 md:w-10 md:h-10"
           src={"/green-dish.png"}
           alt="logo"
           width={40}
@@ -23,6 +27,7 @@ const Header = () => {
       </Link>
 
       <LocationDisplay />
+      <Places open={open} handleClose={toggle} />
 
       <div className="order-last w-full md:w-[40%] ml-auto">
         <Search />
@@ -30,7 +35,7 @@ const Header = () => {
 
       <div className="flex gap-3 ml-auto md:order-last">
         <Link href="/cart">
-          <button className="relative md:ml-[3rem] text-neutral-100 3 h-8 w-8 md:h-10 md:w-10 flex items-center justify-center rounded-full bg-primary2">
+          <button className="relative md:ml-[3rem]  3 h-8 w-8 md:h-10 md:w-10 flex items-center justify-center rounded-full bg-accent2">
             <BsCart4 />
             <span className="absolute -top-1 -right-1 text-white bg-accent w-4 h-4 text-xs rounded-full">
               {itemsInCart}
@@ -54,7 +59,7 @@ const Header = () => {
                 asChild
               >
                 <Link href="/login">
-                  <button className="h-7 w-7 flex items-center justify-center rounded-full bg-primary2">
+                  <button className="h-7 w-7 flex items-center justify-center rounded-full bg-accent">
                     <User color="white" />
                   </button>
                   Log in
