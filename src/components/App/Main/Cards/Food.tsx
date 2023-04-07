@@ -57,7 +57,7 @@ const Food = ({ food }: { food: FoodType }) => {
             </h6>
           </Link>
 
-          <small className="text-primary text-base font-semibold mt-1">
+          <small className="text-primary text-sm  mt-1">
             {currencyFormat(food.price)}
           </small>
           {!pathname.includes("stores") && (
