@@ -28,26 +28,30 @@ const Food = ({ food }: { food: FoodType }) => {
   };
 
   return (
-    <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
-      <Link href={`/foods/${food.id}`}>
-        <Image
-          alt={food.name}
-          src={food.image || "/"}
-          className="w-full h-[160px] rounded-xl object-cover"
-          width={100}
-          height={100}
-        />
-      </Link>
-      {unavailableFoods.includes(food.id) ? (
-        <p>Not available</p>
-      ) : (
-        <button
-          className="flex justify-center items-center w-7 h-7 bg-yellow-600 rounded-full text-white absolute top-3 right-3"
-          onClick={handleAddToCart}
-        >
-          <FaShoppingCart color="white" size={15} />
-        </button>
-      )}
+    <div className="relative my-3 px-2  hover:shadow-md hover:bg-white rounded-xl ">
+      <div className="relative">
+        <Link href={`/foods/${food.id}`}>
+          <Image
+            alt={food.name}
+            src={food.image || "/"}
+            className="w-full h-[160px] rounded-xl object-cover"
+            width={100}
+            height={100}
+          />
+        </Link>
+        {unavailableFoods.includes(food.id) ? (
+          <div className="absolute top-0 left-0 text-neutral-100 grid place-items-center w-full h-[160px] bg-[#1a1a1aee] rounded-xl ">
+            <p>This meal is not available now</p>
+          </div>
+        ) : (
+          <button
+            className="flex justify-center items-center w-7 h-7 bg-yellow-600 rounded-full text-white absolute top-3 right-3"
+            onClick={handleAddToCart}
+          >
+            <FaShoppingCart color="white" size={15} />
+          </button>
+        )}
+      </div>
 
       <div className="mb-2 px-2">
         <div className="flex flex-col ">
