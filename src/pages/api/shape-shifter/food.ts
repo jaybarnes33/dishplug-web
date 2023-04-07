@@ -21,11 +21,8 @@ export default async function handler(
       if (!store) throw new Error("store can't be undefined");
 
       db.doc(doc.ref.path).set({
-        name: data.name,
-        price: data.price,
-        image: data.image,
-        available: data.available,
-        description: data.description,
+        ...data,
+
         store: {
           id: store.id,
           name: store.data().name,
@@ -37,6 +34,7 @@ export default async function handler(
 
     res.status(200).json({ message: "Foods updated" });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Something went wrong" });
   }
 }

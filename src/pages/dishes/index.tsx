@@ -13,7 +13,7 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const sortedFoods = useMealsByLocation(foods);
 
   return (
-    <section className="pt-2" style={{ minHeight: "90vh" }}>
+    <section className="pt-2 px-2" style={{ minHeight: "90vh" }}>
       <Head>
         <title>Dishes</title>
         <meta
@@ -22,12 +22,11 @@ const Foods = ({ foods }: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
       </Head>
       <h2 className="text-2xl font-bold mt-5">Dishes</h2>
-      <div>
-        <div className="grid md:grid-cols-3 gap-3">
-          {sortedFoods.map(food => (
-            <Food key={food.id} food={food} />
-          ))}
-        </div>
+
+      <div className="grid md:grid-cols-3 gap-5">
+        {sortedFoods.map(food => (
+          <Food key={food.id} food={food} />
+        ))}
       </div>
     </section>
   );
@@ -40,6 +39,8 @@ export const getStaticProps: GetStaticProps<{
 
   const products = await db
     .collectionGroup("products")
+    .orderBy("image")
+    .where("image", ">", "")
     .orderBy("available", "desc")
     .withConverter(foodConverter)
     .get();
