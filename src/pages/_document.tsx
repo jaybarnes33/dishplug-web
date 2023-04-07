@@ -35,7 +35,7 @@ class MyDocument extends Document {
           />
           <meta name="theme-color" content="#fff" />
           <script
-            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAPS_KEY}`}
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAPS_KEY}&libraries=places`}
             defer
           ></script>
         </Head>

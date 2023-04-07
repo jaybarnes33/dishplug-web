@@ -29,7 +29,7 @@ const Footer = () => {
               target={"_blank"}
               rel="noreferrer noopener"
             >
-              <div className="w-10 h-10 rounded-full bg-primary hover:scale-105 hover:bg-neutral-800 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-primary2 hover:scale-105 hover:bg-neutral-800 flex items-center justify-center">
                 <FaWhatsapp color="white" />
               </div>
             </Link>
@@ -38,7 +38,7 @@ const Footer = () => {
               target={"_blank"}
               rel="noreferrer noopener"
             >
-              <div className="w-10 h-10 rounded-full bg-primary hover:scale-105 hover:bg-neutral-800 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-primary2 hover:scale-105 hover:bg-neutral-800 flex items-center justify-center">
                 <FaTwitter color="white" />
               </div>
             </Link>
@@ -47,7 +47,7 @@ const Footer = () => {
               target={"_blank"}
               rel="noreferrer noopener"
             >
-              <div className="w-10 h-10 rounded-full bg-primary hover:scale-105 hover:bg-neutral-800 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-primary2 hover:scale-105 hover:bg-neutral-800 flex items-center justify-center">
                 <FaPhoneAlt color="white" />
               </div>
             </Link>
@@ -110,7 +110,7 @@ const Footer = () => {
               className="focus:outline-0 focus:ring-0 text-neutral-700 mr-3"
               placeholder="Email Address"
             />
-            <div className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer bg-primary">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer bg-primary2">
               <Image
                 src="/send.svg"
                 alt="image of a send icon"

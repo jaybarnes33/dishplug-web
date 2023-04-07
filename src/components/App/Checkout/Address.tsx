@@ -2,6 +2,7 @@ import { useAuth } from "@/components/Context/Auth";
 import { useLocation } from "@/components/Context/Location";
 import Input from "@/components/Core/Input";
 import { formatPhone } from "@/helpers/utils";
+import { useModal } from "@/hooks/useModal";
 import { IPageProps, TValues } from "@/pages/checkout/[path]";
 import colors from "@/styles/colors";
 import { useFormik } from "formik";
@@ -42,6 +43,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
     onSubmit
   });
 
+  const { toggle } = useModal();
   return (
     <div>
       <Head>
@@ -84,6 +86,7 @@ const Address = ({ updateDetails, details }: IPageProps) => {
               <Input
                 {...getFieldProps("location")}
                 required
+                onChange={() => toggle()}
                 placeholder="First Love"
               />
             </div>

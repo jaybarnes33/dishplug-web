@@ -7,6 +7,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import Footer from "@/components/Layout/Footer";
 
 import Header from "@/components/Layout/Header";
+import ModalProvider from "@/hooks/useModal";
 
 import "@/styles/globals.css";
 import localforage from "localforage";
@@ -44,8 +45,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <>
-      <ErrorBoundary>
+    <ErrorBoundary>
+      <ModalProvider>
         <LocationProvider>
           <AuthProvider>
             <SearchProvider>
@@ -61,8 +62,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             </SearchProvider>
           </AuthProvider>
         </LocationProvider>
-      </ErrorBoundary>
-    </>
+      </ModalProvider>
+    </ErrorBoundary>
   );
 }
 
