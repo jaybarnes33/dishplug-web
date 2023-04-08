@@ -181,7 +181,7 @@ const Register = () => {
         <div className="flex justify-center mt-2">
           <button
             id="submit-button"
-            className="bg-primary text-white rounded hover:bg-primary2 px-2 py-2"
+            className="bg-primary flex gap-3 justify-center text-white rounded hover:bg-primary2 px-2 py-2"
             type="submit"
             disabled={isSubmitting}
           >
