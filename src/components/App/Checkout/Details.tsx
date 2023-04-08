@@ -245,7 +245,7 @@ const Details = ({ details }: IPageProps) => {
             {addressInfo.paymentMethod === "online" && (
               <button
                 type="button"
-                className="bg-primary hover:bg-primary2 py-1 px-1 rounded text-neutral-100 w-full"
+                className="bg-primary hover:bg-primary2 flex gap-3 justify-center py-1 px-2 rounded text-neutral-100 w-full"
                 disabled={availableItems.length === 0}
                 onClick={() =>
                   initializePayment(
@@ -264,7 +264,7 @@ const Details = ({ details }: IPageProps) => {
               <button
                 type="button"
                 disabled={availableItems.length === 0}
-                className="bg-primary hover:bg-primary2 py-1 px-1 rounded text-neutral-100"
+                className="bg-primary hover:bg-primary2 flex gap-3 justify-center py-1 px-2 rounded text-neutral-100"
                 onClick={() => checkoutWithoutPayment(availableItems)}
               >
                 Place Order {loading && <Spinner />}
