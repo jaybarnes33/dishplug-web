@@ -17,6 +17,8 @@
     "@fontsource/sen": "^4.5.9",
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@googlemaps/markerclusterer": "^2.0.15",
+    "@headlessui/react": "^1.7.14",
+    "@radix-ui/react-dialog": "^1.0.3",
     "@radix-ui/react-dropdown-menu": "^2.0.4",
     "@reduxjs/toolkit": "^1.8.3",
     "@sentry/nextjs": "^7.8.0",
