@@ -1,10 +1,12 @@
-import { useCallback, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 import { createContext, useContext } from "react";
 
 interface ModalContextInterface {
   toggle: () => void;
   open: boolean;
+  selected: ReactNode;
+  setSelected: Dispatch<SetStateAction<ReactNode>>;
 }
 
 const ModalCtx = createContext<ModalContextInterface | null>(null);
@@ -17,12 +19,15 @@ interface IProps {
 
 export const ModalProvider = ({ children }: IProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const toggle = useCallback(() => setOpen(open => !open), []);
+  const toggle = () => setOpen(open => !open);
 
+  const [selected, setSelected] = useState<ReactNode>("");
   return (
     <ModalCtx.Provider
       value={{
         toggle,
+        selected,
+        setSelected,
         open
       }}
     >

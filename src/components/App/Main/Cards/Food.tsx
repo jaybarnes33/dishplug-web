@@ -8,12 +8,14 @@ import { currencyFormat } from "@/helpers/utils";
 import { useCart } from "@/components/Context/Cart";
 import { useRouter } from "next/router";
 import { useAvailability } from "@/components/Context/Availability";
+import { useModal } from "@/hooks/useModal";
+import DishDetail from "./DishDetail";
 
 const Food = ({ food }: { food: FoodType }) => {
   const { pathname } = useRouter();
   const { addToCart } = useCart();
   const { unavailableFoods } = useAvailability();
-
+  const { toggle, setSelected } = useModal();
   const handleAddToCart = () => {
     addToCart({
       id: food.id,
@@ -30,15 +32,19 @@ const Food = ({ food }: { food: FoodType }) => {
   return (
     <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
       <div className="relative">
-        <Link href={`/foods/${food.id}`}>
+        <>
           <Image
+            onClick={() => {
+              toggle();
+              setSelected(<DishDetail food={food} />);
+            }}
             alt={food.name}
             src={food.image || "/"}
             className="w-full h-[160px] rounded-xl object-cover"
             width={100}
             height={100}
           />
-        </Link>
+        </>
         {unavailableFoods.includes(food.id) ? (
           <div className="absolute top-0 left-0 text-neutral-100 grid place-items-center w-full h-[160px] bg-[#1a1a1aee] rounded-xl ">
             <p>This meal is not available now</p>
@@ -55,11 +61,15 @@ const Food = ({ food }: { food: FoodType }) => {
 
       <div className="mb-2 px-2">
         <div className="flex flex-col ">
-          <Link href={`/foods/${food.id}`}>
-            <h6 className="capitalize font-semibold mt-1 text-lg">
-              {food.name}
-            </h6>
-          </Link>
+          <h6
+            className="capitalize cursor-pointer font-semibold mt-1 text-lg"
+            onClick={() => {
+              toggle();
+              setSelected(<DishDetail food={food} />);
+            }}
+          >
+            {food.name}
+          </h6>
 
           <small className="text-primary text-sm  mt-1">
             {currencyFormat(food.price)}
