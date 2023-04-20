@@ -30,13 +30,13 @@ const DishDetail = ({ food }: { food: FoodType }) => {
   };
 
   return (
-    <div className="relative shadow-md bg-white  rounded-xl pb-4  top-[-10rem]">
+    <div className="relative shadow-md bg-white w-full  md:w-[500px] rounded-xl pb-4 top-[-5rem] md:top-0">
       <Image
         src={food.image || ""}
         width={200}
         height={130}
         alt=""
-        className="w-full md:h-[350px] rounded-t-xl"
+        className="w-full max-h-[350px]  rounded-t-xl"
       />
 
       <button
