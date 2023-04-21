@@ -46,15 +46,15 @@ const Food = ({ food }: { food: FoodType }) => {
           />
         </>
         {unavailableFoods.includes(food.id) ? (
-          <div className="absolute top-0 left-0 text-neutral-100 grid place-items-center w-full h-[160px] bg-[#1a1a1aee] rounded-xl ">
+          <div className="absolute top-0 left-0 text-neutral-100 grid place-items-center w-full h-[170px] bg-[#1a1a1aee] rounded-xl ">
             <p>This meal is not available now</p>
           </div>
         ) : (
           <button
-            className="flex justify-center items-center w-7 h-7 bg-yellow-600 rounded-full text-white absolute top-3 right-3"
+            className="flex justify-center items-center w-7 h-7 bg-white rounded-full text-neutral-600 absolute top-3 right-3"
             onClick={handleAddToCart}
           >
-            <FaShoppingCart color="white" size={15} />
+            <FaShoppingCart size={15} />
           </button>
         )}
       </div>
