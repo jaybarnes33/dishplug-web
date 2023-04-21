@@ -53,7 +53,11 @@ function MyApp({ Component, pageProps }: AppProps) {
               <AvailabilityProvider>
                 <CartProvider>
                   {!noHeader.includes(pathname) && <Header />}
-                  <div className="px-3 pt-28 md:pt-20 md:px-7 text-neutral-700 ">
+                  <div
+                    className={`${
+                      !pathname.includes("stores") && "px-3 md:px-7"
+                    } pt-28 md:pt-20  text-neutral-700`}
+                  >
                     <Component {...pageProps} />
                   </div>
                   {!noHeader.includes(pathname) && <Footer />}
