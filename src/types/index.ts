@@ -55,6 +55,7 @@ export interface StoreType {
   contact: string;
   id: string;
   name: string;
+  image?: string;
   owner: {
     contact: string;
     name: string;

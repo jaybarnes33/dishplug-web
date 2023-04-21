@@ -40,7 +40,7 @@ const Food = ({ food }: { food: FoodType }) => {
             }}
             alt={food.name}
             src={food.image || "/"}
-            className="w-full h-[160px] rounded-xl object-cover"
+            className="w-full h-[170px] rounded-xl object-cover object-center"
             width={100}
             height={100}
           />

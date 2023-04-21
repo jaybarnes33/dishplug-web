@@ -49,13 +49,16 @@ const Shops = () => {
         <meta name="description" content={store?.name} />
       </Head>
       <div
-        className="flex justify-center items-center"
+        className="flex justify-center items-center w-screen relative h-[40vh] "
         style={{
-          backgroundImage: "url('/Pattern (7).png')",
-          minHeight: "50vh"
+          backgroundColor: "#1a1a1aae",
+          backgroundImage: `url(${store?.image ? store?.image : ""}`,
+          backgroundSize: "cover",
+          backgroundBlendMode: "overlay",
+          backgroundPosition: "center"
         }}
       >
-        <div className="flex items-center justify-center mt-4 pt-2">
+        <div className="flex items-center justify-center mt-4 pt-2 text-white">
           <div>
             <h1 className="text-center text-2xl font-bold tracking-wide">
               {store?.name}
