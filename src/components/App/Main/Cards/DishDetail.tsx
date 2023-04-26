@@ -31,13 +31,14 @@ const DishDetail = ({ food }: { food: FoodType }) => {
 
   return (
     <div className="relative shadow-md bg-white w-full  md:w-[500px] rounded-xl pb-4 top-[-5rem] md:top-0">
-      <Image
-        src={food.image || ""}
-        width={200}
-        height={130}
-        alt=""
-        className="w-full max-h-[350px]  rounded-t-xl"
-      />
+      <div className="h-72 relative">
+        <Image
+          src={food.image || ""}
+          fill
+          alt=""
+          className="w-full max-h-[350px] object-cover rounded-t-xl"
+        />
+      </div>
 
       <button
         onClick={toggle}

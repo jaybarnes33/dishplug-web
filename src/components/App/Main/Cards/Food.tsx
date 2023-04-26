@@ -31,7 +31,7 @@ const Food = ({ food }: { food: FoodType }) => {
 
   return (
     <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
-      <div className="relative">
+      <div className="relative h-28">
         <>
           <Image
             onClick={() => {
@@ -41,8 +41,7 @@ const Food = ({ food }: { food: FoodType }) => {
             alt={food.name}
             src={food.image || "/"}
             className="w-full h-[170px] rounded-xl object-cover object-center"
-            width={100}
-            height={100}
+            fill
           />
         </>
         {unavailableFoods.includes(food.id) ? (
