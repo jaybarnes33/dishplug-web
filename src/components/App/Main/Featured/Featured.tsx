@@ -24,7 +24,7 @@ const Featured = ({ foods }: IProps) => {
         </Link>
       </div>
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 items-center pt-1 md:gap-3">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 pt-1 md:gap-3">
         {foods.map((food, index) => (
           <div key={index}>
             <Food food={food} />
