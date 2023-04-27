@@ -31,7 +31,7 @@ const Food = ({ food }: { food: FoodType }) => {
 
   return (
     <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
-      <div className="relative h-28">
+      <div className="relative h-36">
         <>
           <Image
             onClick={() => {
@@ -45,7 +45,7 @@ const Food = ({ food }: { food: FoodType }) => {
           />
         </>
         {unavailableFoods.includes(food.id) ? (
-          <div className="absolute top-0 left-0 text-neutral-100 grid place-items-center w-full h-[170px] bg-[#1a1a1aee] rounded-xl ">
+          <div className="absolute top-0 left-0 text-neutral-100 grid place-items-center w-full h-full bg-[#1a1a1aee] rounded-xl ">
             <p>This meal is not available now</p>
           </div>
         ) : (
