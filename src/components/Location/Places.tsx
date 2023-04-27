@@ -42,9 +42,9 @@ const Places = ({ handleClose }: IProps) => {
       handleClose();
     }
   };
-  const className = "p-2  hover:bg-gray-50 m-2 text-sm";
+  const className = "p-2 hover:bg-gray-50 m-2 text-sm";
   return (
-    <div className="bg-white p-7  rounded-3xl h-screen w-screen md:h-[500px] md:w-[500px] md:mt-5">
+    <div className="bg-white p-7 mt-12 rounded-3xl h-[80vh] w-screen md:h-[500px] md:w-[500px] md:mt-5">
       <div className="flex justify-between items-center mb-4">
         <h1>Delivery location</h1>
         <button
