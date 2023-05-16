@@ -31,7 +31,7 @@ const Food = ({ food }: { food: FoodType }) => {
 
   return (
     <div className="relative my-3 p-2 hover:shadow-md hover:bg-white rounded-xl ">
-      <div className="relative h-36">
+      <div className="relative h-40">
         <>
           <Image
             onClick={() => {
@@ -40,7 +40,7 @@ const Food = ({ food }: { food: FoodType }) => {
             }}
             alt={food.name}
             src={food.image || "/"}
-            className="w-full h-[170px] rounded-xl object-cover object-center"
+            className="w-full  rounded-xl object-cover object-center"
             fill
           />
         </>
