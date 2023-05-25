@@ -6,6 +6,7 @@ import {
   useEffect,
   useState
 } from "react";
+import Places from "../Location/Places";
 
 interface IProviderProps {
   children: React.ReactNode;
@@ -30,7 +31,7 @@ const LocationProvider = ({ children }: IProviderProps) => {
     deliveryLocation: "",
     coords: null
   });
-  const { toggle } = useModal();
+  const { toggle, setSelected } = useModal();
 
   const updateLocation = useCallback((newLocation: TLocation) => {
     setLocation(newLocation);
@@ -40,12 +41,13 @@ const LocationProvider = ({ children }: IProviderProps) => {
   useEffect(() => {
     const savedLocation = localStorage.getItem("location");
 
-    if (savedLocation && JSON.parse(savedLocation).city) {
+    if (savedLocation && JSON.parse(savedLocation)) {
       setLocation(JSON.parse(savedLocation));
     } else {
       toggle();
+      setSelected(<Places handleClose={toggle} />);
     }
-  }, [toggle]);
+  }, [toggle, setSelected]);
 
   return (
     <LocationContext.Provider value={{ location, updateLocation }}>
